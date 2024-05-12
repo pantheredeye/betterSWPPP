@@ -14,11 +14,91 @@ generator client {
   binaryTargets = "native"
 }
 
-// Define your own datamodels here and run `yarn redwood prisma migrate dev`
-// to create migrations for them and apply to your dev DB.
-// TODO: Please remove the following example:
-model UserExample {
-  id    Int     @id @default(autoincrement())
-  email String  @unique
-  name  String?
+model User {
+  id          Int          @id @default(autoincrement())
+  email       String       @unique
+  password    String
+  firstName   String?
+  lastName    String?
+  phoneNumber String?
+  role        Role         @relation(fields: [roleId], references: [id])
+  roleId      Int
+  createdAt   DateTime     @default(now())
+  updatedAt   DateTime     @updatedAt
+  inspections Inspection[]
+  sites       Site[]
+}
+
+model Role {
+  id    Int    @id @default(autoincrement())
+  name  String @unique
+  users User[]
+}
+
+model Site {
+  id          Int          @id @default(autoincrement())
+  name        String
+  address     String
+  city        String
+  state       String
+  zipCode     String
+  siteType    SiteType     @relation(fields: [siteTypeId], references: [id])
+  siteTypeId  Int
+  owner       User         @relation(fields: [ownerId], references: [id])
+  ownerId     Int
+  createdAt   DateTime     @default(now())
+  updatedAt   DateTime     @updatedAt
+  inspections Inspection[]
+  bmps        BMP[]
+}
+
+model SiteType {
+  id    Int    @id @default(autoincrement())
+  name  String @unique
+  sites Site[]
+}
+
+model Inspection {
+  id          Int       @id @default(autoincrement())
+  site        Site      @relation(fields: [siteId], references: [id])
+  siteId      Int
+  inspector   User      @relation(fields: [inspectorId], references: [id])
+  inspectorId Int
+  date        DateTime
+  weather     String
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+  bmpData     BmpData[]
+  media       Media[]
+}
+
+model BMP {
+  id          Int       @id @default(autoincrement())
+  name        String
+  description String
+  isStandard  Boolean
+  site        Site      @relation(fields: [siteId], references: [id])
+  siteId      Int
+  bmpData     BmpData[]
+}
+
+model BmpData {
+  id                     Int        @id @default(autoincrement())
+  bmp                    BMP        @relation(fields: [bmpId], references: [id])
+  bmpId                  Int
+  inspection             Inspection @relation(fields: [inspectionId], references: [id])
+  inspectionId           Int
+  implemented            Boolean
+  maintenanceRequired    Boolean
+  repeatOccurrence       Boolean
+  correctiveActionNeeded String
+  notes                  String
+}
+
+model Media {
+  id           Int        @id @default(autoincrement())
+  inspection   Inspection @relation(fields: [inspectionId], references: [id])
+  inspectionId Int
+  url          String
+  type         String
 }
