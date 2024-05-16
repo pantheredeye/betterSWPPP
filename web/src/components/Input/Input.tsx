@@ -1,27 +1,35 @@
-// web/src/components/Form/Input.tsx
-import React, { FC, InputHTMLAttributes } from 'react'
+import React, { forwardRef } from 'react'
 
-interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
+import { TextField } from '@redwoodjs/forms'
+
+interface InputProps {
   label: string
   name: string
   className?: string
+  validation?: Record<string, unknown>
 }
 
-const Input: FC<InputProps> = ({ label, type = 'text', name, className = '', ...props }) => {
-  return (
-    <div className="mb-4">
-      <label htmlFor={name} className="block text-gray-700 text-sm font-bold mb-2">
-        {label}
-      </label>
-      <input
-        type={type}
-        id={name}
-        name={name}
-        className={`shadow appearance-none border rounded-sm w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline ${className}`}
-        {...props}
-      />
-    </div>
-  )
-}
+const Input = forwardRef<HTMLInputElement, InputProps>(
+  ({ label, name, className = '', validation, ...props }, ref) => {
+    return (
+      <div className="mb-4">
+        <label
+          htmlFor={name}
+          className="mb-2 block text-sm font-bold text-gray-700"
+        >
+          {label}
+        </label>
+        <TextField
+          id={name}
+          name={name}
+          className={`focus:shadow-outline w-full appearance-none rounded-sm border px-3 py-2 leading-tight text-gray-700 shadow focus:outline-none ${className}`}
+          ref={ref}
+          validation={validation}
+          {...props}
+        />
+      </div>
+    )
+  }
+)
 
 export default Input

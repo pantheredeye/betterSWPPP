@@ -1,13 +1,19 @@
 import { useRef, useEffect } from 'react'
 
-import { Form, Label, FieldError, useForm } from '@redwoodjs/forms'
+import {
+  Form,
+  Label,
+  FieldError,
+  useForm,
+  TextField,
+  PasswordField,
+} from '@redwoodjs/forms'
 import { Link, navigate, routes } from '@redwoodjs/router'
 import { Metadata } from '@redwoodjs/web'
 import { toast, Toaster } from '@redwoodjs/web/toast'
 
 import { useAuth } from 'src/auth'
 import Button from 'src/components/Button/Button'
-import Input from 'src/components/Input/Input'
 
 const LoginPage = () => {
   const { isAuthenticated, logIn } = useAuth()
@@ -65,11 +71,11 @@ const LoginPage = () => {
                   >
                     Email
                   </Label>
-                  <Input
-                    label="Email"
+                  <TextField
                     name="email"
-                    type="email"
                     ref={emailRef}
+                    className="focus:shadow-outline w-full appearance-none rounded-sm border px-3 py-2 leading-tight text-gray-700 shadow focus:outline-none"
+                    errorClassName="focus:shadow-outline w-full appearance-none rounded-sm border px-3 py-2 leading-tight text-red-600 shadow focus:outline-none"
                     validation={{
                       required: {
                         value: true,
@@ -86,11 +92,11 @@ const LoginPage = () => {
                   >
                     Password
                   </Label>
-                  <Input
-                    label="Password"
+                  <PasswordField
                     name="password"
-                    type="password"
                     autoComplete="current-password"
+                    className="focus:shadow-outline w-full appearance-none rounded-sm border px-3 py-2 leading-tight text-gray-700 shadow focus:outline-none"
+                    errorClassName="focus:shadow-outline w-full appearance-none rounded-sm border px-3 py-2 leading-tight text-red-600 shadow focus:outline-none"
                     validation={{
                       required: {
                         value: true,
