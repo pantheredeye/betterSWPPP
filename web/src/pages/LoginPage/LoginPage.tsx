@@ -1,22 +1,17 @@
-import { useRef } from 'react'
-import { useEffect } from 'react'
+import { useRef, useEffect } from 'react'
 
-import {
-  Form,
-  Label,
-  TextField,
-  PasswordField,
-  Submit,
-  FieldError,
-} from '@redwoodjs/forms'
+import { Form, Label, FieldError, useForm } from '@redwoodjs/forms'
 import { Link, navigate, routes } from '@redwoodjs/router'
 import { Metadata } from '@redwoodjs/web'
 import { toast, Toaster } from '@redwoodjs/web/toast'
 
 import { useAuth } from 'src/auth'
+import Button from 'src/components/Button/Button'
+import Input from 'src/components/Input/Input'
 
 const LoginPage = () => {
   const { isAuthenticated, logIn } = useAuth()
+  const formMethods = useForm()
 
   useEffect(() => {
     if (isAuthenticated) {
@@ -58,7 +53,11 @@ const LoginPage = () => {
 
             <div className="rw-segment-main">
               <div className="rw-form-wrapper">
-                <Form onSubmit={onSubmit} className="rw-form-wrapper">
+                <Form
+                  onSubmit={onSubmit}
+                  className="rw-form-wrapper"
+                  formMethods={formMethods}
+                >
                   <Label
                     name="email"
                     className="rw-label"
@@ -66,10 +65,10 @@ const LoginPage = () => {
                   >
                     Email
                   </Label>
-                  <TextField
+                  <Input
+                    label="Email"
                     name="email"
-                    className="rw-input"
-                    errorClassName="rw-input rw-input-error"
+                    type="email"
                     ref={emailRef}
                     validation={{
                       required: {
@@ -78,7 +77,6 @@ const LoginPage = () => {
                       },
                     }}
                   />
-
                   <FieldError name="email" className="rw-field-error" />
 
                   <Label
@@ -88,10 +86,10 @@ const LoginPage = () => {
                   >
                     Password
                   </Label>
-                  <PasswordField
+                  <Input
+                    label="Password"
                     name="password"
-                    className="rw-input"
-                    errorClassName="rw-input rw-input-error"
+                    type="password"
                     autoComplete="current-password"
                     validation={{
                       required: {
@@ -100,6 +98,7 @@ const LoginPage = () => {
                       },
                     }}
                   />
+                  <FieldError name="password" className="rw-field-error" />
 
                   <div className="rw-forgot-link">
                     <Link
@@ -110,10 +109,10 @@ const LoginPage = () => {
                     </Link>
                   </div>
 
-                  <FieldError name="password" className="rw-field-error" />
-
                   <div className="rw-button-group">
-                    <Submit className="rw-button rw-button-blue">Login</Submit>
+                    <Button type="submit" className="rw-button rw-button-blue">
+                      Login
+                    </Button>
                   </div>
                 </Form>
               </div>

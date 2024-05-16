@@ -1,22 +1,17 @@
-import { useRef } from 'react'
-import { useEffect } from 'react'
+import { useRef, useEffect } from 'react'
 
-import {
-  Form,
-  Label,
-  TextField,
-  PasswordField,
-  FieldError,
-  Submit,
-} from '@redwoodjs/forms'
+import { Form, Label, FieldError, useForm } from '@redwoodjs/forms'
 import { Link, navigate, routes } from '@redwoodjs/router'
 import { Metadata } from '@redwoodjs/web'
 import { toast, Toaster } from '@redwoodjs/web/toast'
 
 import { useAuth } from 'src/auth'
+import Button from 'src/components/Button/Button'
+import Input from 'src/components/Input/Input'
 
 const SignupPage = () => {
   const { isAuthenticated, signUp } = useAuth()
+  const formMethods = useForm()
 
   useEffect(() => {
     if (isAuthenticated) {
@@ -60,7 +55,11 @@ const SignupPage = () => {
 
             <div className="rw-segment-main">
               <div className="rw-form-wrapper">
-                <Form onSubmit={onSubmit} className="rw-form-wrapper">
+                <Form
+                  onSubmit={onSubmit}
+                  className="rw-form-wrapper"
+                  formMethods={formMethods}
+                >
                   <Label
                     name="email"
                     className="rw-label"
@@ -68,10 +67,10 @@ const SignupPage = () => {
                   >
                     Email
                   </Label>
-                  <TextField
+                  <Input
+                    label="Email"
                     name="email"
-                    className="rw-input"
-                    errorClassName="rw-input rw-input-error"
+                    type="email"
                     ref={emailRef}
                     validation={{
                       required: {
@@ -89,10 +88,10 @@ const SignupPage = () => {
                   >
                     Password
                   </Label>
-                  <PasswordField
+                  <Input
+                    label="Password"
                     name="password"
-                    className="rw-input"
-                    errorClassName="rw-input rw-input-error"
+                    type="password"
                     autoComplete="current-password"
                     validation={{
                       required: {
@@ -104,9 +103,9 @@ const SignupPage = () => {
                   <FieldError name="password" className="rw-field-error" />
 
                   <div className="rw-button-group">
-                    <Submit className="rw-button rw-button-blue">
+                    <Button type="submit" className="rw-button rw-button-blue">
                       Sign Up
-                    </Submit>
+                    </Button>
                   </div>
                 </Form>
               </div>
