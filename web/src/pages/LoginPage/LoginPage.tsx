@@ -42,6 +42,7 @@ const LoginPage = () => {
       toast.error(response.error)
     } else {
       toast.success('Welcome back!')
+      navigate(routes.home())
     }
   }
 
@@ -125,7 +126,7 @@ const LoginPage = () => {
             </div>
           </div>
           <div className="rw-login-link">
-            <span>Don&apos;t have an account?</span>{' '}
+            <span>Don&apos;t have an account?</span>
             <Link to={routes.signup()} className="rw-link">
               Sign up!
             </Link>

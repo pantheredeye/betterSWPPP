@@ -1,5 +1,6 @@
 import type { Prisma } from '@prisma/client'
 import { db } from 'api/src/lib/db'
+
 import { hashPassword } from '@redwoodjs/auth-dbauth-api'
 
 export default async () => {
@@ -24,21 +25,37 @@ export default async () => {
     )
 
     // Seed data for users
-    const users: Array<Omit<Prisma.UserCreateInput, 'hashedPassword' | 'salt'> & { password: string }> = [
+    const users: Array<
+      Omit<Prisma.UserCreateInput, 'hashedPassword' | 'salt'> & {
+        password: string
+      }
+    > = [
       {
         email: 'admin@example.com',
         password: 'adminpassword',
-        role: { connect: { id: createdRoles.find((role) => role.name === 'ADMIN')?.id } },
+        role: {
+          connect: {
+            id: createdRoles.find((role) => role.name === 'ADMIN')?.id,
+          },
+        },
       },
       {
         email: 'siteowner@example.com',
         password: 'siteownerpassword',
-        role: { connect: { id: createdRoles.find((role) => role.name === 'SITE_OWNER')?.id } },
+        role: {
+          connect: {
+            id: createdRoles.find((role) => role.name === 'SITE_OWNER')?.id,
+          },
+        },
       },
       {
         email: 'inspector@example.com',
         password: 'inspectorpassword',
-        role: { connect: { id: createdRoles.find((role) => role.name === 'INSPECTOR')?.id } },
+        role: {
+          connect: {
+            id: createdRoles.find((role) => role.name === 'INSPECTOR')?.id,
+          },
+        },
       },
     ]
 
@@ -62,7 +79,13 @@ export default async () => {
         city: 'City 1',
         state: 'State 1',
         zipCode: '12345',
-        siteType: { connect: { id: createdSiteTypes.find((siteType) => siteType.name === 'RESIDENTIAL')?.id } },
+        siteType: {
+          connect: {
+            id: createdSiteTypes.find(
+              (siteType) => siteType.name === 'RESIDENTIAL'
+            )?.id,
+          },
+        },
         owner: { connect: { email: 'siteowner@example.com' } },
       },
       {
@@ -71,7 +94,12 @@ export default async () => {
         city: 'City 2',
         state: 'State 2',
         zipCode: '67890',
-        siteType: { connect: { id: createdSiteTypes.find((siteType) => siteType.name === 'LARGE')?.id } },
+        siteType: {
+          connect: {
+            id: createdSiteTypes.find((siteType) => siteType.name === 'LARGE')
+              ?.id,
+          },
+        },
         owner: { connect: { email: 'siteowner@example.com' } },
       },
     ]
