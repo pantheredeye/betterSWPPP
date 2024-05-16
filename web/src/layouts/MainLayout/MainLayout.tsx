@@ -2,7 +2,7 @@ import { Link, routes } from '@redwoodjs/router'
 
 const MainLayout = ({ children }) => {
   return (
-    <div className="text-dark-gray-700 flex min-h-screen flex-col bg-white">
+    <div className="text-dark-gray-700 bg-gradient-blue-silver flex min-h-screen flex-col">
       <header className="flex items-center justify-between bg-blue-600 px-6 py-4 text-white shadow">
         <h1 className="text-2xl font-bold">BetterSWPPP</h1>
         <nav>
