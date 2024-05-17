@@ -17,10 +17,6 @@ const Routes = () => {
       </Set>
       <PrivateSet unauthenticated="login" wrap={AuthenticatedLayout}>
         <Route path="/dashboard" page={DashboardPage} name="dashboard" />
-        {/* <Route path="/inspections" page={InspectionsPage} name="inspections" x />
-        <Route path="/sites" page={SitesPage} name="sites" />
-        <Route path="/bmps" page={BmpsPage} name="bmps" />
-        <Route path="/settings" page={SettingsPage} name="settings" /> */}
       </PrivateSet>
 
       <Route notfound page={NotFoundPage} />
