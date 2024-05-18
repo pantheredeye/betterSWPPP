@@ -36,7 +36,7 @@ const MainLayout = ({ children }: MainLayoutProps) => {
   const [sidebarOpen, setSidebarOpen] = useState(false)
 
   return (
-    <div className="flex h-full bg-white">
+    <div className="flex min-h-screen bg-gradient-blue-silver">
       <Transition show={sidebarOpen} as={Fragment}>
         <Dialog
           as="div"
@@ -221,7 +221,7 @@ const MainLayout = ({ children }: MainLayoutProps) => {
           </div>
         </header>
 
-        <main className="flex-1 py-10">
+        <main className="flex-grow py-10">
           <div className="px-4 sm:px-6 lg:px-8">{children}</div>
         </main>
 

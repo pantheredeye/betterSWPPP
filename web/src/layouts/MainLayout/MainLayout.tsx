@@ -1,5 +1,4 @@
 import { Link, routes, useLocation } from '@redwoodjs/router'
-
 import { useAuth } from 'src/auth'
 
 const MainLayout = ({ children }) => {
@@ -15,11 +14,9 @@ const MainLayout = ({ children }) => {
             Home
           </Link>
           {isAuthenticated ? (
-            <>
-              <button onClick={logOut} className="px-4">
-                Logout
-              </button>
-            </>
+            <button onClick={logOut} className="px-4">
+              Logout
+            </button>
           ) : (
             <>
               {location.pathname !== routes.login() && (
