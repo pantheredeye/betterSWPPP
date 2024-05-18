@@ -52,7 +52,7 @@ model Site {
   createdAt   DateTime     @default(now())
   updatedAt   DateTime     @updatedAt
   inspections Inspection[]
-  bmps        BMP[]
+  bmps        Bmp[]
 }
 
 model SiteType {
@@ -75,7 +75,7 @@ model Inspection {
   media       Media[]
 }
 
-model BMP {
+model Bmp {
   id          Int       @id @default(autoincrement())
   name        String
   description String
@@ -87,7 +87,7 @@ model BMP {
 
 model BmpData {
   id                     Int        @id @default(autoincrement())
-  bmp                    BMP        @relation(fields: [bmpId], references: [id])
+  bmp                    Bmp        @relation(fields: [bmpId], references: [id])
   bmpId                  Int
   inspection             Inspection @relation(fields: [inspectionId], references: [id])
   inspectionId           Int
