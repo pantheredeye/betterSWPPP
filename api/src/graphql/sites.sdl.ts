@@ -2,14 +2,19 @@ export const schema = gql`
   type Site {
     id: Int!
     name: String!
-    address: String!
+    location: String
+    addressLine1: String!
+    addressLine2: String
     city: String!
     state: String!
-    zipCode: String!
+    postalCode: String!
+    country: String!
+    npdesTrackingNo: String
     siteType: SiteType!
     siteTypeId: Int!
-    owner: User!
-    ownerId: Int!
+    siteInspector: String!
+    siteMap: String
+    ownerName: String!
     createdAt: DateTime!
     updatedAt: DateTime!
     inspections: [Inspection]!
@@ -23,22 +28,34 @@ export const schema = gql`
 
   input CreateSiteInput {
     name: String!
-    address: String!
+    location: String
+    addressLine1: String!
+    addressLine2: String
     city: String!
     state: String!
-    zipCode: String!
+    postalCode: String!
+    country: String!
+    npdesTrackingNo: String
     siteTypeId: Int!
-    ownerId: Int!
+    siteInspector: String!
+    siteMap: String
+    ownerName: String!
   }
 
   input UpdateSiteInput {
     name: String
-    address: String
+    location: String
+    addressLine1: String
+    addressLine2: String
     city: String
     state: String
-    zipCode: String
+    postalCode: String
+    country: String
+    npdesTrackingNo: String
     siteTypeId: Int
-    ownerId: Int
+    siteInspector: String
+    siteMap: String
+    ownerName: String
   }
 
   type Mutation {

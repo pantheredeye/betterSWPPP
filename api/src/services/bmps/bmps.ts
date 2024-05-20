@@ -16,9 +16,17 @@ export const bmp: QueryResolvers['bmp'] = ({ id }) => {
   })
 }
 
+export const standardBmps: QueryResolvers['standardBmps'] = () => {
+  return db.bmp.findMany({
+    where: { isStandard: true },
+  })
+}
+
 export const createBmp: MutationResolvers['createBmp'] = ({ input }) => {
+  // Ensure siteId is set to null if not provided
+  const data = { ...input, siteId: input.siteId || null }
   return db.bmp.create({
-    data: input,
+    data,
   })
 }
 

@@ -8,6 +8,8 @@ import AuthenticatedLayout from './layouts/AuthenticatedLayout/AuthenticatedLayo
 const Routes = () => {
   return (
     <Router useAuth={useAuth}>
+      <Route path="/new-site" page={NewSitePage} name="newSite" />
+      <Route path="/standard-bmp-settings" page={StandardBMPSettingsPage} name="standardBmpSettings" />
       <Set wrap={MainLayout}>
         <Route path="/" page={HomePage} name="home" />
         <Route path="/login" page={LoginPage} name="login" />

@@ -75,10 +75,14 @@ export default async () => {
     const sites: Prisma.SiteCreateInput[] = [
       {
         name: 'Site 1',
-        address: '123 Main St',
+        location: 'Location 1',
+        addressLine1: '123 Main St',
+        addressLine2: 'Suite 100',
         city: 'City 1',
         state: 'State 1',
-        zipCode: '12345',
+        postalCode: '12345',
+        country: 'Country 1',
+        npdesTrackingNo: 'NPDES123',
         siteType: {
           connect: {
             id: createdSiteTypes.find(
@@ -86,21 +90,29 @@ export default async () => {
             )?.id,
           },
         },
-        owner: { connect: { email: 'siteowner@example.com' } },
+        siteInspector: 'Inspector 1',
+        siteMap: 'site1-map.pdf',
+        ownerName: 'Owner 1',
       },
       {
         name: 'Site 2',
-        address: '456 Elm St',
+        location: 'Location 2',
+        addressLine1: '456 Elm St',
+        addressLine2: 'Apt 202',
         city: 'City 2',
         state: 'State 2',
-        zipCode: '67890',
+        postalCode: '67890',
+        country: 'Country 2',
+        npdesTrackingNo: 'NPDES456',
         siteType: {
           connect: {
             id: createdSiteTypes.find((siteType) => siteType.name === 'LARGE')
               ?.id,
           },
         },
-        owner: { connect: { email: 'siteowner@example.com' } },
+        siteInspector: 'Inspector 2',
+        siteMap: 'site2-map.jpeg',
+        ownerName: 'Owner 2',
       },
     ]
 

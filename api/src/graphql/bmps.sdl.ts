@@ -4,21 +4,22 @@ export const schema = gql`
     name: String!
     description: String!
     isStandard: Boolean!
-    site: Site!
-    siteId: Int!
+    site: Site
+    siteId: Int
     bmpData: [BmpData]!
   }
 
   type Query {
     bmps: [Bmp!]! @requireAuth
     bmp(id: Int!): Bmp @requireAuth
+    standardBmps: [Bmp!]! @requireAuth
   }
 
   input CreateBmpInput {
     name: String!
     description: String!
     isStandard: Boolean!
-    siteId: Int!
+    siteId: Int
   }
 
   input UpdateBmpInput {

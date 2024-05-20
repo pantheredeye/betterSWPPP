@@ -39,9 +39,6 @@ export const Site: SiteRelationResolvers = {
   siteType: (_obj, { root }) => {
     return db.site.findUnique({ where: { id: root?.id } }).siteType()
   },
-  owner: (_obj, { root }) => {
-    return db.site.findUnique({ where: { id: root?.id } }).owner()
-  },
   inspections: (_obj, { root }) => {
     return db.site.findUnique({ where: { id: root?.id } }).inspections()
   },
