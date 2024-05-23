@@ -36,7 +36,11 @@ const MainLayout = ({ children }: MainLayoutProps) => {
   const [sidebarOpen, setSidebarOpen] = useState(false)
 
   return (
+<<<<<<< HEAD
     <div className="bg-gradient-blue-silver flex min-h-screen">
+=======
+    <div className="flex min-h-screen bg-gradient-blue-silver">
+>>>>>>> 1719eb166435dc7d619cbdde7c50c4c82db9783a
       <Transition show={sidebarOpen} as={Fragment}>
         <Dialog
           as="div"
