@@ -231,7 +231,6 @@ focus:ring-indigo-600 sm:text-sm sm:leading-6"
                   />
                 </div>
               </div>
-              php Copy code
               <div className="col-span-full">
                 <label
                   htmlFor="npdesTrackingNo"
@@ -359,7 +358,6 @@ focus:ring-indigo-600 sm:text-sm sm:leading-6"
             Below is a list of standard BMPs for new sites.
           </p>
         </div>
-
         <div className="md:col-span-2">
           <ul className="space-y-4 bg-white p-4 shadow-sm ring-1 ring-gray-900/5 sm:rounded-xl">
             {data.standardBmps.map(
