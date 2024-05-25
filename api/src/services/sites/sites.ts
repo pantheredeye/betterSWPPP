@@ -16,11 +16,37 @@ export const site: QueryResolvers['site'] = ({ id }) => {
   })
 }
 
-export const createSite: MutationResolvers['createSite'] = ({ input }) => {
+export const createSite: MutationResolvers['createSite'] = async ({ input }) => {
+  const { siteTypeId, userId, ...rest } = input
+
+  // Check if the siteTypeId exists
+  const siteTypeExists = await db.siteType.findUnique({
+    where: { id: siteTypeId },
+  })
+  if (!siteTypeExists) {
+    throw new Error(`SiteType with ID ${siteTypeId} does not exist`)
+  }
+
+  // Check if the userId exists, if provided
+  if (userId) {
+    const userExists = await db.user.findUnique({
+      where: { id: userId },
+    })
+    if (!userExists) {
+      throw new Error(`User with ID ${userId} does not exist`)
+    }
+  }
+
   return db.site.create({
-    data: input,
+    data: {
+      ...rest,
+      siteType: { connect: { id: siteTypeId } },
+      User: userId ? { connect: { id: userId } } : undefined,
+    },
   })
 }
+
+
 
 export const updateSite: MutationResolvers['updateSite'] = ({ id, input }) => {
   return db.site.update({
@@ -45,4 +71,9 @@ export const Site: SiteRelationResolvers = {
   bmps: (_obj, { root }) => {
     return db.site.findUnique({ where: { id: root?.id } }).bmps()
   },
+  User: (_obj, { root }) => {
+    return db.site.findUnique({ where: { id: root?.id } }).User()
+  },
 }
+
+

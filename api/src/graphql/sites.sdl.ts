@@ -6,19 +6,21 @@ export const schema = gql`
     addressLine1: String!
     addressLine2: String
     city: String!
-    state: String!
-    postalCode: String!
-    country: String!
+    state: String
+    postalCode: String
+    country: String
     npdesTrackingNo: String
     siteType: SiteType!
     siteTypeId: Int!
-    siteInspector: String!
+    siteInspector: String
     siteMap: String
     ownerName: String!
     createdAt: DateTime!
     updatedAt: DateTime!
     inspections: [Inspection]!
     bmps: [Bmp]!
+    User: User
+    userId: Int
   }
 
   type Query {
@@ -32,14 +34,15 @@ export const schema = gql`
     addressLine1: String!
     addressLine2: String
     city: String!
-    state: String!
-    postalCode: String!
-    country: String!
+    state: String
+    postalCode: String
+    country: String
     npdesTrackingNo: String
     siteTypeId: Int!
-    siteInspector: String!
+    siteInspector: String
     siteMap: String
     ownerName: String!
+    userId: Int
   }
 
   input UpdateSiteInput {
@@ -56,6 +59,7 @@ export const schema = gql`
     siteInspector: String
     siteMap: String
     ownerName: String
+    userId: Int
   }
 
   type Mutation {

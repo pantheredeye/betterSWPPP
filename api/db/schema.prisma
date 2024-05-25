@@ -45,13 +45,13 @@ model Site {
   addressLine1    String
   addressLine2    String?
   city            String
-  state           String
-  postalCode      String
-  country         String
+  state           String?
+  postalCode      String?
+  country         String?
   npdesTrackingNo String?
   siteType        SiteType     @relation(fields: [siteTypeId], references: [id])
   siteTypeId      Int
-  siteInspector   String
+  siteInspector   String?
   siteMap         String?
   ownerName       String
   createdAt       DateTime     @default(now())
@@ -98,11 +98,11 @@ model BmpData {
   bmpId                  Int
   inspection             Inspection @relation(fields: [inspectionId], references: [id])
   inspectionId           Int
-  implemented            Boolean
-  maintenanceRequired    Boolean
-  repeatOccurrence       Boolean
-  correctiveActionNeeded String
-  notes                  String
+  implemented            Boolean?
+  maintenanceRequired    Boolean?
+  repeatOccurrence       Boolean?
+  correctiveActionNeeded String?
+  notes                  String?
 }
 
 model Media {
