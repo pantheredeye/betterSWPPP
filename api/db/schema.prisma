@@ -67,20 +67,6 @@ model SiteType {
   sites Site[]
 }
 
-model Inspection {
-  id          Int       @id @default(autoincrement())
-  site        Site      @relation(fields: [siteId], references: [id])
-  siteId      Int
-  inspector   User      @relation(fields: [inspectorId], references: [id])
-  inspectorId Int
-  date        DateTime
-  weather     String
-  createdAt   DateTime  @default(now())
-  updatedAt   DateTime  @updatedAt
-  bmpData     BmpData[]
-  media       Media[]
-}
-
 model Bmp {
   id          Int       @id @default(autoincrement())
   name        String
@@ -102,6 +88,20 @@ model BmpData {
   repeatOccurrence       Boolean?
   correctiveActionNeeded String?
   notes                  String?
+}
+
+model Inspection {
+  id          Int       @id @default(autoincrement())
+  site        Site      @relation(fields: [siteId], references: [id])
+  siteId      Int
+  inspector   User      @relation(fields: [inspectorId], references: [id])
+  inspectorId Int
+  date        DateTime
+  weather     String
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+  bmpData     BmpData[]
+  media       Media[]
 }
 
 model Media {

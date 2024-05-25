@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 
 import { navigate, routes } from '@redwoodjs/router'
 import { useMutation, useQuery } from '@redwoodjs/web'
@@ -23,6 +23,11 @@ const CREATE_SITE = gql`
     createSite(input: $input) {
       id
       name
+      bmps {
+        id
+        name
+        description
+      }
     }
   }
 `
@@ -43,12 +48,33 @@ const NewSitePage = () => {
   const [siteMap, setSiteMap] = useState<string>('')
   const [ownerName, setOwnerName] = useState<string>('')
 
+  const [bmps, setBmps] = useState<{ name: string, description: string, isStandard: boolean }[]>([])
+  const [newBmpName, setNewBmpName] = useState<string>('')
+  const [newBmpDescription, setNewBmpDescription] = useState<string>('')
+  const [newBmpIsStandard, setNewBmpIsStandard] = useState<boolean>(false)
+
+  useEffect(() => {
+    if (data && data.siteTypes.length > 0) {
+      setSiteTypeId(data.siteTypes[0].id)
+    }
+  }, [data])
+
+  const handleAddBmp = () => {
+    setBmps([...bmps, { name: newBmpName, description: newBmpDescription, isStandard: newBmpIsStandard }])
+    setNewBmpName('')
+    setNewBmpDescription('')
+    setNewBmpIsStandard(false)
+  }
+
+  const handleRemoveBmp = (index: number) => {
+    setBmps(bmps.filter((_, i) => i !== index))
+  }
+
   const handleCreateSite = async () => {
     await createSite({
       variables: {
         input: {
           name,
-          location,
           addressLine1,
           addressLine2,
           city,
@@ -60,6 +86,7 @@ const NewSitePage = () => {
           siteInspector,
           siteMap,
           ownerName,
+          bmps,
         },
       },
     })
@@ -207,8 +234,7 @@ const NewSitePage = () => {
                     id="country"
                     value={country}
                     onChange={(e) => setCountry(e.target.value)}
-                    className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset
-focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                    className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                   />
                 </div>
               </div>
@@ -333,27 +359,104 @@ focus:ring-indigo-600 sm:text-sm sm:leading-6"
       <div className="grid grid-cols-1 gap-x-8 gap-y-8 pt-10 md:grid-cols-3">
         <div className="px-4 sm:px-0">
           <h2 className="text-base font-semibold leading-7 text-gray-900">
-            Standard BMPs
+            BMPs
           </h2>
           <p className="mt-1 text-sm leading-6 text-gray-600">
-            Below is a list of standard BMPs for new sites.
+            Below is a list of BMPs for the new site.
           </p>
         </div>
         <div className="md:col-span-2">
           <ul className="space-y-4 bg-white p-4 shadow-sm ring-1 ring-gray-900/5 sm:rounded-xl">
-            {data.standardBmps.map(
-              (bmp: { id: number; name: string; description: string }) => (
-                <li key={bmp.id} className="border-b border-gray-200 pb-4">
+            {bmps.map((bmp, index) => (
+              <li key={index} className="border-b border-gray-200 pb-4 flex justify-between items-center">
+                <div>
                   <h3 className="text-lg font-medium leading-6 text-gray-900">
                     {bmp.name}
                   </h3>
                   <p className="mt-2 text-sm text-gray-600">
                     {bmp.description}
                   </p>
-                </li>
-              )
-            )}
+                </div>
+                <button
+                  type="button"
+                  onClick={() => handleRemoveBmp(index)}
+                  className="text-red-600 hover:text-red-900"
+                >
+                  Remove
+                </button>
+              </li>
+            ))}
           </ul>
+
+          <div className="mt-4">
+            <h3 className="text-lg font-medium leading-6 text-gray-900">
+              Add New BMP
+            </h3>
+            <div className="grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
+              <div className="col-span-full">
+                <label
+                  htmlFor="newBmpName"
+                  className="block text-sm font-medium leading-6 text-gray-900"
+                >
+                  BMP Name
+                </label>
+                <div className="mt-2">
+                  <input
+                    type="text"
+                    name="newBmpName"
+                    id="newBmpName"
+                    value={newBmpName}
+                    onChange={(e) => setNewBmpName(e.target.value)}
+                    className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                  />
+                </div>
+              </div>
+              <div className="col-span-full">
+                <label
+                  htmlFor="newBmpDescription"
+                  className="block text-sm font-medium leading-6 text-gray-900"
+                >
+                  Description
+                </label>
+                <div className="mt-2">
+                  <textarea
+                    name="newBmpDescription"
+                    id="newBmpDescription"
+                    value={newBmpDescription}
+                    onChange={(e) => setNewBmpDescription(e.target.value)}
+                    className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                  />
+                </div>
+              </div>
+              <div className="col-span-full">
+                <label
+                  htmlFor="newBmpIsStandard"
+                  className="block text-sm font-medium leading-6 text-gray-900"
+                >
+                  Is Standard
+                </label>
+                <div className="mt-2">
+                  <input
+                    type="checkbox"
+                    name="newBmpIsStandard"
+                    id="newBmpIsStandard"
+                    checked={newBmpIsStandard}
+                    onChange={(e) => setNewBmpIsStandard(e.target.checked)}
+                    className="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-600"
+                  />
+                </div>
+              </div>
+              <div className="col-span-full flex justify-end">
+                <button
+                  type="button"
+                  onClick={handleAddBmp}
+                  className="rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+                >
+                  Add BMP
+                </button>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </div>
