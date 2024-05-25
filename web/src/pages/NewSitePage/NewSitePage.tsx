@@ -114,6 +114,9 @@ const NewSitePage = () => {
             <p className="mt-1 text-sm leading-6 text-gray-600">
               Please fill out the details for the new site.
             </p>
+            <p className="mt-1 text-sm leading-6 text-red-600">
+              * = required
+            </p>
           </div>
           <div className="grid max-w-2xl grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6 md:col-span-2">
             <div className="sm:col-span-4">
@@ -121,7 +124,7 @@ const NewSitePage = () => {
                 htmlFor="name"
                 className="block text-sm font-medium leading-6 text-gray-900"
               >
-                Site Name
+                Site Name*
               </label>
               <div className="mt-2">
                 <input
@@ -130,7 +133,7 @@ const NewSitePage = () => {
                   id="name"
                   value={name}
                   onChange={(e) => setName(e.target.value)}
-                  className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                  className="required:border-red-500 block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                   required
                 />
               </div>
@@ -140,7 +143,7 @@ const NewSitePage = () => {
                 htmlFor="addressLine1"
                 className="block text-sm font-medium leading-6 text-gray-900"
               >
-                Address Line 1
+                Address Line 1*
               </label>
               <div className="mt-2">
                 <input
@@ -266,7 +269,7 @@ const NewSitePage = () => {
                 htmlFor="siteTypeId"
                 className="block text-sm font-medium leading-6 text-gray-900"
               >
-                Site Type
+                Site Type*
               </label>
               <div className="mt-2">
                 <select
@@ -324,7 +327,7 @@ const NewSitePage = () => {
                 htmlFor="ownerName"
                 className="block text-sm font-medium leading-6 text-gray-900"
               >
-                Owner Name
+                Owner Name*
               </label>
               <div className="mt-2">
                 <input
@@ -340,13 +343,13 @@ const NewSitePage = () => {
           </div>
         </div>
 
-        <div className="grid grid-cols-1 gap-x-8 gap-y-10 border-b border-gray-900/10 pb-12 md:grid-cols-3">
+        {siteTypeId !== 2 && (<div className="grid grid-cols-1 gap-x-8 gap-y-10 border-b border-gray-900/10 pb-12 md:grid-cols-3">
           <div>
             <h2 className="text-base font-semibold leading-7 text-gray-900">
               BMPs
             </h2>
             <p className="mt-1 text-sm leading-6 text-gray-600">
-              Below is a list of BMPs for the new site.
+              Add any custom BMPs for the site. Standard BMPs will show on the inspection form automatically.
             </p>
           </div>
           <div className="grid max-w-2xl grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6 md:col-span-2">
@@ -386,7 +389,7 @@ const NewSitePage = () => {
                       htmlFor="newBmpName"
                       className="block text-sm font-medium leading-6 text-gray-900"
                     >
-                      BMP Name
+                      BMP Name*
                     </label>
                     <div className="mt-2">
                       <input
@@ -404,7 +407,7 @@ const NewSitePage = () => {
                       htmlFor="newBmpDescription"
                       className="block text-sm font-medium leading-6 text-gray-900"
                     >
-                      Description
+                      Description*
                     </label>
                     <div className="mt-2">
                       <textarea
@@ -429,7 +432,7 @@ const NewSitePage = () => {
               </button>
             </div>
           </div>
-        </div>
+        </div>)}
       </div>
       <div className="mt-6 flex items-center justify-end gap-x-6 ">
         <button
