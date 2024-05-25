@@ -31,7 +31,6 @@ const NewSitePage = () => {
   const { data, loading, error } = useQuery(GET_STANDARD_BMPS_NEW_SITE)
   const [createSite] = useMutation(CREATE_SITE)
   const [name, setName] = useState<string>('')
-  const [location, setLocation] = useState<string>('')
   const [addressLine1, setAddressLine1] = useState<string>('')
   const [addressLine2, setAddressLine2] = useState<string>('')
   const [city, setCity] = useState<string>('')
@@ -39,7 +38,7 @@ const NewSitePage = () => {
   const [postalCode, setPostalCode] = useState<string>('')
   const [country, setCountry] = useState<string>('')
   const [npdesTrackingNo, setNpdesTrackingNo] = useState<string>('')
-  const [siteTypeId, setSiteTypeId] = useState<number>(0)
+  const [siteTypeId, setSiteTypeId] = useState<number>(1)
   const [siteInspector, setSiteInspector] = useState<string>('')
   const [siteMap, setSiteMap] = useState<string>('')
   const [ownerName, setOwnerName] = useState<string>('')
@@ -100,24 +99,6 @@ const NewSitePage = () => {
                     id="name"
                     value={name}
                     onChange={(e) => setName(e.target.value)}
-                    className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                  />
-                </div>
-              </div>
-              <div className="col-span-full">
-                <label
-                  htmlFor="location"
-                  className="block text-sm font-medium leading-6 text-gray-900"
-                >
-                  Location
-                </label>
-                <div className="mt-2">
-                  <input
-                    type="text"
-                    name="location"
-                    id="location"
-                    value={location}
-                    onChange={(e) => setLocation(e.target.value)}
                     className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                   />
                 </div>
