@@ -8,7 +8,6 @@ import AuthenticatedLayout from './layouts/AuthenticatedLayout/AuthenticatedLayo
 const Routes = () => {
   return (
     <Router useAuth={useAuth}>
-      <Route path="/new-inspection" page={NewInspectionPage} name="newInspection" />
       <Set wrap={MainLayout}>
         <Route path="/" page={HomePage} name="home" />
         <Route path="/login" page={LoginPage} name="login" />
@@ -17,6 +16,7 @@ const Routes = () => {
         <Route path="/reset-password" page={ResetPasswordPage} name="resetPassword" />
       </Set>
       <PrivateSet unauthenticated="login" wrap={AuthenticatedLayout}>
+        <Route path="/new-inspection" page={NewInspectionPage} name="newInspection" />
         <Route path="/new-site" page={NewSitePage} name="newSite" />
         <Route path="/standard-bmp-settings" page={StandardBMPSettingsPage} name="standardBmpSettings" />
         <Route path="/dashboard" page={DashboardPage} name="dashboard" />
