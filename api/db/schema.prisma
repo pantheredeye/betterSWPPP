@@ -43,7 +43,7 @@ model Site {
   name            String
   addressLine1    String
   addressLine2    String?
-  city            String
+  city            String?
   state           String?
   postalCode      String?
   country         String?
