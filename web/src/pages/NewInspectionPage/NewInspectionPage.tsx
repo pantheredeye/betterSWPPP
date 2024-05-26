@@ -75,7 +75,7 @@ const NewInspectionPage = () => {
           </div>
           <div className="md:col-span-2">
             <div className="grid max-w-2xl grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
-              <div className="col-span-4">
+              <div className="col-span-3">
                 <Label
                   name="siteId"
                   className="block text-sm font-medium leading-6 text-gray-900"
@@ -85,6 +85,18 @@ const NewInspectionPage = () => {
                 <div className="mt-2">
                   <SitesCell />
                   <FieldError name="siteId" className="text-red-600" />
+                </div>
+              </div>
+              <div className="col-span-3">
+                <Label
+                  className="block text-sm font-medium leading-6 text-gray-900"
+                  name="inspectorId"
+                >
+                  Inspector*
+                </Label>
+                <div className="mt-2">
+                  <UsersCell />
+                  <FieldError name="inspectorId" className="text-red-600" />
                 </div>
               </div>
               <div className="sm:col-span-2">
@@ -135,18 +147,7 @@ const NewInspectionPage = () => {
                   <FieldError name="endTime" className="text-red-600" />
                 </div>
               </div>
-              <div className="col-span-3">
-                <Label
-                  className="block text-sm font-medium leading-6 text-gray-900"
-                  name="inspectorId"
-                >
-                  Inspector*
-                </Label>
-                <div className="mt-2">
-                  <UsersCell />
-                  <FieldError name="inspectorId" className="text-red-600" />
-                </div>
-              </div>
+
               <div className="col-span-3">
                 <Label
                   name="whomToContact"
@@ -160,6 +161,35 @@ const NewInspectionPage = () => {
                     className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                   />
                 </div>
+              </div>
+
+              <div className="col-span-full">
+                <Label
+                  name="title"
+                  className="block text-sm font-medium leading-6 text-gray-900"
+                >
+                  Title*
+                </Label>
+                <TextField
+                  name="title"
+                  className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                  validation={{ required: true }}
+                />
+                <FieldError name="title" className="text-red-600" />
+              </div>
+              <div className="col-span-full">
+                <Label
+                  name="description"
+                  className="block text-sm font-medium leading-6 text-gray-900"
+                >
+                  Description*
+                </Label>
+                <TextAreaField
+                  name="description"
+                  className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                  validation={{ required: true }}
+                />
+                <FieldError name="description" className="text-red-600" />
               </div>
               <div className="col-span-3">
                 <Label
@@ -197,34 +227,6 @@ const NewInspectionPage = () => {
                   <option value="LOW">Low</option>
                 </SelectField>
                 <FieldError name="severity" className="text-red-600" />
-              </div>
-              <div className="col-span-full">
-                <Label
-                  name="title"
-                  className="block text-sm font-medium leading-6 text-gray-900"
-                >
-                  Title*
-                </Label>
-                <TextField
-                  name="title"
-                  className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                  validation={{ required: true }}
-                />
-                <FieldError name="title" className="text-red-600" />
-              </div>
-              <div className="col-span-full">
-                <Label
-                  name="description"
-                  className="block text-sm font-medium leading-6 text-gray-900"
-                >
-                  Description*
-                </Label>
-                <TextAreaField
-                  name="description"
-                  className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                  validation={{ required: true }}
-                />
-                <FieldError name="description" className="text-red-600" />
               </div>
               <div className="col-span-3">
                 <Label
@@ -301,55 +303,7 @@ const NewInspectionPage = () => {
           </div>
           <div className="md:col-span-2">
             <div className="grid max-w-2xl grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
-              <div className="col-span-full">
-                <Label
-                  name="newStormEvent"
-                  className="block text-sm font-medium leading-6 text-gray-900"
-                >
-                  New Storm Event
-                </Label>
-                <CheckboxField
-                  name="newStormEvent"
-                  className="rounded border-gray-300 text-indigo-600 shadow-sm focus:ring-indigo-500"
-                />
-              </div>
-              <div className="col-span-full">
-                <Label
-                  name="stormDateTime"
-                  className="block text-sm font-medium leading-6 text-gray-900"
-                >
-                  Storm Date-Time
-                </Label>
-                <DatetimeLocalField
-                  name="stormDateTime"
-                  className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                />
-              </div>
-              <div className="col-span-full">
-                <Label
-                  name="stormDuration"
-                  className="block text-sm font-medium leading-6 text-gray-900"
-                >
-                  Storm Duration
-                </Label>
-                <TextField
-                  name="stormDuration"
-                  className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                />
-              </div>
-              <div className="col-span-full">
-                <Label
-                  name="approximatePrecipitation"
-                  className="block text-sm font-medium leading-6 text-gray-900"
-                >
-                  Approximate Precipitation (in.)
-                </Label>
-                <TextField
-                  name="approximatePrecipitation"
-                  className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                />
-              </div>
-              <div className="col-span-full">
+            <div className="col-span-4">
                 <Label
                   name="weatherAtTime"
                   className="block text-sm font-medium leading-6 text-gray-900"
@@ -372,7 +326,7 @@ const NewInspectionPage = () => {
                 </SelectField>
                 <FieldError name="weatherAtTime" className="text-red-600" />
               </div>
-              <div className="col-span-full">
+              <div className="col-span-2">
                 <Label
                   name="temperature"
                   className="block text-sm font-medium leading-6 text-gray-900"
@@ -384,6 +338,55 @@ const NewInspectionPage = () => {
                   className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                 />
               </div>
+              <div className="col-span-2">
+                <Label
+                  name="newStormEvent"
+                  className="block text-sm font-medium leading-6 text-gray-900"
+                >
+Has there been a storm event since the last inspection?                </Label>
+                <CheckboxField
+                  name="newStormEvent"
+                  className="rounded border-gray-300 text-indigo-600 shadow-sm focus:ring-indigo-500"
+                />
+              </div>
+              <div className="col-span-2">
+                <Label
+                  name="stormDateTime"
+                  className="block text-sm font-medium leading-6 text-gray-900"
+                >
+                  Storm Date-Time
+                </Label>
+                <DatetimeLocalField
+                  name="stormDateTime"
+                  className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                />
+              </div>
+              <div className="col-span-2">
+                <Label
+                  name="stormDuration"
+                  className="block text-sm font-medium leading-6 text-gray-900"
+                >
+                  Storm Duration
+                </Label>
+                <TextField
+                  name="stormDuration"
+                  className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                />
+              </div>
+              <div className="col-span-2">
+                <Label
+                  name="approximatePrecipitation"
+                  className="block text-sm font-medium leading-6 text-gray-900"
+                >
+                  Approximate Precipitation (in.)
+                </Label>
+                <TextField
+                  name="approximatePrecipitation"
+                  className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                />
+              </div>
+
+
               <div className="col-span-3">
                 <Label
                   name="previousDischarge"
