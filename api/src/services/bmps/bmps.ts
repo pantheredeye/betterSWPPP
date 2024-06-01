@@ -22,6 +22,19 @@ export const standardBmps: QueryResolvers['standardBmps'] = () => {
   })
 }
 
+export const inspectionBmps: QueryResolvers['inspectionBmps'] = ({ isStandard, siteId }) => {
+  const where: any = {}
+  if (isStandard !== undefined) {
+    where.isStandard = isStandard
+  }
+  if (siteId !== undefined) {
+    where.siteId = siteId
+  }
+  return db.bmp.findMany({
+    where,
+  })
+}
+
 export const createBmp: MutationResolvers['createBmp'] = ({ input }) => {
   // Ensure siteId is set to null if not provided
   const data = { ...input, siteId: input.siteId || null }

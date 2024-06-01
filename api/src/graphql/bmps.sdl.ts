@@ -10,6 +10,7 @@ export const schema = gql`
   }
 
   type Query {
+    inspectionBmps(isStandard: Boolean, siteId: Int): [Bmp!]! @requireAuth
     bmps: [Bmp!]! @requireAuth
     bmp(id: Int!): Bmp @requireAuth
     standardBmps: [Bmp!]! @requireAuth

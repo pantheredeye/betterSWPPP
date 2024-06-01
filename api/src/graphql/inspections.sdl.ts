@@ -6,7 +6,29 @@ export const schema = gql`
     inspector: User!
     inspectorId: Int!
     date: DateTime!
+    startTime: DateTime!
+    endTime: DateTime!
     weather: String!
+    permitOnSite: Boolean!
+    swpppOnSite: Boolean!
+    bmpsInstalledPerSwppp: Boolean!
+    siteInspectionReports: Boolean!
+    inspectionType: String!
+    title: String!
+    description: String!
+    severity: String!
+    violationsNotes: String
+    whomToContact: String
+    newStormEvent: Boolean!
+    stormDateTime: DateTime
+    stormDuration: String
+    approximatePrecipitation: Float
+    weatherAtTime: String!
+    temperature: Float
+    previousDischarge: Boolean!
+    newDischarges: Boolean!
+    dischargeAtThisTime: Boolean!
+    currentDischarges: Boolean!
     createdAt: DateTime!
     updatedAt: DateTime!
     bmpData: [BmpData]!
@@ -22,14 +44,58 @@ export const schema = gql`
     siteId: Int!
     inspectorId: Int!
     date: DateTime!
+    startTime: DateTime!
+    endTime: DateTime!
     weather: String!
+    permitOnSite: Boolean!
+    swpppOnSite: Boolean!
+    bmpsInstalledPerSwppp: Boolean!
+    siteInspectionReports: Boolean!
+    inspectionType: String!
+    title: String!
+    description: String!
+    severity: String!
+    violationsNotes: String
+    whomToContact: String
+    newStormEvent: Boolean!
+    stormDateTime: DateTime
+    stormDuration: String
+    approximatePrecipitation: Float
+    weatherAtTime: String!
+    temperature: Float
+    previousDischarge: Boolean!
+    newDischarges: Boolean!
+    dischargeAtThisTime: Boolean!
+    currentDischarges: Boolean!
   }
 
   input UpdateInspectionInput {
     siteId: Int
     inspectorId: Int
     date: DateTime
+    startTime: DateTime
+    endTime: DateTime
     weather: String
+    permitOnSite: Boolean
+    swpppOnSite: Boolean
+    bmpsInstalledPerSwppp: Boolean
+    siteInspectionReports: Boolean
+    inspectionType: String
+    title: String
+    description: String
+    severity: String
+    violationsNotes: String
+    whomToContact: String
+    newStormEvent: Boolean
+    stormDateTime: DateTime
+    stormDuration: String
+    approximatePrecipitation: Float
+    weatherAtTime: String
+    temperature: Float
+    previousDischarge: Boolean
+    newDischarges: Boolean
+    dischargeAtThisTime: Boolean
+    currentDischarges: Boolean
   }
 
   type Mutation {

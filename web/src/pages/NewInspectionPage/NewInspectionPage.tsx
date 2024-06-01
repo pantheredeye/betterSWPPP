@@ -14,6 +14,7 @@ import {
 import { useMutation } from '@redwoodjs/web'
 import UsersCell from 'src/components/UsersCell'
 import SitesCell from 'src/components/SitesCell'
+import BmpsCell from 'src/components/BmpsCell'
 import { useState } from 'react'
 
 const CREATE_INSPECTION_MUTATION = gql`
@@ -438,6 +439,35 @@ Has there been a storm event since the last inspection?                </Label>
             </div>
           </div>
         </div>
+        <div className="grid grid-cols-1 gap-x-8 gap-y-10 border-b border-gray-900/10 pb-12 md:grid-cols-3">
+          <div>
+            <h2 className="text-base font-semibold leading-7 text-gray-900">
+              Standard BMPs
+            </h2>
+            <p className="mt-1 text-sm leading-6 text-gray-600">
+              Review and update the standard BMPs.
+            </p>
+          </div>
+          <div className="md:col-span-2">
+            <BmpsCell isStandard={true} />
+          </div>
+        </div>
+
+        {formData.siteId && (
+          <div className="grid grid-cols-1 gap-x-8 gap-y-10 border-b border-gray-900/10 pb-12 md:grid-cols-3">
+            <div>
+              <h2 className="text-base font-semibold leading-7 text-gray-900">
+                Site BMPs
+              </h2>
+              <p className="mt-1 text-sm leading-6 text-gray-600">
+                Review and update the site-specific BMPs.
+              </p>
+            </div>
+            <div className="md:col-span-2">
+              <BmpsCell isStandard={false} siteId={formData.siteId} />
+            </div>
+          </div>
+        )}
         <div className="col-span-full flex justify-end">
           <Submit
             disabled={loading}
