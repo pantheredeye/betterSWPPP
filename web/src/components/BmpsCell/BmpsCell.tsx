@@ -24,7 +24,12 @@ export const Empty = () => <div>Empty</div>
 export const Failure = ({ error }: CellFailureProps) => (
   <div style={{ color: 'red' }}>Error: {error?.message}</div>
 )
-
 export const Success = ({ inspectionBmps }: CellSuccessProps<inspectionBmpsQuery>) => {
-  return inspectionBmps.map((bmp) => <BmpItem key={bmp.id} bmp={bmp} />)
+  return (
+    <>
+      {inspectionBmps.map((bmp) => (
+        <BmpItem key={bmp.id} bmp={bmp} />
+      ))}
+    </>
+  )
 }
