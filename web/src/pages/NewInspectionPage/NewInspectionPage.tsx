@@ -21,6 +21,14 @@ const CREATE_INSPECTION_MUTATION = gql`
   mutation CreateInspectionMutation($input: CreateInspectionInput!) {
     createInspection(input: $input) {
       id
+      bmpData {
+        id
+        implemented
+        maintenanceRequired
+        repeatOccurrence
+        correctiveActionNeeded
+        notes
+      }
     }
   }
 `
@@ -55,25 +63,84 @@ const NewInspectionPage = () => {
     newDischarges: false,
     dischargeAtThisTime: false,
     currentDischarges: false,
+    bmpData: [],
   })
 
-  const handleSubmit = (data) => {
-    // Parse IDs to integers
-    data.siteId = parseInt(data.siteId, 10)
-    data.inspectorId = parseInt(data.inspectorId, 10)
-
-    // Combine date and time for startTime and endTime to form valid DateTime strings
-    data.startTime = `${data.date}T${data.startTime}:00Z`
-    data.endTime = `${data.date}T${data.endTime}:00Z`
-
-    // Ensure Float fields are handled correctly
-    data.temperature = data.temperature ? parseFloat(data.temperature) : null
-    data.approximatePrecipitation = data.approximatePrecipitation
-      ? parseFloat(data.approximatePrecipitation)
-      : null
-
-    createInspection({ variables: { input: data } })
+  const handleBmpsChange = (updatedBmpData) => {
+    setFormData((prevData) => ({
+      ...prevData,
+      bmpData: updatedBmpData,
+    }))
   }
+
+  const handleSubmit = (data) => {
+    try {
+      console.log('Initial form data:', data);
+
+      // Parse IDs to integers
+      data.siteId = parseInt(data.siteId, 10);
+      data.inspectorId = parseInt(data.inspectorId, 10);
+
+      // Combine date with startTime and endTime to form valid DateTime strings
+      const baseDate = new Date(data.date);
+      const [startHours, startMinutes] = data.startTime.split(':');
+      const [endHours, endMinutes] = data.endTime.split(':');
+
+      const startTime = new Date(baseDate);
+      startTime.setHours(startHours, startMinutes);
+
+      const endTime = new Date(baseDate);
+      endTime.setHours(endHours, endMinutes);
+
+      if (isNaN(startTime.getTime()) || isNaN(endTime.getTime())) {
+        throw new Error('Invalid date format for startTime or endTime');
+      }
+
+      // Convert to ISO string
+      data.startTime = startTime.toISOString();
+      data.endTime = endTime.toISOString();
+
+      console.log('Parsed date and time:', data.startTime, data.endTime);
+
+      // Collect BMP data from formData
+      const bmpData = formData.bmpData.map(bmp => ({
+        name: bmp.name,
+        description: bmp.description,
+        implemented: bmp.implemented.includes('on'),
+        maintenanceRequired: bmp.maintenanceRequired.includes('on'),
+        repeatOccurrence: bmp.repeatOccurrence.includes('on'),
+        correctiveActionNeeded: bmp.correctiveActionNeeded,
+        notes: bmp.notes,
+        updated: true,
+      })).filter(bmp => bmp.updated);
+
+      console.log('BMP Data to be submitted:', bmpData);
+
+      // Ensure Float fields are handled correctly
+      data.temperature = data.temperature ? parseFloat(data.temperature) : null;
+      data.approximatePrecipitation = data.approximatePrecipitation
+        ? parseFloat(data.approximatePrecipitation)
+        : null;
+
+      // Create inspection with nested BMP data
+      createInspection({
+        variables: {
+          input: {
+            ...data,
+            bmpData,  // Add the nested bmpData array
+          },
+        },
+      });
+
+      console.log('Submitted data:', { ...data, bmpData });
+
+    } catch (error) {
+      console.error('Error in handleSubmit:', error.message);
+      alert('There was an error processing the form. Please check your input and try again.');
+    }
+  };
+
+
 
   return (
     <Form onSubmit={handleSubmit}>
@@ -463,7 +530,7 @@ const NewInspectionPage = () => {
             </p>
           </div>
           <div className="md:col-span-2">
-            <BmpsCell isStandard={true} />
+            <BmpsCell isStandard={true} onBmpsChange={handleBmpsChange} />
           </div>
         </div>
 
@@ -481,6 +548,7 @@ const NewInspectionPage = () => {
               <BmpsCell
                 isStandard={false}
                 siteId={parseInt(formData.siteId, 10)}
+                onBmpsChange={handleBmpsChange}
               />
             </div>
           </div>

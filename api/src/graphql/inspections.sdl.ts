@@ -41,33 +41,35 @@ export const schema = gql`
   }
 
   input CreateInspectionInput {
-    siteId: Int!
-    inspectorId: Int!
-    date: DateTime!
-    startTime: DateTime!
-    endTime: DateTime!
-    weather: String!
-    permitOnSite: Boolean!
-    swpppOnSite: Boolean!
-    bmpsInstalledPerSwppp: Boolean!
-    siteInspectionReports: Boolean!
-    inspectionType: String!
-    title: String!
-    description: String!
-    severity: String!
-    violationsNotes: String
-    whomToContact: String
-    newStormEvent: Boolean!
-    stormDateTime: DateTime
-    stormDuration: String
-    approximatePrecipitation: Float
-    weatherAtTime: String!
-    temperature: Float
-    previousDischarge: Boolean!
-    newDischarges: Boolean!
-    dischargeAtThisTime: Boolean!
-    currentDischarges: Boolean!
-  }
+  siteId: Int!
+  inspectorId: Int!
+  date: DateTime!
+  startTime: DateTime!
+  endTime: DateTime!
+  weather: String!
+  permitOnSite: Boolean!
+  swpppOnSite: Boolean!
+  bmpsInstalledPerSwppp: Boolean!
+  siteInspectionReports: Boolean!
+  inspectionType: String!
+  title: String!
+  description: String!
+  severity: String!
+  violationsNotes: String
+  whomToContact: String
+  newStormEvent: Boolean!
+  stormDateTime: DateTime
+  stormDuration: String
+  approximatePrecipitation: Float
+  weatherAtTime: String!
+  temperature: Float
+  previousDischarge: Boolean!
+  newDischarges: Boolean!
+  dischargeAtThisTime: Boolean!
+  currentDischarges: Boolean!
+  bmpData: [CreateBmpDataInput!]  # Include BMP data in the input
+}
+
 
   input UpdateInspectionInput {
     siteId: Int
@@ -96,6 +98,8 @@ export const schema = gql`
     newDischarges: Boolean
     dischargeAtThisTime: Boolean
     currentDischarges: Boolean
+    bmpData: [CreateBmpDataInput!]  # Include BMP data in the input
+
   }
 
   type Mutation {

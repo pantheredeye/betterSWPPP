@@ -16,22 +16,42 @@ export const inspection: QueryResolvers['inspection'] = ({ id }) => {
   })
 }
 
-export const createInspection: MutationResolvers['createInspection'] = ({
+export const createInspection: MutationResolvers['createInspection'] = async ({
   input,
 }) => {
-  return db.inspection.create({
-    data: input,
+  const { bmpData, ...inspectionData } = input
+
+  const inspection = await db.inspection.create({
+    data: {
+      ...inspectionData,
+      bmpData: {
+        create: bmpData,
+      },
+    },
   })
+
+  return inspection
 }
 
-export const updateInspection: MutationResolvers['updateInspection'] = ({
+
+export const updateInspection: MutationResolvers['updateInspection'] = async ({
   id,
   input,
 }) => {
-  return db.inspection.update({
-    data: input,
+  const { bmpData, ...inspectionData } = input
+
+  const updatedInspection = await db.inspection.update({
     where: { id },
+    data: {
+      ...inspectionData,
+      bmpData: {
+        deleteMany: {},  // Remove existing BMP data+
+        create: bmpData, // Add new BMP data
+      },
+    },
   })
+
+  return updatedInspection
 }
 
 export const deleteInspection: MutationResolvers['deleteInspection'] = ({
