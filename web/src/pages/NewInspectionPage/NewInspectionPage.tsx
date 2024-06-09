@@ -1,3 +1,5 @@
+import { useState } from 'react'
+
 import {
   Form,
   FieldError,
@@ -12,10 +14,10 @@ import {
   DatetimeLocalField,
 } from '@redwoodjs/forms'
 import { useMutation } from '@redwoodjs/web'
-import UsersCell from 'src/components/UsersCell'
-import SitesCell from 'src/components/SitesCell'
+
 import BmpsCell from 'src/components/BmpsCell'
-import { useState } from 'react'
+import SitesCell from 'src/components/SitesCell'
+import UsersCell from 'src/components/UsersCell'
 
 const CREATE_INSPECTION_MUTATION = gql`
   mutation CreateInspectionMutation($input: CreateInspectionInput!) {
@@ -75,72 +77,73 @@ const NewInspectionPage = () => {
 
   const handleSubmit = (data) => {
     try {
-      console.log('Initial form data:', data);
+      console.log('Initial form data:', data)
 
       // Parse IDs to integers
-      data.siteId = parseInt(data.siteId, 10);
-      data.inspectorId = parseInt(data.inspectorId, 10);
+      data.siteId = parseInt(data.siteId, 10)
+      data.inspectorId = parseInt(data.inspectorId, 10)
 
       // Combine date with startTime and endTime to form valid DateTime strings
-      const baseDate = new Date(data.date);
-      const [startHours, startMinutes] = data.startTime.split(':');
-      const [endHours, endMinutes] = data.endTime.split(':');
+      const baseDate = new Date(data.date)
+      const [startHours, startMinutes] = data.startTime.split(':')
+      const [endHours, endMinutes] = data.endTime.split(':')
 
-      const startTime = new Date(baseDate);
-      startTime.setHours(startHours, startMinutes);
+      const startTime = new Date(baseDate)
+      startTime.setHours(startHours, startMinutes)
 
-      const endTime = new Date(baseDate);
-      endTime.setHours(endHours, endMinutes);
+      const endTime = new Date(baseDate)
+      endTime.setHours(endHours, endMinutes)
 
       if (isNaN(startTime.getTime()) || isNaN(endTime.getTime())) {
-        throw new Error('Invalid date format for startTime or endTime');
+        throw new Error('Invalid date format for startTime or endTime')
       }
 
       // Convert to ISO string
-      data.startTime = startTime.toISOString();
-      data.endTime = endTime.toISOString();
+      data.startTime = startTime.toISOString()
+      data.endTime = endTime.toISOString()
 
-      console.log('Parsed date and time:', data.startTime, data.endTime);
+      console.log('Parsed date and time:', data.startTime, data.endTime)
 
       // Collect BMP data from formData
-      const bmpData = formData.bmpData.map(bmp => ({
-        name: bmp.name,
-        description: bmp.description,
-        implemented: bmp.implemented.includes('on'),
-        maintenanceRequired: bmp.maintenanceRequired.includes('on'),
-        repeatOccurrence: bmp.repeatOccurrence.includes('on'),
-        correctiveActionNeeded: bmp.correctiveActionNeeded,
-        notes: bmp.notes,
-        updated: true,
-      })).filter(bmp => bmp.updated);
+      const bmpData = formData.bmpData
+        .map((bmp) => ({
+          name: bmp.name,
+          description: bmp.description,
+          implemented: bmp.implemented.includes('on'),
+          maintenanceRequired: bmp.maintenanceRequired.includes('on'),
+          repeatOccurrence: bmp.repeatOccurrence.includes('on'),
+          correctiveActionNeeded: bmp.correctiveActionNeeded,
+          notes: bmp.notes,
+          updated: true,
+        }))
+        .filter((bmp) => bmp.updated)
 
-      console.log('BMP Data to be submitted:', bmpData);
+      console.log('BMP Data to be submitted:', bmpData)
 
       // Ensure Float fields are handled correctly
-      data.temperature = data.temperature ? parseFloat(data.temperature) : null;
+      data.temperature = data.temperature ? parseFloat(data.temperature) : null
       data.approximatePrecipitation = data.approximatePrecipitation
         ? parseFloat(data.approximatePrecipitation)
-        : null;
+        : null
 
       // Create inspection with nested BMP data
       createInspection({
         variables: {
           input: {
             ...data,
-            bmpData,  // Add the nested bmpData array
+            bmpData, // Add the nested bmpData array
           },
         },
-      });
+      })
 
-      console.log('Submitted data:', { ...data, bmpData });
-
+      console.log('Submitted data:', { ...data, bmpData })
     } catch (error) {
-      console.error('Error in handleSubmit:', error.message);
-      alert('There was an error processing the form. Please check your input and try again.');
+      console.error('Error in handleSubmit:', error.message)
+      alert(
+        'There was an error processing the form. Please check your input and try again.'
+      )
     }
-  };
-
-
+  }
 
   return (
     <Form onSubmit={handleSubmit}>
@@ -351,7 +354,7 @@ const NewInspectionPage = () => {
                   name="siteInspectionReports"
                   className="block text-sm font-medium leading-6 text-gray-900"
                 >
-                  Are 'Site Inspection Reports' on site?
+                  Are &apos;Site Inspection Reports&apos; on site?
                 </Label>
                 <CheckboxField
                   name="siteInspectionReports"

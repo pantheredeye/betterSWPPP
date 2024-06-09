@@ -1,4 +1,5 @@
 import { useRef, useEffect } from 'react'
+
 import {
   Form,
   Label,
@@ -10,6 +11,7 @@ import {
 import { Link, navigate, routes } from '@redwoodjs/router'
 import { Metadata } from '@redwoodjs/web'
 import { toast, Toaster } from '@redwoodjs/web/toast'
+
 import { useAuth } from 'src/auth'
 import Button from 'src/components/Button/Button'
 
@@ -91,7 +93,10 @@ const LoginPage = () => {
                     }}
                   />
                 </div>
-                <FieldError name="email" className="mt-2 text-sm text-red-600" />
+                <FieldError
+                  name="email"
+                  className="mt-2 text-sm text-red-600"
+                />
               </div>
               <div>
                 <Label
@@ -116,7 +121,10 @@ const LoginPage = () => {
                     }}
                   />
                 </div>
-                <FieldError name="password" className="mt-2 text-sm text-red-600" />
+                <FieldError
+                  name="password"
+                  className="mt-2 text-sm text-red-600"
+                />
               </div>
               <div className="flex items-center justify-between">
                 <div className="flex items-center">
@@ -126,25 +134,37 @@ const LoginPage = () => {
                     type="checkbox"
                     className="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-600"
                   />
-                  <label htmlFor="remember-me" className="ml-3 block text-sm leading-6 text-gray-900">
+                  <label
+                    htmlFor="remember-me"
+                    className="ml-3 block text-sm leading-6 text-gray-900"
+                  >
                     Remember me
                   </label>
                 </div>
                 <div className="text-sm leading-6">
-                  <Link to={routes.forgotPassword()} className="font-semibold text-indigo-600 hover:text-indigo-500">
+                  <Link
+                    to={routes.forgotPassword()}
+                    className="font-semibold text-indigo-600 hover:text-indigo-500"
+                  >
                     Forgot password?
                   </Link>
                 </div>
               </div>
               <div>
-                <Button type="submit" className="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">
+                <Button
+                  type="submit"
+                  className="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+                >
                   Sign in
                 </Button>
               </div>
             </Form>
             <p className="mt-10 text-center text-sm text-gray-500">
-              Don't have an account?{' '}
-              <Link to={routes.signup()} className="font-semibold leading-6 text-indigo-600 hover:text-indigo-500">
+              Don&apos;t have an account?{' '}
+              <Link
+                to={routes.signup()}
+                className="font-semibold leading-6 text-indigo-600 hover:text-indigo-500"
+              >
                 Sign up
               </Link>
             </p>

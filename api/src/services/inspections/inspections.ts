@@ -33,7 +33,6 @@ export const createInspection: MutationResolvers['createInspection'] = async ({
   return inspection
 }
 
-
 export const updateInspection: MutationResolvers['updateInspection'] = async ({
   id,
   input,
@@ -45,7 +44,7 @@ export const updateInspection: MutationResolvers['updateInspection'] = async ({
     data: {
       ...inspectionData,
       bmpData: {
-        deleteMany: {},  // Remove existing BMP data+
+        deleteMany: {}, // Remove existing BMP data+
         create: bmpData, // Add new BMP data
       },
     },
