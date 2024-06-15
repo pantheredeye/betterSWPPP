@@ -8,7 +8,6 @@ export const schema = gql`
     date: DateTime!
     startTime: DateTime!
     endTime: DateTime!
-    weather: String!
     permitOnSite: Boolean!
     swpppOnSite: Boolean!
     bmpsInstalledPerSwppp: Boolean!
@@ -46,7 +45,6 @@ export const schema = gql`
   date: DateTime!
   startTime: DateTime!
   endTime: DateTime!
-  weather: String!
   permitOnSite: Boolean!
   swpppOnSite: Boolean!
   bmpsInstalledPerSwppp: Boolean!
@@ -77,7 +75,6 @@ export const schema = gql`
     date: DateTime
     startTime: DateTime
     endTime: DateTime
-    weather: String
     permitOnSite: Boolean
     swpppOnSite: Boolean
     bmpsInstalledPerSwppp: Boolean
