@@ -22,7 +22,10 @@ export const standardBmps: QueryResolvers['standardBmps'] = () => {
   })
 }
 
-export const inspectionBmps: QueryResolvers['inspectionBmps'] = ({ isStandard, siteId }) => {
+export const inspectionBmps: QueryResolvers['inspectionBmps'] = ({
+  isStandard,
+  siteId,
+}) => {
   const where: any = {}
   if (isStandard !== undefined) {
     where.isStandard = isStandard

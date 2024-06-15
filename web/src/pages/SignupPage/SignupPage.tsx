@@ -1,4 +1,5 @@
 import { useRef, useEffect } from 'react'
+
 import {
   Form,
   Label,
@@ -10,6 +11,7 @@ import {
 import { Link, navigate, routes } from '@redwoodjs/router'
 import { Metadata } from '@redwoodjs/web'
 import { toast, Toaster } from '@redwoodjs/web/toast'
+
 import { useAuth } from 'src/auth'
 import Button from 'src/components/Button/Button'
 
@@ -90,7 +92,10 @@ const SignupPage = () => {
                     }}
                   />
                 </div>
-                <FieldError name="email" className="mt-2 text-sm text-red-600" />
+                <FieldError
+                  name="email"
+                  className="mt-2 text-sm text-red-600"
+                />
               </div>
               <div>
                 <Label
@@ -115,17 +120,26 @@ const SignupPage = () => {
                     }}
                   />
                 </div>
-                <FieldError name="password" className="mt-2 text-sm text-red-600" />
+                <FieldError
+                  name="password"
+                  className="mt-2 text-sm text-red-600"
+                />
               </div>
               <div>
-                <Button type="submit" className="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">
+                <Button
+                  type="submit"
+                  className="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+                >
                   Sign up
                 </Button>
               </div>
             </Form>
             <p className="mt-10 text-center text-sm text-gray-500">
               Already have an account?{' '}
-              <Link to={routes.login()} className="font-semibold leading-6 text-indigo-600 hover:text-indigo-500">
+              <Link
+                to={routes.login()}
+                className="font-semibold leading-6 text-indigo-600 hover:text-indigo-500"
+              >
                 Log in
               </Link>
             </p>

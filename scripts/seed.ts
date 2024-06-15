@@ -19,22 +19,26 @@ export default async () => {
     const standardBMPs: Prisma.BmpCreateInput[] = [
       {
         name: 'Slope Stability',
-        description: 'Are all slopes and disturbed areas not actively being worked properly stabilized?',
+        description:
+          'Are all slopes and disturbed areas not actively being worked properly stabilized?',
         isStandard: true,
       },
       {
         name: 'Natural Resource Protection',
-        description: 'Are natural resource areas (streams, wetlands, mature trees, etc.) protected with barriers or similar BMPs?',
+        description:
+          'Are natural resource areas (streams, wetlands, mature trees, etc.) protected with barriers or similar BMPs?',
         isStandard: true,
       },
       {
         name: 'Perimeter Controls',
-        description: 'Are perimeter controls and sediment barriers adequately installed (keyed into substrate) and maintained?',
+        description:
+          'Are perimeter controls and sediment barriers adequately installed (keyed into substrate) and maintained?',
         isStandard: true,
       },
       {
         name: 'Discharge Points',
-        description: 'Are discharge points and receiving waters free of any sediment deposits?',
+        description:
+          'Are discharge points and receiving waters free of any sediment deposits?',
         isStandard: true,
       },
       {
@@ -44,32 +48,38 @@ export default async () => {
       },
       {
         name: 'Construction Exit',
-        description: 'Is the construction exit preventing sediment from being tracked into the street?',
+        description:
+          'Is the construction exit preventing sediment from being tracked into the street?',
         isStandard: true,
       },
       {
         name: 'Trash and Litter',
-        description: 'Is trash/litter from work areas collected and placed into covered dumpsters?',
+        description:
+          'Is trash/litter from work areas collected and placed into covered dumpsters?',
         isStandard: true,
       },
       {
         name: 'Washout Facilities',
-        description: 'Are washout facilities (e.g., paint, stucco, concrete) available, clearly marked, and maintained?',
+        description:
+          'Are washout facilities (e.g., paint, stucco, concrete) available, clearly marked, and maintained?',
         isStandard: true,
       },
       {
         name: 'Vehicle and Equipment Areas',
-        description: 'Are vehicle and equipment fueling, cleaning, and maintenance areas free of spills, leaks, or any other deleterious material?',
+        description:
+          'Are vehicle and equipment fueling, cleaning, and maintenance areas free of spills, leaks, or any other deleterious material?',
         isStandard: true,
       },
       {
         name: 'Material Storage',
-        description: 'Are materials that are potential stormwater contaminants stored inside or under cover?',
+        description:
+          'Are materials that are potential stormwater contaminants stored inside or under cover?',
         isStandard: true,
       },
       {
         name: 'Non-Stormwater Discharges',
-        description: 'Are non-stormwater discharges (e.g., wash water, dewatering) properly controlled?',
+        description:
+          'Are non-stormwater discharges (e.g., wash water, dewatering) properly controlled?',
         isStandard: true,
       },
     ]

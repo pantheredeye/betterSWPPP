@@ -4,11 +4,16 @@ interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   className?: string
 }
 
-const Button: FC<ButtonProps> = ({ children, type = 'button', className = '', ...props }) => {
+const Button: FC<ButtonProps> = ({
+  children,
+  type = 'button',
+  className = '',
+  ...props
+}) => {
   return (
     <button
       type={type}
-      className={`bg-blue-600 text-white py-2 px-4 rounded-md hover:bg-blue-700 ${className}`}
+      className={`rounded-md bg-blue-600 px-4 py-2 text-white hover:bg-blue-700 ${className}`}
       {...props}
     >
       {children}

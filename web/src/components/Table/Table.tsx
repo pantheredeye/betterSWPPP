@@ -8,7 +8,7 @@ interface TableProps {
 
 const Table: FC<TableProps> = ({ headers, children }) => {
   return (
-    <div className="shadow overflow-hidden border-b border-gray-200 sm:rounded-lg">
+    <div className="overflow-hidden border-b border-gray-200 shadow sm:rounded-lg">
       <table className="min-w-full bg-white">
         <thead className="bg-gray-50">
           <tr>

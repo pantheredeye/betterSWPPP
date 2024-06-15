@@ -1,8 +1,10 @@
 import { useEffect, useRef } from 'react'
+
 import { Form, Label, TextField, Submit, FieldError } from '@redwoodjs/forms'
 import { navigate, routes } from '@redwoodjs/router'
 import { Metadata } from '@redwoodjs/web'
 import { toast, Toaster } from '@redwoodjs/web/toast'
+
 import { useAuth } from 'src/auth'
 
 const ForgotPasswordPage = () => {
@@ -25,7 +27,9 @@ const ForgotPasswordPage = () => {
     if (response.error) {
       toast.error(response.error)
     } else {
-      toast.success('A link to reset your password was sent to ' + response.email)
+      toast.success(
+        'A link to reset your password was sent to ' + response.email
+      )
       navigate(routes.login())
     }
   }
@@ -45,7 +49,8 @@ const ForgotPasswordPage = () => {
             Forgot your password?
           </h2>
           <p className="mt-2 text-center text-sm text-gray-600">
-            Enter your email address below and we'll send you a link to reset your password.
+            Enter your email address below and we&apos;ll send you a link to
+            reset your password.
           </p>
         </div>
         <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-[480px]">
@@ -76,7 +81,10 @@ const ForgotPasswordPage = () => {
                     }}
                   />
                 </div>
-                <FieldError name="email" className="mt-2 text-sm text-red-600" />
+                <FieldError
+                  name="email"
+                  className="mt-2 text-sm text-red-600"
+                />
               </div>
               <div>
                 <Submit className="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">
