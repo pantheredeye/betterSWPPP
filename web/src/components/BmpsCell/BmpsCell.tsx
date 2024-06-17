@@ -2,7 +2,6 @@ import type {
   inspectionBmpsQuery,
   inspectionBmpsQueryVariables,
 } from 'types/graphql'
-import { useState } from 'react'
 import type {
   CellSuccessProps,
   CellFailureProps,
@@ -10,7 +9,7 @@ import type {
 } from '@redwoodjs/web'
 import BmpItem from '../BmpItem/BmpItem'
 import useBmpStore from 'src/stores/bmpStore'
-import AvailableBmps from '../AvailableBMPs/AvailableBMPs'
+import AvailableBmps from '../AvailableBmps/AvailableBmps'
 
 export const QUERY: TypedDocumentNode<
   inspectionBmpsQuery,
@@ -50,6 +49,7 @@ export const Success = ({
       correctiveActionNeeded: '',
       notes: '',
     })
+    console.log(`Added Fields for BMP ${bmp.id}:`, bmp) // Log added bmp
   }
 
   return (
@@ -69,5 +69,3 @@ export const Success = ({
     </>
   )
 }
-
-export default Success

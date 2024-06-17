@@ -12,15 +12,15 @@
 
 import type { Meta, StoryObj } from '@storybook/react'
 
-import AvailableBmPs from './AvailableBmPs'
+import AvailableBmps from './AvailableBmps'
 
-const meta: Meta<typeof AvailableBmPs> = {
-  component: AvailableBmPs,
+const meta: Meta<typeof AvailableBmps> = {
+  component: AvailableBmps,
   tags: ['autodocs'],
 }
 
 export default meta
 
-type Story = StoryObj<typeof AvailableBmPs>
+type Story = StoryObj<typeof AvailableBmps>
 
 export const Primary: Story = {}

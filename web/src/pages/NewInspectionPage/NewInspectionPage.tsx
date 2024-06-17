@@ -533,7 +533,7 @@ const NewInspectionPage = () => {
             </p>
           </div>
           <div className="md:col-span-2">
-            <BmpsCell isStandard={true} onBmpsChange={handleBmpsChange} />
+            <BmpsCell isStandard={true} />
           </div>
         </div>
 
@@ -551,7 +551,6 @@ const NewInspectionPage = () => {
               <BmpsCell
                 isStandard={false}
                 siteId={parseInt(formData.siteId, 10)}
-                onBmpsChange={handleBmpsChange}
               />
             </div>
           </div>

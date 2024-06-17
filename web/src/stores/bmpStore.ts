@@ -27,11 +27,14 @@ const useBmpStore = create<BmpState>((set, get) => ({
     }
     return state;
   }),
-  updateBmp: (bmpId, updatedData) => set((state) => ({
-    bmps: state.bmps.map((bmp) =>
-      bmp.id === bmpId ? { ...bmp, ...updatedData } : bmp
-    ),
-  })),
+  updateBmp: (bmpId, updatedData) => set((state) => {
+    console.log(`Updating BMP in store: ${bmpId}`, updatedData)
+    return {
+      bmps: state.bmps.map((bmp) =>
+        bmp.id === bmpId ? { ...bmp, ...updatedData } : bmp
+      ),
+    }
+  }),
   submitBmps: () => {
     const { bmps } = get();
     console.log('Submitting BMPs:', bmps);

@@ -1,14 +1,14 @@
 import { render } from '@redwoodjs/testing/web'
 
-import AvailableBmPs from './AvailableBmPs'
+import AvailableBmps from './AvailableBmps'
 
 //   Improve this test with help from the Redwood Testing Doc:
 //    https://redwoodjs.com/docs/testing#testing-components
 
-describe('AvailableBmPs', () => {
+describe('AvailableBmps', () => {
   it('renders successfully', () => {
     expect(() => {
-      render(<AvailableBmPs />)
+      render(<AvailableBmps />)
     }).not.toThrow()
   })
 })

@@ -30,8 +30,9 @@ const BmpItem = ({ bmp }: BmpItemProps) => {
     const { name, value, type, checked } = e.target
     const updatedData = {
       ...bmpData,
-      [name]: type === 'checkbox' ? checked : value,
+      [name.replace(`-${bmp.id}`, '')]: type === 'checkbox' ? checked : value,
     }
+    console.log(`Updating BMP ${bmp.id}:`, updatedData)
     setBmpData(updatedData)
     updateBmp(bmp.id, updatedData)
   }
@@ -52,28 +53,23 @@ const BmpItem = ({ bmp }: BmpItemProps) => {
           <Label name={`implemented-${bmp.id}`} className="block text-sm font-medium leading-6 text-gray-900">
             Implemented
           </Label>
-          <CheckboxField name="implemented" checked={bmpData.implemented} onChange={handleChange} />
+          <CheckboxField name={`implemented-${bmp.id}`} checked={bmpData.implemented} onChange={handleChange} />
           <Label name={`maintenanceRequired-${bmp.id}`} className="block text-sm font-medium leading-6 text-gray-900">
             Maintenance Required
           </Label>
-          <CheckboxField name="maintenanceRequired" checked={bmpData.maintenanceRequired} onChange={handleChange} />
+          <CheckboxField name={`maintenanceRequired-${bmp.id}`} checked={bmpData.maintenanceRequired} onChange={handleChange} />
           <Label name={`repeatOccurrence-${bmp.id}`} className="block text-sm font-medium leading-6 text-gray-900">
             Repeat Occurrence
           </Label>
-          <CheckboxField name="repeatOccurrence" checked={bmpData.repeatOccurrence} onChange={handleChange} />
+          <CheckboxField name={`repeatOccurrence-${bmp.id}`} checked={bmpData.repeatOccurrence} onChange={handleChange} />
           <Label name={`correctiveActionNeeded-${bmp.id}`} className="block text-sm font-medium leading-6 text-gray-900">
             Corrective Action Needed
           </Label>
-          <TextField name="correctiveActionNeeded" value={bmpData.correctiveActionNeeded} onChange={handleChange} className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300" />
+          <TextField name={`correctiveActionNeeded-${bmp.id}`} value={bmpData.correctiveActionNeeded} onChange={handleChange} className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300" />
           <Label name={`notes-${bmp.id}`} className="block text-sm font-medium leading-6 text-gray-900">
             Notes
           </Label>
-          <TextAreaField
-            name="notes"
-            value={bmpData.notes}
-            onChange={handleChange}
-            className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300"
-          />
+          <TextAreaField name={`notes-${bmp.id}`} value={bmpData.notes} onChange={handleChange} className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300" />
         </div>
       )}
     </div>
