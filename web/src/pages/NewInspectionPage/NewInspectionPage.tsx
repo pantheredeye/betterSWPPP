@@ -18,6 +18,7 @@ import { useMutation } from '@redwoodjs/web'
 import BmpsCell from 'src/components/BmpsCell'
 import SitesCell from 'src/components/SitesCell'
 import UsersCell from 'src/components/UsersCell'
+import useBmpStore from 'src/stores/bmpStore'
 
 const CREATE_INSPECTION_MUTATION = gql`
   mutation CreateInspectionMutation($input: CreateInspectionInput!) {
@@ -36,6 +37,8 @@ const CREATE_INSPECTION_MUTATION = gql`
 `
 
 const NewInspectionPage = () => {
+  const getFilteredResponses = useBmpStore((state) => state.getFilteredResponses)
+
   const [createInspection, { loading, error }] = useMutation(
     CREATE_INSPECTION_MUTATION
   )
@@ -74,76 +77,48 @@ const NewInspectionPage = () => {
       bmpData: updatedBmpData,
     }))
   }
-
-  const handleSubmit = (data) => {
+  const handleSubmit = async (data) => {
     try {
-      console.log('Initial form data:', data)
+      // Parse and validate form data
+      data.siteId = parseInt(data.siteId, 10);
+      data.inspectorId = parseInt(data.inspectorId, 10);
 
-      // Parse IDs to integers
-      data.siteId = parseInt(data.siteId, 10)
-      data.inspectorId = parseInt(data.inspectorId, 10)
+      // Combine date with startTime and endTime
+      const baseDate = new Date(data.date);
+      const [startHours, startMinutes] = data.startTime.split(':');
+      const [endHours, endMinutes] = data.endTime.split(':');
 
-      // Combine date with startTime and endTime to form valid DateTime strings
-      const baseDate = new Date(data.date)
-      const [startHours, startMinutes] = data.startTime.split(':')
-      const [endHours, endMinutes] = data.endTime.split(':')
+      const startTime = new Date(baseDate);
+      startTime.setHours(startHours, startMinutes);
 
-      const startTime = new Date(baseDate)
-      startTime.setHours(startHours, startMinutes)
+      const endTime = new Date(baseDate);
+      endTime.setHours(endHours, endMinutes);
 
-      const endTime = new Date(baseDate)
-      endTime.setHours(endHours, endMinutes)
+      data.startTime = startTime.toISOString();
+      data.endTime = endTime.toISOString();
 
-      if (isNaN(startTime.getTime()) || isNaN(endTime.getTime())) {
-        throw new Error('Invalid date format for startTime or endTime')
-      }
+      // Fetch BMP data from the store
+      const bmpData = getFilteredResponses();
 
-      // Convert to ISO string
-      data.startTime = startTime.toISOString()
-      data.endTime = endTime.toISOString()
+      // Update formData with BMP data
+      const completeFormData = {
+        ...data,
+        bmpData,
+      };
 
-      console.log('Parsed date and time:', data.startTime, data.endTime)
-
-      // Collect BMP data from formData
-      const bmpData = formData.bmpData
-        .map((bmp) => ({
-          name: bmp.name,
-          description: bmp.description,
-          implemented: bmp.implemented.includes('on'),
-          maintenanceRequired: bmp.maintenanceRequired.includes('on'),
-          repeatOccurrence: bmp.repeatOccurrence.includes('on'),
-          correctiveActionNeeded: bmp.correctiveActionNeeded,
-          notes: bmp.notes,
-          updated: true,
-        }))
-        .filter((bmp) => bmp.updated)
-
-      console.log('BMP Data to be submitted:', bmpData)
-
-      // Ensure Float fields are handled correctly
-      data.temperature = data.temperature ? parseFloat(data.temperature) : null
-      data.approximatePrecipitation = data.approximatePrecipitation
-        ? parseFloat(data.approximatePrecipitation)
-        : null
-
-      // Create inspection with nested BMP data
-      createInspection({
+      // Submit the complete formData
+      await createInspection({
         variables: {
-          input: {
-            ...data,
-            bmpData, // Add the nested bmpData array
-          },
+          input: completeFormData,
         },
-      })
+      });
 
-      console.log('Submitted data:', { ...data, bmpData })
+      console.log('Submitted data:', completeFormData);
     } catch (error) {
-      console.error('Error in handleSubmit:', error.message)
-      alert(
-        'There was an error processing the form. Please check your input and try again.'
-      )
+      console.error('Error in handleSubmit:', error.message);
+      alert('There was an error processing the form. Please check your input and try again.');
     }
-  }
+  };
 
   return (
     <Form onSubmit={handleSubmit}>

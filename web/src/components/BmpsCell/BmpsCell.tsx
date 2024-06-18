@@ -8,8 +8,6 @@ import type {
   TypedDocumentNode,
 } from '@redwoodjs/web'
 import BmpItem from '../BmpItem/BmpItem'
-import useBmpStore from 'src/stores/bmpStore'
-import AvailableBmps from '../AvailableBmps/AvailableBmps'
 
 export const QUERY: TypedDocumentNode<
   inspectionBmpsQuery,
@@ -35,37 +33,15 @@ export const Failure = ({ error }: CellFailureProps) => (
   <div style={{ color: 'red' }}>Error: {error?.message}</div>
 )
 
-export const Success = ({
-  inspectionBmps,
-}: CellSuccessProps<inspectionBmpsQuery>) => {
-  const { bmps, addBmp, submitBmps } = useBmpStore()
-
-  const handleSelectBmp = (bmp: Bmp) => {
-    addBmp({
-      ...bmp,
-      implemented: false,
-      maintenanceRequired: false,
-      repeatOccurrence: false,
-      correctiveActionNeeded: '',
-      notes: '',
-    })
-    console.log(`Added Fields for BMP ${bmp.id}:`, bmp) // Log added bmp
-  }
+export const Success = ({ inspectionBmps }: CellSuccessProps<inspectionBmpsQuery>) => {
 
   return (
     <>
-      <AvailableBmps bmps={inspectionBmps} onSelect={handleSelectBmp} />
       <div className="mt-4 space-y-4">
-        {bmps.map((bmp) => (
-          <BmpItem key={bmp.id} bmp={bmp} />
+        {inspectionBmps.map((bmp) => (
+          <BmpItem key={bmp.id} bmp={{...bmp, implemented: false, maintenanceRequired: false, repeatOccurrence: false, correctiveActionNeeded: '', notes: ''}} />
         ))}
       </div>
-      <button
-        onClick={submitBmps}
-        className="mt-4 rounded-md bg-blue-600 px-4 py-2 text-white"
-      >
-        Submit
-      </button>
     </>
   )
 }

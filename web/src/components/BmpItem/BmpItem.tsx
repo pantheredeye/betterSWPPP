@@ -1,3 +1,4 @@
+// src/components/BmpItem/BmpItem.tsx
 import { CheckboxField, TextField, TextAreaField, Label } from '@redwoodjs/forms'
 import { useState, useEffect } from 'react'
 import useBmpStore from 'src/stores/bmpStore'
@@ -20,7 +21,7 @@ interface BmpItemProps {
 const BmpItem = ({ bmp }: BmpItemProps) => {
   const [expanded, setExpanded] = useState(false)
   const [bmpData, setBmpData] = useState<Bmp>(bmp)
-  const updateBmp = useBmpStore((state) => state.updateBmp)
+  const updateBmpResponse = useBmpStore((state) => state.updateBmpResponse)
 
   useEffect(() => {
     setBmpData(bmp)
@@ -29,12 +30,14 @@ const BmpItem = ({ bmp }: BmpItemProps) => {
   const handleChange = (e) => {
     const { name, value, type, checked } = e.target
     const updatedData = {
-      ...bmpData,
       [name.replace(`-${bmp.id}`, '')]: type === 'checkbox' ? checked : value,
     }
     console.log(`Updating BMP ${bmp.id}:`, updatedData)
-    setBmpData(updatedData)
-    updateBmp(bmp.id, updatedData)
+    setBmpData(prevData => ({
+      ...prevData,
+      ...updatedData,
+    }))
+    updateBmpResponse(bmp.id, updatedData)
   }
 
   return (

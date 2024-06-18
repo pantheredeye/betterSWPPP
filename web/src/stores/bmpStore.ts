@@ -1,45 +1,44 @@
-import create from 'zustand'
+// src/stores/bmpStore.ts
+import { create } from 'zustand';
 
-interface Bmp {
-  id: number;
-  name: string;
-  description: string;
-  implemented: boolean;
-  maintenanceRequired: boolean;
-  repeatOccurrence: boolean;
-  correctiveActionNeeded: string;
-  notes: string;
+interface BmpResponses {
+  [key: number]: {
+    [key: string]: string | boolean;
+  };
 }
 
-interface BmpState {
-  bmps: Bmp[];
-  addBmp: (bmp: Bmp) => void;
-  updateBmp: (bmpId: number, updatedData: Partial<Bmp>) => void;
+interface BmpStore {
+  bmpResponses: BmpResponses;
+  updateBmpResponse: (bmpId: number, responses: Partial<BmpResponses[number]>) => void;
+  getFilteredResponses: () => Partial<BmpResponses[number]>[];
   submitBmps: () => void;
 }
 
-const useBmpStore = create<BmpState>((set, get) => ({
-  bmps: [],
-  addBmp: (bmp) => set((state) => {
-    const exists = state.bmps.some((existingBmp) => existingBmp.id === bmp.id);
-    if (!exists) {
-      return { bmps: [...state.bmps, bmp] };
-    }
-    return state;
-  }),
-  updateBmp: (bmpId, updatedData) => set((state) => {
-    console.log(`Updating BMP in store: ${bmpId}`, updatedData)
-    return {
-      bmps: state.bmps.map((bmp) =>
-        bmp.id === bmpId ? { ...bmp, ...updatedData } : bmp
-      ),
-    }
-  }),
-  submitBmps: () => {
-    const { bmps } = get();
-    console.log('Submitting BMPs:', bmps);
-    // Add form submission logic here
+const useBmpStore = create<BmpStore>((set, get) => ({
+  bmpResponses: {},
+  updateBmpResponse: (bmpId, responses) => set(state => ({
+    bmpResponses: {
+      ...state.bmpResponses,
+      [bmpId]: {
+        ...state.bmpResponses[bmpId],
+        ...responses,
+      },
+    },
+  })),
+  getFilteredResponses: () => {
+    const bmpResponses = get().bmpResponses;
+    return Object.entries(bmpResponses).reduce((acc, [bmpId, responses]) => {
+      if (Object.keys(responses).some(key => responses[key] !== '' && responses[key] !== false)) {
+        acc.push({ bmpId, ...responses });
+      }
+      return acc;
+    }, [] as Partial<BmpResponses[number]>[]);
   },
+  submitBmps: () => {
+    const filteredResponses = get().getFilteredResponses();
+    console.log('Submitting BMPs:', filteredResponses);
+    // Add form submission logic here
+  }
 }));
 
 export default useBmpStore;
