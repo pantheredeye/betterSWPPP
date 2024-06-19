@@ -1,9 +1,4 @@
-// Don't forget to tell Prisma about your edits to this file using
-// `yarn rw prisma migrate dev` or `yarn rw prisma db push`.
-// `migrate` is like committing while `push` is for prototyping.
-// Read more about both here:
-// https://www.prisma.io/docs/orm/prisma-migrate
-
+// schema.prisma
 datasource db {
   provider = "sqlite"
   url      = env("DATABASE_URL")
@@ -67,29 +62,6 @@ model SiteType {
   sites Site[]
 }
 
-model Bmp {
-  id          Int       @id @default(autoincrement())
-  name        String
-  description String
-  isStandard  Boolean
-  site        Site?     @relation(fields: [siteId], references: [id])
-  siteId      Int?
-  bmpData     BmpData[]
-}
-
-model BmpData {
-  id                     Int        @id @default(autoincrement())
-  bmp                    Bmp        @relation(fields: [bmpId], references: [id])
-  bmpId                  Int
-  inspection             Inspection @relation(fields: [inspectionId], references: [id])
-  inspectionId           Int
-  implemented            Boolean?
-  maintenanceRequired    Boolean?
-  repeatOccurrence       Boolean?
-  correctiveActionNeeded String?
-  notes                  String?
-}
-
 model Inspection {
   id                       Int       @id @default(autoincrement())
   site                     Site      @relation(fields: [siteId], references: [id])
@@ -123,6 +95,29 @@ model Inspection {
   updatedAt                DateTime  @updatedAt
   bmpData                  BmpData[]
   media                    Media[]
+}
+
+model Bmp {
+  id          Int       @id @default(autoincrement())
+  name        String
+  description String
+  isStandard  Boolean
+  site        Site?     @relation(fields: [siteId], references: [id])
+  siteId      Int?
+  bmpData     BmpData[]
+}
+
+model BmpData {
+  id                     Int        @id @default(autoincrement())
+  bmp                    Bmp        @relation(fields: [bmpId], references: [id])
+  bmpId                  Int
+  inspection             Inspection @relation(fields: [inspectionId], references: [id])
+  inspectionId           Int
+  implemented            Boolean?
+  maintenanceRequired    Boolean?
+  repeatOccurrence       Boolean?
+  correctiveActionNeeded String?
+  notes                  String?
 }
 
 model Media {

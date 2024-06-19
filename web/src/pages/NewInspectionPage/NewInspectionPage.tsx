@@ -37,8 +37,6 @@ const CREATE_INSPECTION_MUTATION = gql`
 `
 
 const NewInspectionPage = () => {
-  const getFilteredResponses = useBmpStore((state) => state.getFilteredResponses)
-
   const [createInspection, { loading, error }] = useMutation(
     CREATE_INSPECTION_MUTATION
   )
@@ -68,57 +66,83 @@ const NewInspectionPage = () => {
     newDischarges: false,
     dischargeAtThisTime: false,
     currentDischarges: false,
-    bmpData: [],
   })
 
-  const handleBmpsChange = (updatedBmpData) => {
-    setFormData((prevData) => ({
-      ...prevData,
-      bmpData: updatedBmpData,
-    }))
-  }
   const handleSubmit = async (data) => {
     try {
-      // Parse and validate form data
-      data.siteId = parseInt(data.siteId, 10);
-      data.inspectorId = parseInt(data.inspectorId, 10);
+      console.log('Initial form data:', data)
 
-      // Combine date with startTime and endTime
-      const baseDate = new Date(data.date);
-      const [startHours, startMinutes] = data.startTime.split(':');
-      const [endHours, endMinutes] = data.endTime.split(':');
+      // Parse IDs to integers
+      data.siteId = parseInt(data.siteId, 10)
+      data.inspectorId = parseInt(data.inspectorId, 10)
 
-      const startTime = new Date(baseDate);
-      startTime.setHours(startHours, startMinutes);
+      // Combine date with startTime and endTime to form valid DateTime strings
+      const baseDate = new Date(data.date)
+      const [startHours, startMinutes] = data.startTime.split(':')
+      const [endHours, endMinutes] = data.endTime.split(':')
 
-      const endTime = new Date(baseDate);
-      endTime.setHours(endHours, endMinutes);
+      const startTime = new Date(baseDate)
+      startTime.setHours(startHours, startMinutes)
 
-      data.startTime = startTime.toISOString();
-      data.endTime = endTime.toISOString();
+      const endTime = new Date(baseDate)
+      endTime.setHours(endHours, endMinutes)
 
-      // Fetch BMP data from the store
-      const bmpData = getFilteredResponses();
+      data.startTime = startTime.toISOString()
+      data.endTime = endTime.toISOString()
 
-      // Update formData with BMP data
-      const completeFormData = {
-        ...data,
-        bmpData,
-      };
+      console.log('Parsed date and time:', data.startTime, data.endTime)
 
-      // Submit the complete formData
+      // Extract BMP data from form data
+      const bmpData = []
+      const cleanedData = { ...data }
+
+      Object.keys(data).forEach((key) => {
+        const match = key.match(/(.*)-(\d+)/)
+        if (match) {
+          const fieldName = match[1]
+          const bmpId = parseInt(match[2], 10) // Convert bmpId to integer
+          if (!bmpData[bmpId]) {
+            bmpData[bmpId] = { bmpId }
+          }
+          bmpData[bmpId][fieldName] = data[key]
+          delete cleanedData[key]
+        }
+      })
+
+      const filteredBmpData = bmpData.filter(Boolean)
+
+      console.log('BMP Data to be submitted:', filteredBmpData)
+
+      // Ensure Float fields are handled correctly
+      cleanedData.temperature = cleanedData.temperature
+        ? parseFloat(cleanedData.temperature)
+        : null
+      cleanedData.approximatePrecipitation =
+        cleanedData.approximatePrecipitation
+          ? parseFloat(cleanedData.approximatePrecipitation)
+          : null
+
+      // Create inspection with nested BMP data
       await createInspection({
         variables: {
-          input: completeFormData,
+          input: {
+            ...cleanedData,
+            bmpData: filteredBmpData, // Add the nested bmpData array
+          },
         },
-      });
+      })
 
-      console.log('Submitted data:', completeFormData);
+      console.log('Submitted data:', {
+        ...cleanedData,
+        bmpData: filteredBmpData,
+      })
     } catch (error) {
-      console.error('Error in handleSubmit:', error.message);
-      alert('There was an error processing the form. Please check your input and try again.');
+      console.error('Error in handleSubmit:', error.message)
+      alert(
+        'There was an error processing the form. Please check your input and try again.'
+      )
     }
-  };
+  }
 
   return (
     <Form onSubmit={handleSubmit}>
