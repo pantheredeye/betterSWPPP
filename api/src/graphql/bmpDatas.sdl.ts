@@ -17,6 +17,15 @@ export const schema = gql`
     bmpData(id: Int!): BmpData @requireAuth
   }
 
+  input InspectionBmpInput {
+    bmpId: Int!
+    implemented: Boolean!
+    maintenanceRequired: Boolean!
+    repeatOccurrence: Boolean!
+    correctiveActionNeeded: String!
+    notes: String!
+  }
+
   input CreateBmpDataInput {
     bmpId: Int!
     inspectionId: Int!

@@ -15,30 +15,24 @@ export const inspection: QueryResolvers['inspection'] = ({ id }) => {
     where: { id },
   })
 }
+
 export const createInspection: MutationResolvers['createInspection'] = async ({
   input,
 }) => {
   const { bmpData, ...inspectionData } = input
-  console.log("bmpData structure:", bmpData);
 
   const inspection = await db.inspection.create({
     data: {
       ...inspectionData,
       bmpData: {
-        create: [
-          bmpData.map((data) => ({
-            bmpId: {
-              connect: {
-                where: { id: data.bmpId },
-              },
-            },
-            implemented: data.implemented,
-            maintenanceRequired: data.maintenanceRequired,
-            repeatOccurrence: data.repeatOccurrence,
-            correctiveActionNeeded: data.correctiveActionNeeded,
-            notes: data.notes,
-          })),
-        ],
+        create: bmpData.map((data) => ({
+          bmpId: data.bmpId,
+          implemented: data.implemented,
+          maintenanceRequired: data.maintenanceRequired,
+          repeatOccurrence: data.repeatOccurrence,
+          correctiveActionNeeded: data.correctiveActionNeeded,
+          notes: data.notes,
+        })),
       },
     },
   })

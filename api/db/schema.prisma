@@ -118,6 +118,8 @@ model BmpData {
   repeatOccurrence       Boolean?
   correctiveActionNeeded String?
   notes                  String?
+
+  @@unique([bmpId, inspectionId])
 }
 
 model Media {
