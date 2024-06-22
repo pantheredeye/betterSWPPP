@@ -18,7 +18,7 @@ import { useMutation } from '@redwoodjs/web'
 import BmpsCell from 'src/components/BmpsCell'
 import SitesCell from 'src/components/SitesCell'
 import UsersCell from 'src/components/UsersCell'
-import useBmpStore from 'src/stores/bmpStore'
+// import useBmpStore from 'src/stores/bmpStore'
 
 const CREATE_INSPECTION_MUTATION = gql`
   mutation CreateInspectionMutation($input: CreateInspectionInput!) {
@@ -40,7 +40,7 @@ const NewInspectionPage = () => {
   const [createInspection, { loading, error }] = useMutation(
     CREATE_INSPECTION_MUTATION
   )
-  const [formData, setFormData] = useState({
+  const [formData] = useState({
     date: '',
     startTime: '',
     endTime: '',
@@ -70,8 +70,6 @@ const NewInspectionPage = () => {
 
   const handleSubmit = async (data) => {
     try {
-      console.log('Initial form data:', data)
-
       // Parse IDs to integers
       data.siteId = parseInt(data.siteId, 10)
       data.inspectorId = parseInt(data.inspectorId, 10)
@@ -90,8 +88,6 @@ const NewInspectionPage = () => {
       data.startTime = startTime.toISOString()
       data.endTime = endTime.toISOString()
 
-      console.log('Parsed date and time:', data.startTime, data.endTime)
-
       // Extract BMP data from form data
       const bmpData = []
       const cleanedData = { ...data }
@@ -100,7 +96,7 @@ const NewInspectionPage = () => {
         const match = key.match(/(.*)-(\d+)/)
         if (match) {
           const fieldName = match[1]
-          const bmpId = parseInt(match[2], 10) // Convert bmpId to integer
+          const bmpId = parseInt(match[2], 10)
           if (!bmpData[bmpId]) {
             bmpData[bmpId] = { bmpId }
           }
@@ -110,8 +106,6 @@ const NewInspectionPage = () => {
       })
 
       const filteredBmpData = bmpData.filter(Boolean)
-
-      console.log('BMP Data to be submitted:', filteredBmpData)
 
       // Ensure Float fields are handled correctly
       cleanedData.temperature = cleanedData.temperature
@@ -130,11 +124,6 @@ const NewInspectionPage = () => {
             bmpData: filteredBmpData, // Add the nested bmpData array
           },
         },
-      })
-
-      console.log('Submitted data:', {
-        ...cleanedData,
-        bmpData: filteredBmpData,
       })
     } catch (error) {
       console.error('Error in handleSubmit:', error.message)
@@ -159,7 +148,7 @@ const NewInspectionPage = () => {
           </div>
           <div className="md:col-span-2">
             <div className="grid max-w-2xl grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
-              <div className="col-span-3">
+              <div className="col-span-3 sm:col-span-3">
                 <Label
                   name="siteId"
                   className="block text-sm font-medium leading-6 text-gray-900"
@@ -171,7 +160,7 @@ const NewInspectionPage = () => {
                   <FieldError name="siteId" className="text-red-600" />
                 </div>
               </div>
-              <div className="col-span-3">
+              <div className="col-span-3 sm:col-span-3">
                 <Label
                   className="block text-sm font-medium leading-6 text-gray-900"
                   name="inspectorId"
@@ -183,7 +172,7 @@ const NewInspectionPage = () => {
                   <FieldError name="inspectorId" className="text-red-600" />
                 </div>
               </div>
-              <div className="sm:col-span-2">
+              <div className="col-span-6 sm:col-span-2">
                 <Label
                   name="date"
                   className="block text-sm font-medium leading-6 text-gray-900"
@@ -199,7 +188,8 @@ const NewInspectionPage = () => {
                   <FieldError name="date" className="text-red-600" />
                 </div>
               </div>
-              <div className="sm:col-span-2">
+
+              <div className="col-span-3 sm:col-span-2">
                 <Label
                   name="startTime"
                   className="block text-sm font-medium leading-6 text-gray-900"
@@ -215,7 +205,7 @@ const NewInspectionPage = () => {
                   <FieldError name="startTime" className="text-red-600" />
                 </div>
               </div>
-              <div className="sm:col-span-2">
+              <div className="col-span-3 sm:col-span-2">
                 <Label
                   name="endTime"
                   className="block text-sm font-medium leading-6 text-gray-900"
@@ -232,7 +222,7 @@ const NewInspectionPage = () => {
                 </div>
               </div>
 
-              <div className="col-span-3">
+              <div className="col-span-6 sm:col-span-3">
                 <Label
                   name="whomToContact"
                   className="block text-sm font-medium leading-6 text-gray-900"
@@ -247,7 +237,7 @@ const NewInspectionPage = () => {
                 </div>
               </div>
 
-              <div className="col-span-full">
+              <div className="col-span-6 sm:col-span-6">
                 <Label
                   name="title"
                   className="block text-sm font-medium leading-6 text-gray-900"
@@ -261,7 +251,7 @@ const NewInspectionPage = () => {
                 />
                 <FieldError name="title" className="text-red-600" />
               </div>
-              <div className="col-span-full">
+              <div className="col-span-6 sm:col-span-6">
                 <Label
                   name="description"
                   className="block text-sm font-medium leading-6 text-gray-900"
@@ -360,7 +350,7 @@ const NewInspectionPage = () => {
                   className="rounded border-gray-300 text-indigo-600 shadow-sm focus:ring-indigo-500"
                 />
               </div>
-              <div className="col-span-full">
+              <div className="col-span-6">
                 <Label
                   name="violationsNotes"
                   className="block text-sm font-medium leading-6 text-gray-900"
@@ -410,7 +400,7 @@ const NewInspectionPage = () => {
                 </SelectField>
                 <FieldError name="weatherAtTime" className="text-red-600" />
               </div>
-              <div className="col-span-2">
+              <div className="col-span-3 sm:col-span-2">
                 <Label
                   name="temperature"
                   className="block text-sm font-medium leading-6 text-gray-900"
@@ -422,7 +412,7 @@ const NewInspectionPage = () => {
                   className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                 />
               </div>
-              <div className="col-span-2">
+              <div className="col-span-6">
                 <Label
                   name="newStormEvent"
                   className="block text-sm font-medium leading-6 text-gray-900"
@@ -434,7 +424,7 @@ const NewInspectionPage = () => {
                   className="rounded border-gray-300 text-indigo-600 shadow-sm focus:ring-indigo-500"
                 />
               </div>
-              <div className="col-span-2">
+              <div className="col-span-3 sm:col-span-3">
                 <Label
                   name="stormDateTime"
                   className="block text-sm font-medium leading-6 text-gray-900"
@@ -446,7 +436,7 @@ const NewInspectionPage = () => {
                   className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                 />
               </div>
-              <div className="col-span-2">
+              <div className="col-span-3 sm:col-span-3">
                 <Label
                   name="stormDuration"
                   className="block text-sm font-medium leading-6 text-gray-900"
@@ -458,7 +448,7 @@ const NewInspectionPage = () => {
                   className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                 />
               </div>
-              <div className="col-span-2">
+              <div className="col-span-3 sm:col-span-3">
                 <Label
                   name="approximatePrecipitation"
                   className="block text-sm font-medium leading-6 text-gray-900"
@@ -470,54 +460,61 @@ const NewInspectionPage = () => {
                   className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                 />
               </div>
-
-              <div className="col-span-3">
-                <Label
-                  name="previousDischarge"
-                  className="block text-sm font-medium leading-6 text-gray-900"
-                >
-                  Previous Discharge
-                </Label>
-                <CheckboxField
-                  name="previousDischarge"
-                  className="rounded border-gray-300 text-indigo-600 shadow-sm focus:ring-indigo-500"
-                />
+              <div className="col-span-6 sm:col-span-6">
+                <div className="grid grid-cols-2 gap-4">
+                  <div className="col-span-1">
+                    <Label
+                      name="previousDischarge"
+                      className="block text-sm font-medium leading-6 text-gray-900"
+                    >
+                      Previous Discharge
+                    </Label>
+                    <CheckboxField
+                      name="previousDischarge"
+                      className="rounded border-gray-300 text-indigo-600 shadow-sm focus:ring-indigo-500"
+                    />
+                  </div>
+                  <div className="col-span-1">
+                    <Label
+                      name="newDischarges"
+                      className="block text-sm font-medium leading-6 text-gray-900"
+                    >
+                      New Discharges
+                    </Label>
+                    <CheckboxField
+                      name="newDischarges"
+                      className="rounded border-gray-300 text-indigo-600 shadow-sm focus:ring-indigo-500"
+                    />
+                  </div>
+                </div>
               </div>
-              <div className="col-span-3">
-                <Label
-                  name="newDischarges"
-                  className="block text-sm font-medium leading-6 text-gray-900"
-                >
-                  New Discharges
-                </Label>
-                <CheckboxField
-                  name="newDischarges"
-                  className="rounded border-gray-300 text-indigo-600 shadow-sm focus:ring-indigo-500"
-                />
-              </div>
-              <div className="col-span-3">
-                <Label
-                  name="dischargeAtThisTime"
-                  className="block text-sm font-medium leading-6 text-gray-900"
-                >
-                  Discharge at this time
-                </Label>
-                <CheckboxField
-                  name="dischargeAtThisTime"
-                  className="rounded border-gray-300 text-indigo-600 shadow-sm focus:ring-indigo-500"
-                />
-              </div>
-              <div className="col-span-3">
-                <Label
-                  name="currentDischarges"
-                  className="block text-sm font-medium leading-6 text-gray-900"
-                >
-                  Current Discharges
-                </Label>
-                <CheckboxField
-                  name="currentDischarges"
-                  className="rounded border-gray-300 text-indigo-600 shadow-sm focus:ring-indigo-500"
-                />
+              <div className="col-span-6 sm:col-span-6">
+                <div className="grid grid-cols-2 gap-4">
+                  <div className="col-span-1">
+                    <Label
+                      name="dischargeAtThisTime"
+                      className="block text-sm font-medium leading-6 text-gray-900"
+                    >
+                      Discharge at this time
+                    </Label>
+                    <CheckboxField
+                      name="dischargeAtThisTime"
+                      className="rounded border-gray-300 text-indigo-600 shadow-sm focus:ring-indigo-500"
+                    />
+                  </div>
+                  <div className="col-span-1">
+                    <Label
+                      name="currentDischarges"
+                      className="block text-sm font-medium leading-6 text-gray-900"
+                    >
+                      Current Discharges
+                    </Label>
+                    <CheckboxField
+                      name="currentDischarges"
+                      className="rounded border-gray-300 text-indigo-600 shadow-sm focus:ring-indigo-500"
+                    />
+                  </div>
+                </div>
               </div>
             </div>
           </div>
