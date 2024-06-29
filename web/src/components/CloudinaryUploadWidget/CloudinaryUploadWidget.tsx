@@ -1,7 +1,7 @@
 import { createContext, useEffect, useState } from 'react'
 
 // Create a context to manage the script loading state
-const CloudinaryScriptContext = createContext()
+const CloudinaryScriptContext = createContext(null)
 
 function CloudinaryUploadWidget({ uwConfig, setPublicId }) {
   const [loaded, setLoaded] = useState(false)
@@ -52,7 +52,10 @@ function CloudinaryUploadWidget({ uwConfig, setPublicId }) {
       <button
         id="upload_widget"
         className="cloudinary-button"
-        onClick={initializeCloudinaryWidget}
+        onClick={(e) => {
+          e.preventDefault()
+          initializeCloudinaryWidget()
+        }}
       >
         Upload
       </button>
