@@ -11,6 +11,8 @@
     ]
   },
   "dependencies": {
+    "@cloudinary/react": "^1.13.0",
+    "@cloudinary/url-gen": "^1.19.0",
     "@redwoodjs/auth-dbauth-web": "7.7.1",
     "@redwoodjs/forms": "7.7.1",
     "@redwoodjs/router": "7.7.1",
