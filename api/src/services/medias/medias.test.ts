@@ -27,13 +27,13 @@ describe('medias', () => {
       input: {
         inspectionId: scenario.media.two.inspectionId,
         url: 'String',
-        type: 'String',
+        description: 'String',
       },
     })
 
     expect(result.inspectionId).toEqual(scenario.media.two.inspectionId)
     expect(result.url).toEqual('String')
-    expect(result.type).toEqual('String')
+    expect(result.description).toEqual('String')
   })
 
   scenario('updates a media', async (scenario: StandardScenario) => {

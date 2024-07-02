@@ -4,7 +4,7 @@ export const schema = gql`
     inspection: Inspection!
     inspectionId: Int!
     url: String!
-    type: String!
+    description: String!
   }
 
   type Query {
@@ -15,13 +15,13 @@ export const schema = gql`
   input CreateMediaInput {
     inspectionId: Int!
     url: String!
-    type: String!
+    description: String!
   }
 
   input UpdateMediaInput {
     inspectionId: Int
     url: String
-    type: String
+    description: String
   }
 
   type Mutation {

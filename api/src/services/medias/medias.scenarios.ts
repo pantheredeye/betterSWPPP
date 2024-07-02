@@ -1,5 +1,4 @@
 import type { Prisma, Media } from '@prisma/client'
-
 import type { ScenarioData } from '@redwoodjs/testing/api'
 
 export const standard = defineScenario<Prisma.MediaCreateArgs>({
@@ -7,39 +6,43 @@ export const standard = defineScenario<Prisma.MediaCreateArgs>({
     one: {
       data: {
         url: 'String',
-        type: 'String',
+        description: 'String',
         inspection: {
           create: {
-            date: '2024-05-18T12:33:41.740Z',
-            weather: 'String',
-            updatedAt: '2024-05-18T12:33:41.740Z',
+            date: '2024-07-02T00:19:29.811Z',
+            startTime: '2024-07-02T00:19:29.811Z',
+            endTime: '2024-07-02T00:19:29.811Z',
+            permitOnSite: true,
+            swpppOnSite: true,
+            bmpsInstalledPerSwppp: true,
+            siteInspectionReports: true,
+            inspectionType: 'String',
+            title: 'String',
+            description: 'String',
+            severity: 'String',
+            newStormEvent: true,
+            weatherAtTime: 'String',
+            previousDischarge: true,
+            newDischarges: true,
+            dischargeAtThisTime: true,
+            currentDischarges: true,
+            updatedAt: '2024-07-02T00:19:29.811Z',
             site: {
               create: {
                 name: 'String',
-                address: 'String',
-                city: 'String',
-                state: 'String',
-                zipCode: 'String',
-                updatedAt: '2024-05-18T12:33:41.740Z',
-                siteType: { create: { name: 'String5115069' } },
-                owner: {
-                  create: {
-                    email: 'String3622045',
-                    hashedPassword: 'String',
-                    salt: 'String',
-                    updatedAt: '2024-05-18T12:33:41.740Z',
-                    role: { create: { name: 'String5693592' } },
-                  },
-                },
+                addressLine1: 'String',
+                ownerName: 'String',
+                updatedAt: '2024-07-02T00:19:29.811Z',
+                siteType: { create: { name: 'String6159064' } },
               },
             },
             inspector: {
               create: {
-                email: 'String4124706',
+                email: 'String5319575',
                 hashedPassword: 'String',
                 salt: 'String',
-                updatedAt: '2024-05-18T12:33:41.740Z',
-                role: { create: { name: 'String450032' } },
+                updatedAt: '2024-07-02T00:19:29.811Z',
+                role: { create: { name: 'String8295340' } },
               },
             },
           },
@@ -49,39 +52,43 @@ export const standard = defineScenario<Prisma.MediaCreateArgs>({
     two: {
       data: {
         url: 'String',
-        type: 'String',
+        description: 'String',
         inspection: {
           create: {
-            date: '2024-05-18T12:33:41.740Z',
-            weather: 'String',
-            updatedAt: '2024-05-18T12:33:41.740Z',
+            date: '2024-07-02T00:19:29.812Z',
+            startTime: '2024-07-02T00:19:29.812Z',
+            endTime: '2024-07-02T00:19:29.812Z',
+            permitOnSite: true,
+            swpppOnSite: true,
+            bmpsInstalledPerSwppp: true,
+            siteInspectionReports: true,
+            inspectionType: 'String',
+            title: 'String',
+            description: 'String',
+            severity: 'String',
+            newStormEvent: true,
+            weatherAtTime: 'String',
+            previousDischarge: true,
+            newDischarges: true,
+            dischargeAtThisTime: true,
+            currentDischarges: true,
+            updatedAt: '2024-07-02T00:19:29.812Z',
             site: {
               create: {
                 name: 'String',
-                address: 'String',
-                city: 'String',
-                state: 'String',
-                zipCode: 'String',
-                updatedAt: '2024-05-18T12:33:41.740Z',
-                siteType: { create: { name: 'String6547890' } },
-                owner: {
-                  create: {
-                    email: 'String3346509',
-                    hashedPassword: 'String',
-                    salt: 'String',
-                    updatedAt: '2024-05-18T12:33:41.740Z',
-                    role: { create: { name: 'String6306549' } },
-                  },
-                },
+                addressLine1: 'String',
+                ownerName: 'String',
+                updatedAt: '2024-07-02T00:19:29.812Z',
+                siteType: { create: { name: 'String2305697' } },
               },
             },
             inspector: {
               create: {
-                email: 'String969616',
+                email: 'String8435685',
                 hashedPassword: 'String',
                 salt: 'String',
-                updatedAt: '2024-05-18T12:33:41.740Z',
-                role: { create: { name: 'String8153207' } },
+                updatedAt: '2024-07-02T00:19:29.812Z',
+                role: { create: { name: 'String78607' } },
               },
             },
           },
