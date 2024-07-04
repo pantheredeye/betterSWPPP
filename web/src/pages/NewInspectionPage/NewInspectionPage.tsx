@@ -1,6 +1,5 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 
-import { AdvancedImage, placeholder, responsive } from '@cloudinary/react'
 import { Cloudinary } from '@cloudinary/url-gen'
 
 import {
@@ -22,7 +21,6 @@ import BmpsCell from 'src/components/BmpsCell'
 import CloudinaryUploadWidget from 'src/components/CloudinaryUploadWidget/CloudinaryUploadWidget'
 import SitesCell from 'src/components/SitesCell'
 import UsersCell from 'src/components/UsersCell'
-// import useBmpStore from 'src/stores/bmpStore'
 
 const CREATE_INSPECTION_MUTATION = gql`
   mutation CreateInspectionMutation($input: CreateInspectionInput!) {
@@ -41,13 +39,17 @@ const CREATE_INSPECTION_MUTATION = gql`
 `
 
 const NewInspectionPage = () => {
-  const [publicIds, setPublicIds] = useState([])
+  // const [publicIds, setPublicIds] = useState([])
   const [cloudName] = useState('goodswppp')
   const [uploadPreset] = useState('swppp_unsigned')
+  const [selectedImage, setSelectedImage] = useState(null)
 
   const [uwConfig] = useState({
     cloudName,
     uploadPreset,
+    thumbnails: '.content',
+    form: 'inspectionForm',
+    fieldName: 'media',
     // cropping: true, //add a cropping step
     // showAdvancedOptions: true,  //add advanced options (public_id and tag)
     // sources: [ "local", "url"], // restrict the upload sources to URL and local files
@@ -62,45 +64,52 @@ const NewInspectionPage = () => {
   })
 
   // Create a Cloudinary instance and set your cloud name.
-  const cld = new Cloudinary({
-    cloud: {
-      cloudName,
-    },
-  })
+  // const cld = new Cloudinary({
+  //   cloud: {
+  //     cloudName,
+  //   },
+  // })
 
   const [createInspection, { loading, error }] = useMutation(
     CREATE_INSPECTION_MUTATION
   )
-  const [formData] = useState({
-    date: '',
-    startTime: '',
-    endTime: '',
-    inspectorId: '',
-    siteId: '',
-    permitOnSite: false,
-    swpppOnSite: false,
-    bmpsInstalledPerSwppp: false,
-    siteInspectionReports: false,
-    inspectionType: 'REGULAR',
-    title: '',
-    description: '',
-    severity: 'LOW',
-    violationsNotes: '',
-    whomToContact: '',
-    newStormEvent: false,
-    stormDateTime: '',
-    stormDuration: '',
-    approximatePrecipitation: '',
-    weatherAtTime: 'CLEAR',
-    temperature: '',
-    previousDischarge: false,
-    newDischarges: false,
-    dischargeAtThisTime: false,
-    currentDischarges: false,
+  const [formData] = useState(() => {
+    const now = new Date()
+    const formattedDate = now.toISOString().split('T')[0]
+    const formattedTime = now.toTimeString().split(' ')[0].substring(0, 5)
+    return {
+      date: formattedDate,
+      startTime: formattedTime,
+      endTime: '',
+      inspectorId: '',
+      siteId: '',
+      permitOnSite: false,
+      swpppOnSite: false,
+      bmpsInstalledPerSwppp: false,
+      siteInspectionReports: false,
+      inspectionType: 'REGULAR',
+      title: '',
+      description: '',
+      severity: 'LOW',
+      violationsNotes: '',
+      whomToContact: '',
+      newStormEvent: false,
+      stormDateTime: '',
+      stormDuration: '',
+      approximatePrecipitation: '',
+      weatherAtTime: 'CLEAR',
+      temperature: '',
+      previousDischarge: false,
+      newDischarges: false,
+      dischargeAtThisTime: false,
+      currentDischarges: false,
+      media: [],
+    }
   })
 
   const handleSubmit = async (data) => {
     try {
+      console.log(data)
       // Parse IDs to integers
       data.siteId = parseInt(data.siteId, 10)
       data.inspectorId = parseInt(data.inspectorId, 10)
@@ -164,9 +173,26 @@ const NewInspectionPage = () => {
     }
   }
 
+  useEffect(() => {
+    const handleThumbnailClick = (event) => {
+      const thumbnail = event.target.closest('.cloudinary-thumbnail')
+      if (thumbnail) {
+        const data = JSON.parse(thumbnail.getAttribute('data-cloudinary'))
+        setSelectedImage(data.secure_url)
+      }
+    }
+
+    const contentDiv = document.querySelector('.content')
+    contentDiv?.addEventListener('click', handleThumbnailClick)
+
+    return () => {
+      contentDiv?.removeEventListener('click', handleThumbnailClick)
+    }
+  }, [])
+
   return (
     <>
-      <Form onSubmit={handleSubmit}>
+      <Form id="inspectionForm" onSubmit={handleSubmit}>
         <div className="space-y-12">
           <div className="grid grid-cols-1 gap-x-8 gap-y-10 border-b border-gray-900/10 pb-12 md:grid-cols-3">
             <div className="px-4 sm:px-0">
@@ -216,6 +242,7 @@ const NewInspectionPage = () => {
                   <div className="mt-2">
                     <DateField
                       name="date"
+                      defaultValue={formData.date} // Set default value
                       className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                       validation={{ required: true }}
                     />
@@ -233,6 +260,7 @@ const NewInspectionPage = () => {
                   <div className="mt-2">
                     <TimeField
                       name="startTime"
+                      defaultValue={formData.startTime} // Set default value
                       className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                       validation={{ required: true }}
                     />
@@ -557,20 +585,12 @@ const NewInspectionPage = () => {
           </div>
           <CloudinaryUploadWidget
             uwConfig={uwConfig}
-            setPublicId={(id) => setPublicIds((prev) => [...prev, id])}
+            // setPublicId={(id) => setPublicIds((prev) => [...prev, id])}
           />
-          <div style={{ width: '800px' }}>
-            {publicIds.map((id) => {
-              const myImage = cld.image(id)
-              return (
-                <AdvancedImage
-                  key={id}
-                  style={{ maxWidth: '100%' }}
-                  cldImg={myImage}
-                  plugins={[responsive(), placeholder()]}
-                />
-              )
-            })}
+          <div className="mx-auto max-w-7xl px-6 lg:px-8">
+            <div className="-mx-6 grid grid-cols-2 gap-0.5 overflow-hidden sm:mx-0 sm:rounded-2xl md:grid-cols-3">
+              <div className="content bg-gray-400/5 p-8 sm:p-10"></div>
+            </div>
           </div>
           <div className="grid grid-cols-1 gap-x-8 gap-y-10 border-b border-gray-900/10 pb-12 md:grid-cols-3">
             <div>
@@ -585,7 +605,6 @@ const NewInspectionPage = () => {
               <BmpsCell isStandard={true} />
             </div>
           </div>
-
           {formData.siteId && (
             <div className="grid grid-cols-1 gap-x-8 gap-y-10 border-b border-gray-900/10 pb-12 md:grid-cols-3">
               <div>
@@ -615,6 +634,62 @@ const NewInspectionPage = () => {
           {error && <div className="text-red-600">{error.message}</div>}
         </div>
       </Form>
+      {selectedImage && (
+        <div className="modal" role="dialog" aria-modal="true">
+          <div className="modal-content">
+            <button
+              className="close"
+              onClick={() => setSelectedImage(null)}
+              onKeyDown={(e) => {
+                if (e.key === 'Enter' || e.key === ' ') {
+                  setSelectedImage(null)
+                }
+              }}
+              tabIndex={0}
+              aria-label="Close"
+            >
+              &times;
+            </button>
+            <img src={selectedImage} alt="Full size" />
+          </div>
+        </div>
+      )}
+
+      <style>{`
+        .modal {
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          position: fixed;
+          z-index: 1;
+          left: 0;
+          top: 0;
+          width: 100%;
+          height: 100%;
+          overflow: auto;
+          background-color: rgb(0, 0, 0);
+          background-color: rgba(0, 0, 0, 0.4);
+        }
+        .modal-content {
+          background-color: #fefefe;
+          margin: auto;
+          padding: 20px;
+          border: 1px solid #888;
+          width: 80%;
+        }
+        .close {
+          color: #aaa;
+          float: right;
+          font-size: 28px;
+          font-weight: bold;
+        }
+        .close:hover,
+        .close:focus {
+          color: black;
+          text-decoration: none;
+          cursor: pointer;
+        }
+      `}</style>
     </>
   )
 }

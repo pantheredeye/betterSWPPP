@@ -3,8 +3,9 @@ import { createContext, useEffect, useState } from 'react'
 // Create a context to manage the script loading state
 const CloudinaryScriptContext = createContext(null)
 
-function CloudinaryUploadWidget({ uwConfig, setPublicId }) {
+function CloudinaryUploadWidget({ uwConfig }) {
   const [loaded, setLoaded] = useState(false)
+  const [widget, setWidget] = useState(null)
 
   useEffect(() => {
     // Check if the script is already loaded
@@ -25,25 +26,25 @@ function CloudinaryUploadWidget({ uwConfig, setPublicId }) {
     }
   }, [loaded])
 
-  const initializeCloudinaryWidget = () => {
-    if (loaded) {
+  useEffect(() => {
+    if (loaded && !widget) {
       const myWidget = window.cloudinary.createUploadWidget(
         uwConfig,
         (error, result) => {
           if (!error && result && result.event === 'success') {
             console.log('Done! Here is the image info: ', result.info)
-            setPublicId(result.info.public_id)
+            // setPublicId(result.info.public_id)
           }
         }
       )
+      setWidget(myWidget)
+    }
+  }, [loaded, widget, uwConfig])
 
-      document.getElementById('upload_widget').addEventListener(
-        'click',
-        function () {
-          myWidget.open()
-        },
-        false
-      )
+  const openWidget = (e) => {
+    e.preventDefault()
+    if (widget) {
+      widget.open()
     }
   }
 
@@ -52,10 +53,7 @@ function CloudinaryUploadWidget({ uwConfig, setPublicId }) {
       <button
         id="upload_widget"
         className="cloudinary-button"
-        onClick={(e) => {
-          e.preventDefault()
-          initializeCloudinaryWidget()
-        }}
+        onClick={openWidget}
       >
         Upload
       </button>
