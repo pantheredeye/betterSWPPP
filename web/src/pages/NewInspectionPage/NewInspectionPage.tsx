@@ -1,7 +1,5 @@
 import { useEffect, useState } from 'react'
 
-import { Cloudinary } from '@cloudinary/url-gen'
-
 import {
   Form,
   FieldError,
@@ -39,7 +37,6 @@ const CREATE_INSPECTION_MUTATION = gql`
 `
 
 const NewInspectionPage = () => {
-  // const [publicIds, setPublicIds] = useState([])
   const [cloudName] = useState('goodswppp')
   const [uploadPreset] = useState('swppp_unsigned')
   const [selectedImage, setSelectedImage] = useState(null)
@@ -47,33 +44,16 @@ const NewInspectionPage = () => {
   const [uwConfig] = useState({
     cloudName,
     uploadPreset,
-    thumbnails: '.content',
-    form: 'inspectionForm',
-    fieldName: 'media',
-    // cropping: true, //add a cropping step
-    // showAdvancedOptions: true,  //add advanced options (public_id and tag)
-    // sources: [ "local", "url"], // restrict the upload sources to URL and local files
-    // multiple: false,  //restrict upload to a single file
-    // folder: "user_images", //upload files to the specified folder
-    // tags: ["users", "profile"], //add the given tags to the uploaded files
-    // context: {alt: "user_uploaded"}, //add the given context data to the uploaded files
-    // clientAllowedFormats: ["images"], //restrict uploading to image files only
-    // maxImageFileSize: 2000000,  //restrict file size to less than 2MB
-    // maxImageWidth: 2000, //Scales the image down to a width of 2000 pixels before uploading
-    // theme: "purple", //change to a purple theme
+    // thumbnails: '.content',
+    // form: 'inspectionForm',
+    // fieldName: 'media[]',
   })
-
-  // Create a Cloudinary instance and set your cloud name.
-  // const cld = new Cloudinary({
-  //   cloud: {
-  //     cloudName,
-  //   },
-  // })
 
   const [createInspection, { loading, error }] = useMutation(
     CREATE_INSPECTION_MUTATION
   )
-  const [formData] = useState(() => {
+
+  const [formData, setFormData] = useState(() => {
     const now = new Date()
     const formattedDate = now.toISOString().split('T')[0]
     const formattedTime = now.toTimeString().split(' ')[0].substring(0, 5)
@@ -103,9 +83,41 @@ const NewInspectionPage = () => {
       newDischarges: false,
       dischargeAtThisTime: false,
       currentDischarges: false,
-      media: [],
     }
   })
+
+  const [media, setMedia] = useState([])
+
+  const handleChange = (e) => {
+    const { name, value, type, checked } = e.target
+    setFormData((prevData) => ({
+      ...prevData,
+      [name]: type === 'checkbox' ? checked : value,
+    }))
+  }
+
+  const handleThumbnailClick = (event) => {
+    const thumbnail = event.target.closest('.cloudinary-thumbnail')
+    if (thumbnail) {
+      const data = JSON.parse(thumbnail.getAttribute('data-cloudinary'))
+      setSelectedImage(data.secure_url)
+      // Add new media entry if not already present
+      setMedia((prevMedia) => {
+        if (!prevMedia.some((item) => item.url === data.thumbnail_url)) {
+          return [...prevMedia, { url: data.thumbnail_url, description: '' }]
+        }
+        return prevMedia
+      })
+    }
+  }
+
+  const handleDescriptionChange = (index, description) => {
+    setMedia((prevMedia) => {
+      const newMedia = [...prevMedia]
+      newMedia[index].description = description
+      return newMedia
+    })
+  }
 
   const handleSubmit = async (data) => {
     try {
@@ -156,12 +168,19 @@ const NewInspectionPage = () => {
           ? parseFloat(cleanedData.approximatePrecipitation)
           : null
 
-      // Create inspection with nested BMP data
+      // Add media array to form data
+      data.media = media.map((item) => ({
+        url: item.url,
+        description: item.description,
+      }))
+
+      // Create inspection with nested BMP and media data
       await createInspection({
         variables: {
           input: {
             ...cleanedData,
             bmpData: filteredBmpData, // Add the nested bmpData array
+            media: data.media, // Add the nested media array
           },
         },
       })
@@ -174,14 +193,6 @@ const NewInspectionPage = () => {
   }
 
   useEffect(() => {
-    const handleThumbnailClick = (event) => {
-      const thumbnail = event.target.closest('.cloudinary-thumbnail')
-      if (thumbnail) {
-        const data = JSON.parse(thumbnail.getAttribute('data-cloudinary'))
-        setSelectedImage(data.secure_url)
-      }
-    }
-
     const contentDiv = document.querySelector('.content')
     contentDiv?.addEventListener('click', handleThumbnailClick)
 
@@ -242,7 +253,8 @@ const NewInspectionPage = () => {
                   <div className="mt-2">
                     <DateField
                       name="date"
-                      defaultValue={formData.date} // Set default value
+                      value={formData.date} // Bind to state
+                      onChange={handleChange} // Update state on change
                       className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                       validation={{ required: true }}
                     />
@@ -260,7 +272,8 @@ const NewInspectionPage = () => {
                   <div className="mt-2">
                     <TimeField
                       name="startTime"
-                      defaultValue={formData.startTime} // Set default value
+                      value={formData.startTime} // Bind to state
+                      onChange={handleChange} // Update state on change
                       className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                       validation={{ required: true }}
                     />
@@ -277,6 +290,8 @@ const NewInspectionPage = () => {
                   <div className="mt-2">
                     <TimeField
                       name="endTime"
+                      value={formData.endTime} // Bind to state
+                      onChange={handleChange} // Update state on change
                       className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                       validation={{ required: true }}
                     />
@@ -294,6 +309,8 @@ const NewInspectionPage = () => {
                   <div className="mt-2">
                     <TextField
                       name="whomToContact"
+                      value={formData.whomToContact} // Bind to state
+                      onChange={handleChange} // Update state on change
                       className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                     />
                   </div>
@@ -308,6 +325,8 @@ const NewInspectionPage = () => {
                   </Label>
                   <TextField
                     name="title"
+                    value={formData.title} // Bind to state
+                    onChange={handleChange} // Update state on change
                     className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                     validation={{ required: true }}
                   />
@@ -322,6 +341,8 @@ const NewInspectionPage = () => {
                   </Label>
                   <TextAreaField
                     name="description"
+                    value={formData.description} // Bind to state
+                    onChange={handleChange} // Update state on change
                     className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                     validation={{ required: true }}
                   />
@@ -336,6 +357,8 @@ const NewInspectionPage = () => {
                   </Label>
                   <SelectField
                     name="inspectionType"
+                    value={formData.inspectionType} // Bind to state
+                    onChange={handleChange} // Update state on change
                     className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                     validation={{ required: true }}
                   >
@@ -355,6 +378,8 @@ const NewInspectionPage = () => {
                   </Label>
                   <SelectField
                     name="severity"
+                    value={formData.severity} // Bind to state
+                    onChange={handleChange} // Update state on change
                     className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                     validation={{ required: true }}
                   >
@@ -373,6 +398,8 @@ const NewInspectionPage = () => {
                   </Label>
                   <CheckboxField
                     name="permitOnSite"
+                    checked={formData.permitOnSite} // Bind to state
+                    onChange={handleChange} // Update state on change
                     className="rounded border-gray-300 text-indigo-600 shadow-sm focus:ring-indigo-500"
                   />
                 </div>
@@ -385,6 +412,8 @@ const NewInspectionPage = () => {
                   </Label>
                   <CheckboxField
                     name="swpppOnSite"
+                    checked={formData.swpppOnSite} // Bind to state
+                    onChange={handleChange} // Update state on change
                     className="rounded border-gray-300 text-indigo-600 shadow-sm focus:ring-indigo-500"
                   />
                 </div>
@@ -397,6 +426,8 @@ const NewInspectionPage = () => {
                   </Label>
                   <CheckboxField
                     name="bmpsInstalledPerSwppp"
+                    checked={formData.bmpsInstalledPerSwppp} // Bind to state
+                    onChange={handleChange} // Update state on change
                     className="rounded border-gray-300 text-indigo-600 shadow-sm focus:ring-indigo-500"
                   />
                 </div>
@@ -409,6 +440,8 @@ const NewInspectionPage = () => {
                   </Label>
                   <CheckboxField
                     name="siteInspectionReports"
+                    checked={formData.siteInspectionReports} // Bind to state
+                    onChange={handleChange} // Update state on change
                     className="rounded border-gray-300 text-indigo-600 shadow-sm focus:ring-indigo-500"
                   />
                 </div>
@@ -421,6 +454,8 @@ const NewInspectionPage = () => {
                   </Label>
                   <TextAreaField
                     name="violationsNotes"
+                    value={formData.violationsNotes} // Bind to state
+                    onChange={handleChange} // Update state on change
                     className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                   />
                 </div>
@@ -450,6 +485,8 @@ const NewInspectionPage = () => {
                   </Label>
                   <SelectField
                     name="weatherAtTime"
+                    value={formData.weatherAtTime} // Bind to state
+                    onChange={handleChange} // Update state on change
                     className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                     validation={{ required: true }}
                   >
@@ -473,6 +510,8 @@ const NewInspectionPage = () => {
                   </Label>
                   <TextField
                     name="temperature"
+                    value={formData.temperature} // Bind to state
+                    onChange={handleChange} // Update state on change
                     className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                   />
                 </div>
@@ -485,6 +524,8 @@ const NewInspectionPage = () => {
                   </Label>
                   <CheckboxField
                     name="newStormEvent"
+                    checked={formData.newStormEvent} // Bind to state
+                    onChange={handleChange} // Update state on change
                     className="rounded border-gray-300 text-indigo-600 shadow-sm focus:ring-indigo-500"
                   />
                 </div>
@@ -497,6 +538,8 @@ const NewInspectionPage = () => {
                   </Label>
                   <DatetimeLocalField
                     name="stormDateTime"
+                    value={formData.stormDateTime} // Bind to state
+                    onChange={handleChange} // Update state on change
                     className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                   />
                 </div>
@@ -509,6 +552,8 @@ const NewInspectionPage = () => {
                   </Label>
                   <TextField
                     name="stormDuration"
+                    value={formData.stormDuration} // Bind to state
+                    onChange={handleChange} // Update state on change
                     className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                   />
                 </div>
@@ -521,6 +566,8 @@ const NewInspectionPage = () => {
                   </Label>
                   <TextField
                     name="approximatePrecipitation"
+                    value={formData.approximatePrecipitation} // Bind to state
+                    onChange={handleChange} // Update state on change
                     className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                   />
                 </div>
@@ -535,6 +582,8 @@ const NewInspectionPage = () => {
                       </Label>
                       <CheckboxField
                         name="previousDischarge"
+                        checked={formData.previousDischarge} // Bind to state
+                        onChange={handleChange} // Update state on change
                         className="rounded border-gray-300 text-indigo-600 shadow-sm focus:ring-indigo-500"
                       />
                     </div>
@@ -547,6 +596,8 @@ const NewInspectionPage = () => {
                       </Label>
                       <CheckboxField
                         name="newDischarges"
+                        checked={formData.newDischarges} // Bind to state
+                        onChange={handleChange} // Update state on change
                         className="rounded border-gray-300 text-indigo-600 shadow-sm focus:ring-indigo-500"
                       />
                     </div>
@@ -563,6 +614,8 @@ const NewInspectionPage = () => {
                       </Label>
                       <CheckboxField
                         name="dischargeAtThisTime"
+                        checked={formData.dischargeAtThisTime} // Bind to state
+                        onChange={handleChange} // Update state on change
                         className="rounded border-gray-300 text-indigo-600 shadow-sm focus:ring-indigo-500"
                       />
                     </div>
@@ -575,6 +628,8 @@ const NewInspectionPage = () => {
                       </Label>
                       <CheckboxField
                         name="currentDischarges"
+                        checked={formData.currentDischarges} // Bind to state
+                        onChange={handleChange} // Update state on change
                         className="rounded border-gray-300 text-indigo-600 shadow-sm focus:ring-indigo-500"
                       />
                     </div>
@@ -585,11 +640,36 @@ const NewInspectionPage = () => {
           </div>
           <CloudinaryUploadWidget
             uwConfig={uwConfig}
-            // setPublicId={(id) => setPublicIds((prev) => [...prev, id])}
+            setPublicId={(id) =>
+              setMedia((prev) => [...prev, { url: id, description: '' }])
+            }
           />
-          <div className="mx-auto max-w-7xl px-6 lg:px-8">
-            <div className="-mx-6 grid grid-cols-2 gap-0.5 overflow-hidden sm:mx-0 sm:rounded-2xl md:grid-cols-3">
-              <div className="content bg-gray-400/5 p-8 sm:p-10"></div>
+          <div className="col-span-6 sm:col-span-2">
+            <Label
+              name="media"
+              className="block text-sm font-medium leading-6 text-gray-900"
+            >
+              Uploaded Images
+            </Label>
+            <div className="mt-2">
+              {media.map((item, index) => (
+                <div key={index} className="mb-4">
+                  <img
+                    src={item.url}
+                    alt={`Uploaded ${item.original_filename}`}
+                    className="h-32 w-32 object-cover"
+                  />
+                  <TextField
+                    name={`media-description-${index}`}
+                    value={item.description}
+                    onChange={(e) =>
+                      handleDescriptionChange(index, e.target.value)
+                    }
+                    placeholder="Enter description"
+                    className="mt-2 block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                  />
+                </div>
+              ))}
             </div>
           </div>
           <div className="grid grid-cols-1 gap-x-8 gap-y-10 border-b border-gray-900/10 pb-12 md:grid-cols-3">
