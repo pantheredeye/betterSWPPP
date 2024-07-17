@@ -1,8 +1,8 @@
 import { Link, routes } from '@redwoodjs/router'
 import { useQuery } from '@redwoodjs/web'
 
-const GET_STANDARD_BMPS_QUICK_ACTIONS = gql`
-  query GetStandardBmpsQuickActions {
+const GET_QUICK_ACTIONS = gql`
+  query GetQuickActions {
     standardBmps {
       id
     }
@@ -10,7 +10,7 @@ const GET_STANDARD_BMPS_QUICK_ACTIONS = gql`
 `
 
 const QuickActionsCard = () => {
-  const { data, loading, error } = useQuery(GET_STANDARD_BMPS_QUICK_ACTIONS)
+  const { data, loading, error } = useQuery(GET_QUICK_ACTIONS)
 
   if (loading) return <div>Loading...</div>
   if (error) return <div>Error loading data</div>

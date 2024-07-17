@@ -147,7 +147,6 @@ export default async () => {
     const sites: Prisma.SiteCreateInput[] = [
       {
         name: 'Site 1',
-        location: 'Location 1',
         addressLine1: '123 Main St',
         addressLine2: 'Suite 100',
         city: 'City 1',
@@ -168,7 +167,6 @@ export default async () => {
       },
       {
         name: 'Site 2',
-        location: 'Location 2',
         addressLine1: '456 Elm St',
         addressLine2: 'Apt 202',
         city: 'City 2',
