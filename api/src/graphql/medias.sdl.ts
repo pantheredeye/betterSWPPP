@@ -6,6 +6,7 @@ export const schema = gql`
     url: String!
     description: String!
   }
+
   type MediaUpload {
     inspection: Inspection!
     inspectionId: Int!

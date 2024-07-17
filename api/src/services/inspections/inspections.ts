@@ -34,6 +34,7 @@ export const createInspection: MutationResolvers['createInspection'] = async ({
           notes: data.notes,
         })),
       },
+      // media { }
     },
   })
 
