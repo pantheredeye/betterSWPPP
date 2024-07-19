@@ -20,8 +20,7 @@ export const schema = gql`
   }
 
   input CreateMediaInput {
-    inspectionId: Int!
-    url: String!
+     url: String!
     description: String!
   }
 

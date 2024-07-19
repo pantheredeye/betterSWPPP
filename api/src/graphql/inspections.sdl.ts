@@ -66,7 +66,7 @@ export const schema = gql`
     dischargeAtThisTime: Boolean!
     currentDischarges: Boolean!
     bmpData: [InspectionBmpInput!]
-    # media: [Media]!
+    media: [CreateMediaInput!]
   }
 
   input UpdateInspectionInput {
@@ -96,7 +96,7 @@ export const schema = gql`
     dischargeAtThisTime: Boolean
     currentDischarges: Boolean
     bmpData: [InspectionBmpInput!]
-    # media: [Media]!
+    media: [CreateMediaInput!]
   }
 
   type Mutation {

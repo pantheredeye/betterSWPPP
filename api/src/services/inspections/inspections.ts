@@ -19,7 +19,7 @@ export const inspection: QueryResolvers['inspection'] = ({ id }) => {
 export const createInspection: MutationResolvers['createInspection'] = async ({
   input,
 }) => {
-  const { bmpData, ...inspectionData } = input
+  const { media, bmpData, ...inspectionData } = input
 
   const inspection = await db.inspection.create({
     data: {
@@ -34,7 +34,12 @@ export const createInspection: MutationResolvers['createInspection'] = async ({
           notes: data.notes,
         })),
       },
-      // media { }
+     media: {
+      create: media.map((data) => ({
+        url: data.url,
+        description: data.description,
+      })),
+     },
     },
   })
 
