@@ -41,6 +41,13 @@ const NewInspectionPage = () => {
   const [uploadPreset] = useState('swppp_unsigned')
   const [selectedImage, setSelectedImage] = useState(null)
 
+  // const formMethods = useFormContext();
+
+  // useEffect(() => {
+  //   // Unregister the input when the component mounts
+  //   formMethods.unregister('media-description-1');
+  // }, [formMethods]);
+
   const [uwConfig] = useState({
     cloudName,
     uploadPreset,
@@ -147,6 +154,13 @@ const NewInspectionPage = () => {
             bmpData[bmpId] = { bmpId }
           }
           bmpData[bmpId][fieldName] = data[key]
+          delete cleanedData[key]
+        }
+      })
+
+      // Exclude media-description-* fields
+      Object.keys(cleanedData).forEach((key) => {
+        if (key.startsWith('media-description')) {
           delete cleanedData[key]
         }
       })
@@ -645,7 +659,7 @@ const NewInspectionPage = () => {
                     alt={`Uploaded ${item.original_filename}`}
                     className="h-32 w-32 object-cover"
                   />
-                  <TextField
+                  <input
                     name={`media-description-${index}`}
                     value={item.description}
                     onChange={(e) =>

@@ -34,12 +34,12 @@ export const createInspection: MutationResolvers['createInspection'] = async ({
           notes: data.notes,
         })),
       },
-     media: {
-      create: media.map((data) => ({
-        url: data.url,
-        description: data.description,
-      })),
-     },
+      media: {
+        create: media.map((data) => ({
+          url: data.url,
+          description: data.description,
+        })),
+      },
     },
   })
 
