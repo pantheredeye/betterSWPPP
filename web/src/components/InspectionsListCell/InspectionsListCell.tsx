@@ -9,16 +9,24 @@ import type {
   TypedDocumentNode,
 } from '@redwoodjs/web'
 
-import { Inspection, columns } from 'src/components/InspectionsTable/columns'
+import { columns } from 'src/components/InspectionsTable/columns'
 import DataTable from 'src/components/InspectionsTable/InspectionsTable'
 
 export const QUERY: TypedDocumentNode<
   FindInspectionsListQuery,
   FindInspectionsListQueryVariables
 > = gql`
-  query FindInspectionsListQuery() {
-    inspections: inspections() {
+  query FindInspectionsListQuery {
+    inspections: inspections {
       id
+      site {
+        name
+      }
+      date
+      inspectionType
+      inspector {
+        firstName
+      }
     }
   }
 `
@@ -34,14 +42,14 @@ export const Failure = ({
 )
 
 export const Success = ({
-  inspectionsList,
+  inspections,
 }: CellSuccessProps<
   FindInspectionsListQuery,
   FindInspectionsListQueryVariables
 >) => {
   return (
     <div className="container mx-auto py-10">
-      <DataTable columns={columns} data={inspectionsList} />
+      <DataTable columns={columns} data={inspections} />
     </div>
   )
 }
