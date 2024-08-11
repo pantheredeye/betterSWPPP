@@ -2,16 +2,19 @@ import { ColumnDef } from '@tanstack/react-table'
 
 export type Inspection = {
   id: number
-  site: string
+  site: {
+    name: string
+  }
   date: string
   inspectionType: string
-  //violationCount: number
-  inspector: string
+  inspector: {
+    email: string
+  }
 }
 
 export const columns: ColumnDef<Inspection>[] = [
   {
-    accessorKey: 'site',
+    accessorKey: 'site.name',
     header: 'Site',
   },
   {
@@ -20,10 +23,10 @@ export const columns: ColumnDef<Inspection>[] = [
   },
   {
     accessorKey: 'inspectionType',
-    header: 'Inspection Ty',
+    header: 'Inspection Type',
   },
   {
-    accessorKey: 'inspector',
+    accessorKey: 'inspector.email',
     header: 'Inspector',
   },
 ]

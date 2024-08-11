@@ -25,7 +25,7 @@ export const QUERY: TypedDocumentNode<
       date
       inspectionType
       inspector {
-        firstName
+        email
       }
     }
   }

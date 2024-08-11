@@ -107,7 +107,6 @@ model Bmp {
   bmpData     BmpData[]
 }
 
-
 model BmpData {
   id                     Int        @id @default(autoincrement())
   bmp                    Bmp        @relation(fields: [bmpId], references: [id])
