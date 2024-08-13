@@ -21,7 +21,7 @@ const navigation = [
   },
   {
     name: 'Inspections',
-    href: 'dashboard', // Change to 'inspections' when route is available
+    href: 'inspections', // Change to 'inspections' when route is available
     icon: UsersIcon,
     current: false,
   },
