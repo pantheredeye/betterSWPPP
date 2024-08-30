@@ -1,7 +1,7 @@
 import { ColumnDef } from '@tanstack/react-table'
 import { MoreHorizontal } from 'lucide-react'
 
-import { Button } from '/src/components/ui/button'
+import { Button } from 'src/components/ui/Button'
 
 import {
   DropdownMenu,
