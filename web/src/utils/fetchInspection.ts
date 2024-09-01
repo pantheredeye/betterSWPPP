@@ -1,4 +1,4 @@
-import { useApolloClient } from '@redwoodjs/web'
+import { gql, useLazyQuery } from '@apollo/client'
 
 const FETCH_INSPECTION_QUERY = gql`
   query FindInspectionQuery($id: Int!) {
@@ -46,17 +46,18 @@ const FETCH_INSPECTION_QUERY = gql`
   }
 `
 
-export const fetchInspection = async (id: number) => {
-  const client = useApolloClient()
+export const fetchInspection = (id: number) => {
+  const [loadInspection] = useLazyQuery(FETCH_INSPECTION_QUERY, {
+    variables: { id },
+  })
 
-  try {
-    const { data } = await client.query({
-      query: FETCH_INSPECTION_QUERY,
-      variables: { id },
+  return new Promise((resolve, reject) => {
+    loadInspection().then((result) => {
+      if (result.error) {
+        reject(result.error)
+      } else {
+        resolve(result.data.inspection)
+      }
     })
-    return data.inspection
-  } catch (error) {
-    console.error('Error fetching inspection:', error)
-    throw error
-  }
+  })
 }
