@@ -1,8 +1,12 @@
+import React, { useState } from 'react'
+
+import { PDFDownloadLink } from '@react-pdf/renderer'
 import { ColumnDef } from '@tanstack/react-table'
 import { MoreHorizontal } from 'lucide-react'
 
 import { navigate, routes } from '@redwoodjs/router'
 
+import InspectionPDF from 'src/components/InspectionPDF/InspectionPDF'
 import { Button } from 'src/components/ui/Button'
 import {
   DropdownMenu,
@@ -12,6 +16,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from 'src/components/ui/DropdownMenu'
+import { fetchInspection } from 'src/utils/fetchInspection'
 
 export type Inspection = {
   id: number
@@ -57,6 +62,47 @@ export const columns: ColumnDef<Inspection>[] = [
     cell: ({ row }) => {
       const inspection = row.original
 
+      const handleExportPDF = async (inspectionId: number) => {
+        try {
+          // Step 1: Fetch data using your `fetchInspection` utility
+          const inspectionData = await fetchInspection(inspectionId)
+
+          // Step 2: Create the PDF document using `BlobProvider`
+          const MyDocument = <InspectionPDF inspection={inspectionData} />
+
+          // Step 3: Use BlobProvider to generate the PDF Blob and trigger download
+          const downloadPDF = async (document: JSX.Element) => {
+            const { BlobProvider } = require('@react-pdf/renderer')
+
+            return (
+              <BlobProvider document={document}>
+                {({ blob, url, loading, error }) => {
+                  if (loading) return 'Generating PDF...'
+                  if (error) return 'Error generating PDF...'
+
+                  // Create a link element, set its href to the blob URL, and trigger a click
+                  const link = document.createElement('a')
+                  link.href = URL.createObjectURL(blob)
+                  link.download = `${inspectionData.title}.pdf`
+                  link.click()
+
+                  // Clean up the URL object after the download
+                  URL.revokeObjectURL(link.href)
+
+                  return null
+                }}
+              </BlobProvider>
+            )
+          }
+
+          // Trigger the download
+          await downloadPDF(MyDocument)
+        } catch (error) {
+          console.error('Error exporting PDF:', error)
+          // Handle error gracefully, e.g., show a notification to the user
+        }
+      }
+
       return (
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
@@ -75,13 +121,15 @@ export const columns: ColumnDef<Inspection>[] = [
               Copy inspection ID
             </DropdownMenuItem>
             <DropdownMenuSeparator />
-            <DropdownMenuItem>View inspection</DropdownMenuItem>
             <DropdownMenuItem
               onClick={() =>
                 navigate(routes.viewInspection({ id: inspection.id }))
               }
             >
-              Print inspection
+              View inspection
+            </DropdownMenuItem>
+            <DropdownMenuItem onClick={() => handleExportPDF(inspection.id)}>
+              Export PDF
             </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>

@@ -1,6 +1,6 @@
 import { render } from '@redwoodjs/testing/web'
 
-import InspectionPdf from './InspectionPdf'
+import InspectionPDF from './InspectionPDF'
 
 //   Improve this test with help from the Redwood Testing Doc:
 //    https://redwoodjs.com/docs/testing#testing-components
@@ -8,7 +8,7 @@ import InspectionPdf from './InspectionPdf'
 describe('InspectionPdf', () => {
   it('renders successfully', () => {
     expect(() => {
-      render(<InspectionPdf />)
+      render(<InspectionPDF />)
     }).not.toThrow()
   })
 })

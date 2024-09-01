@@ -8,7 +8,7 @@ import type { FindInspectionQuery } from 'types/graphql'
 import { useParams } from '@redwoodjs/router'
 
 import InspectionCell from 'src/components/InspectionCell'
-import InspectionPDF from 'src/components/InspectionPDF/InspectionPdf'
+import InspectionPDF from 'src/components/InspectionPDF/InspectionPDF'
 import { Button } from 'src/components/ui/Button'
 
 const ViewInspectionPage = () => {

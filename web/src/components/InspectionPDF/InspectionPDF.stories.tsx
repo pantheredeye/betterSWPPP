@@ -12,15 +12,15 @@
 
 import type { Meta, StoryObj } from '@storybook/react'
 
-import InspectionPdf from './InspectionPdf'
+import InspectionPDF from './InspectionPDF'
 
-const meta: Meta<typeof InspectionPdf> = {
-  component: InspectionPdf,
+const meta: Meta<typeof InspectionPDF> = {
+  component: InspectionPDF,
   tags: ['autodocs'],
 }
 
 export default meta
 
-type Story = StoryObj<typeof InspectionPdf>
+type Story = StoryObj<typeof InspectionPDF>
 
 export const Primary: Story = {}
