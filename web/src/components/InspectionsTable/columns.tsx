@@ -1,6 +1,6 @@
-import React, { useState } from 'react'
+import React from 'react'
 
-import { PDFDownloadLink } from '@react-pdf/renderer'
+import { BlobProvider } from '@react-pdf/renderer'
 import { ColumnDef } from '@tanstack/react-table'
 import { MoreHorizontal } from 'lucide-react'
 
@@ -16,7 +16,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from 'src/components/ui/DropdownMenu'
-import { fetchInspection } from 'src/utils/fetchInspection'
+import { useFetchInspection } from 'src/utils/fetchInspection'
 
 export type Inspection = {
   id: number
@@ -63,43 +63,34 @@ export const columns: ColumnDef<Inspection>[] = [
       const inspection = row.original
 
       const handleExportPDF = async (inspectionId: number) => {
-        try {
-          // Step 1: Fetch data using your `fetchInspection` utility
-          const inspectionData = await fetchInspection(inspectionId)
+        const { fetchInspection } = useFetchInspection()
 
-          // Step 2: Create the PDF document using `BlobProvider`
+        try {
+          const inspectionData = await fetchInspection(inspectionId)
           const MyDocument = <InspectionPDF inspection={inspectionData} />
 
-          // Step 3: Use BlobProvider to generate the PDF Blob and trigger download
-          const downloadPDF = async (document: JSX.Element) => {
-            const { BlobProvider } = require('@react-pdf/renderer')
+          return (
+            <BlobProvider document={MyDocument}>
+              {({ blob, loading, error }) => {
+                if (loading) return 'Generating PDF...'
+                if (error) return `Error generating PDF: ${error}`
+                if (!blob) return 'Failed to generate PDF'
 
-            return (
-              <BlobProvider document={document}>
-                {({ blob, url, loading, error }) => {
-                  if (loading) return 'Generating PDF...'
-                  if (error) return 'Error generating PDF...'
+                // Create a link element, set its href to the blob URL, and trigger a click
+                const link = document.createElement('a')
+                link.href = URL.createObjectURL(blob)
+                link.download = `${inspectionData.title || 'inspection'}.pdf`
+                link.click()
 
-                  // Create a link element, set its href to the blob URL, and trigger a click
-                  const link = document.createElement('a')
-                  link.href = URL.createObjectURL(blob)
-                  link.download = `${inspectionData.title}.pdf`
-                  link.click()
+                // Clean up the URL object after the download
+                URL.revokeObjectURL(link.href)
 
-                  // Clean up the URL object after the download
-                  URL.revokeObjectURL(link.href)
-
-                  return null
-                }}
-              </BlobProvider>
-            )
-          }
-
-          // Trigger the download
-          await downloadPDF(MyDocument)
+                return null
+              }}
+            </BlobProvider>
+          )
         } catch (error) {
           console.error('Error exporting PDF:', error)
-          // Handle error gracefully, e.g., show a notification to the user
         }
       }
 
