@@ -1,6 +1,6 @@
 import { useCallback } from 'react'
 
-import { gql, useLazyQuery } from '@apollo/client'
+import { gql, useQuery } from '@apollo/client'
 
 export const FETCH_INSPECTION_QUERY = gql`
   query FindInspectionQuery($id: Int!) {
@@ -85,20 +85,19 @@ export type InspectionData = {
 }
 
 export const useFetchInspection = () => {
-  const [loadInspection, { called, loading, error }] = useLazyQuery(
-    FETCH_INSPECTION_QUERY
-  )
-
+  const { loading, error, refetch } = useQuery(FETCH_INSPECTION_QUERY, {
+    skip: true, // This prevents the query from running automatically
+  })
   const fetchInspection = useCallback(
     async (id: number): Promise<InspectionData> => {
-      const { data } = await loadInspection({ variables: { id } })
+      const { data } = await refetch({ id })
       if (error) {
         throw error
       }
       return data.inspection
     },
-    [loadInspection, error]
+    [refetch, error]
   )
 
-  return { fetchInspection, loading, called, error }
+  return { fetchInspection, loading, error }
 }
