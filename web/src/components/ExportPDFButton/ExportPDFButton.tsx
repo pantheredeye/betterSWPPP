@@ -1,9 +1,7 @@
-import React, { useState } from 'react'
-
-import { PDFDownloadLink } from '@react-pdf/renderer'
+// ExportPDFButton.tsx
+import { pdf } from '@react-pdf/renderer'
 
 import InspectionPDF from 'src/components/InspectionPDF/InspectionPDF'
-import { DropdownMenuItem } from 'src/components/ui/DropdownMenu'
 import { useFetchInspection } from 'src/utils/fetchInspection'
 
 interface ExportPDFButtonProps {
@@ -11,41 +9,34 @@ interface ExportPDFButtonProps {
 }
 
 const ExportPDFButton: React.FC<ExportPDFButtonProps> = ({ inspectionId }) => {
-  const [inspectionData, setInspectionData] = useState(null)
   const { fetchInspection, loading, error } = useFetchInspection()
 
   const handleExportPDF = async () => {
+    if (loading) return
+    if (error) {
+      console.error('Error fetching inspection data:', error)
+      return
+    }
+
     try {
       const data = await fetchInspection(inspectionId)
-      setInspectionData(data)
-      console.log(data)
+      const pdfDoc = <InspectionPDF inspection={data} />
+      const blob = await pdf(pdfDoc).toBlob()
+      const url = URL.createObjectURL(blob)
+      const link = document.createElement('a')
+      link.href = url
+      link.download = `${data.title || 'inspection'}-${inspectionId}.pdf`
+      link.click()
+      URL.revokeObjectURL(url)
     } catch (err) {
-      console.error('Error fetching inspection data:', err)
+      console.error('Error generating PDF:', err)
     }
   }
 
-  if (loading) return <span>Loading...</span>
-  if (error) return <span>Error: {error.message}</span>
-
   return (
-    <>
-      <DropdownMenuItem onClick={handleExportPDF}>Export PDF</DropdownMenuItem>
-
-      {inspectionData && (
-        <PDFDownloadLink
-          document={<InspectionPDF inspection={inspectionData} />}
-          fileName={`${inspectionData.title || 'inspection'}.pdf`}
-        >
-          {({ loading, error }) =>
-            loading
-              ? 'Generating PDF...'
-              : error
-              ? `Error: ${error.message}`
-              : 'Download PDF'
-          }
-        </PDFDownloadLink>
-      )}
-    </>
+    <button onClick={handleExportPDF} disabled={loading}>
+      {loading ? 'Generating PDF...' : 'Export PDF'}
+    </button>
   )
 }
 

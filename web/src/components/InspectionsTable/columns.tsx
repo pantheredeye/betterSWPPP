@@ -86,7 +86,9 @@ export const columns: ColumnDef<Inspection>[] = [
             >
               View inspection
             </DropdownMenuItem>
-            <ExportPDFButton inspectionId={inspection.id} />
+            <DropdownMenuItem>
+              <ExportPDFButton inspectionId={inspection.id} />
+            </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
       )
