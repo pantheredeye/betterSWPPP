@@ -75,6 +75,16 @@ const styles = StyleSheet.create({
   },
 })
 
+const bmpHasData = (bmpItem) => {
+  return (
+    bmpItem.implemented !== null ||
+    bmpItem.maintenanceRequired !== null ||
+    bmpItem.repeatOccurrence !== null ||
+    bmpItem.correctiveActionNeeded !== null ||
+    (bmpItem.notes && bmpItem.notes.trim() !== '')
+  )
+}
+
 const InspectionPDF = ({ inspection }) => {
   const documentTitle = `${inspection.site.name} & ${inspection.title}`
   const author = `Inspector ID: ${inspection.inspector.id}`
@@ -103,7 +113,11 @@ const InspectionPDF = ({ inspection }) => {
             </View>
             <View style={styles.column}>
               <Text style={styles.label}>Inspector:</Text>
-              <Text style={styles.text}>{inspection.inspector.name}</Text>
+              <Text style={styles.text}>
+                {inspection.inspector.firstName +
+                  ' ' +
+                  inspection.inspector.lastName}
+              </Text>
             </View>
             <View style={styles.column}>
               <Text style={styles.label}>Date:</Text>
@@ -203,6 +217,33 @@ const InspectionPDF = ({ inspection }) => {
           <Text style={styles.label}>Discharge at This Time:</Text>
           <Text style={styles.text}>{inspection.dischargeAtThisTime}</Text>
         </View>
+
+        {inspection.bmpData &&
+          inspection.bmpData.filter(bmpHasData).length > 0 && (
+            <View style={styles.section}>
+              <Text style={styles.label}>BMPs:</Text>
+              {inspection.bmpData.filter(bmpHasData).map((bmpItem, index) => (
+                <View key={index} style={styles.section}>
+                  <Text style={styles.text}>BMP Name: {bmpItem.bmp.name}</Text>
+                  <Text style={styles.text}>
+                    Implemented: {bmpItem.implemented ? 'Yes' : 'No'}
+                  </Text>
+                  <Text style={styles.text}>
+                    Maintenance Required:{' '}
+                    {bmpItem.maintenanceRequired ? 'Yes' : 'No'}
+                  </Text>
+                  <Text style={styles.text}>
+                    Repeat Occurrence: {bmpItem.repeatOccurrence ? 'Yes' : 'No'}
+                  </Text>
+                  <Text style={styles.text}>
+                    Corrective Action Needed:{' '}
+                    {bmpItem.correctiveActionNeeded ? 'Yes' : 'No'}
+                  </Text>
+                  <Text style={styles.text}>Notes: {bmpItem.notes}</Text>
+                </View>
+              ))}
+            </View>
+          )}
 
         {/* Media Section */}
         {inspection.media && inspection.media.length > 0 && (

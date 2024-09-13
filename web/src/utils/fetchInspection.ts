@@ -10,7 +10,8 @@ export const FETCH_INSPECTION_QUERY = gql`
         name
       }
       inspector {
-        id
+        firstName
+        lastName
       }
       date
       startTime
@@ -39,14 +40,26 @@ export const FETCH_INSPECTION_QUERY = gql`
       updatedAt
       bmpData {
         id
+        implemented
+        maintenanceRequired
+        repeatOccurrence
+        correctiveActionNeeded
+        notes
+        bmp {
+          id
+          name
+          description
+        }
       }
       media {
         id
         url
+        description
       }
     }
   }
 `
+
 export type InspectionData = {
   id: number
   site: {

@@ -11,6 +11,7 @@ export default async () => {
       { name: 'SITE_OWNER' },
       { name: 'INSPECTOR' },
     ]
+
     const createdRoles = await Promise.all(
       roles.map((role) => db.role.create({ data: role }))
     )
