@@ -1,16 +1,8 @@
 import { useCallback } from 'react'
 
 import { gql, useQuery } from '@apollo/client'
-import type {
-  FetchInspectionQuery,
-  FetchInspectionQueryVariables,
-} from 'types/graphql'
 
-import type { CellSuccessProps, TypedDocumentNode } from '@redwoodjs/web'
-export const FETCH_INSPECTION_QUERY: TypedDocumentNode<
-  FetchInspectionQuery,
-  FetchInspectionQueryVariables
-> = gql`
+export const FETCH_INSPECTION_QUERY = gql`
   query FetchInspectionQuery($id: Int!) {
     inspection: inspection(id: $id) {
       id
@@ -18,7 +10,6 @@ export const FETCH_INSPECTION_QUERY: TypedDocumentNode<
         name
       }
       inspector {
-        id
         firstName
         lastName
       }
@@ -111,11 +102,7 @@ export const useFetchInspection = () => {
     skip: true, // This prevents the query from running automatically
   })
   const fetchInspection = useCallback(
-    async (
-      id: number
-    ): Promise<
-      CellSuccessProps<FetchInspectionQuery, FetchInspectionQueryVariables>
-    > => {
+    async (id: number): Promise<InspectionData> => {
       const { data } = await refetch({ id })
       if (error) {
         throw error

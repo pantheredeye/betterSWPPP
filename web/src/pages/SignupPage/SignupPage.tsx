@@ -42,7 +42,7 @@ const SignupPage = () => {
       toast.error(response.error)
     } else {
       toast.success('Welcome!')
-      navigate(routes.dashboard())
+      navigate(routes.profile({ id: response.id }))
     }
   }
 

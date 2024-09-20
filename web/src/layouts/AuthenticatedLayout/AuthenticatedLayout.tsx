@@ -189,7 +189,7 @@ const MainLayout = ({ children }: MainLayoutProps) => {
                         <MenuItem>
                           {({ active }) => (
                             <Link
-                              to={routes.dashboard()}
+                              to={routes.profile(1)}
                               className={classNames(
                                 active ? 'bg-gray-50' : '',
                                 'block px-3 py-1 text-sm leading-6 text-gray-900'
