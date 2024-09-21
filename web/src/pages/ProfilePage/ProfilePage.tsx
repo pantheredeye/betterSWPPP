@@ -1,7 +1,11 @@
+import { useParams } from '@redwoodjs/router'
+
 import ProfileCell from 'src/components/ProfileCell'
 
-const ProfilePage = ({ id }) => {
-  return <ProfileCell id={id} />
+const ProfilePage = () => {
+  const { id } = useParams()
+
+  return <ProfileCell id={parseInt(id, 10)} />
 }
 
 export default ProfilePage

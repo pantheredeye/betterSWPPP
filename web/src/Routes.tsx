@@ -18,7 +18,7 @@ const Routes = () => {
         <Route path="/inspections" page={InspectionsPage} name="inspections" />
       </Set>
       <PrivateSet unauthenticated="login" wrap={AuthenticatedLayout}>
-        <Route path="/profile" page={ProfilePage} name="profile" />
+        <Route path="/profile/{id}" page={ProfilePage} name="profile" />
         <Route path="/view-inspection" page={ViewInspectionPage} name="viewInspection" />
 
         <Route path="/new-inspection" page={NewInspectionPage} name="newInspection" />

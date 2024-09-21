@@ -17,9 +17,9 @@ export const QUERY: TypedDocumentNode<
       id
       firstName
       lastName
-      role {
-        name
-      }
+      # role {
+      #   name
+      # }
       email
       phoneNumber
     }
