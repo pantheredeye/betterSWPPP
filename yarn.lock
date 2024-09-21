@@ -3986,13 +3986,13 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@listr2/prompt-adapter-enquirer@https://verdaccio.tobbe.dev/@listr2/prompt-adapter-enquirer/-/prompt-adapter-enquirer-2.0.16.tgz":
-  version: 2.0.16
-  resolution: "@listr2/prompt-adapter-enquirer@https://verdaccio.tobbe.dev/@listr2/prompt-adapter-enquirer/-/prompt-adapter-enquirer-2.0.16.tgz"
+"@listr2/prompt-adapter-enquirer@https://verdaccio.tobbe.dev/@listr2/prompt-adapter-enquirer/-/prompt-adapter-enquirer-2.0.17.tgz":
+  version: 2.0.17
+  resolution: "@listr2/prompt-adapter-enquirer@https://verdaccio.tobbe.dev/@listr2/prompt-adapter-enquirer/-/prompt-adapter-enquirer-2.0.17.tgz"
   peerDependencies:
     enquirer: ">= 2.3.0 < 3"
-    listr2: 8.2.3
-  checksum: 10c0/fb66d354122a2c864539dd2ef0ef5d18036bd013f0df4f96c6c7731d5fc6a0b2a2ce86ea4cb1e3b934b9684f4d5bdb4c19c819698a220880e08fc8178f5c958f
+    listr2: "workspace:*"
+  checksum: 10c0/fc2fafd47ca8b092538542295522e70260daa4b60fad01edd28218382fb1fce2b0d140c68186f5a5d02dd92fee2fc31c96c8f49aca012b6424fa2cbf09d1f0ca
   languageName: node
   linkType: hard
 
@@ -18810,17 +18810,17 @@ __metadata:
   languageName: node
   linkType: hard
 
-"listr2@npm:8.2.3":
-  version: 8.2.3
-  resolution: "listr2@npm:8.2.3"
+"listr2@npm:8.2.4":
+  version: 8.2.4
+  resolution: "listr2@npm:8.2.4"
   dependencies:
     cli-truncate: "npm:^4.0.0"
     colorette: "npm:^2.0.20"
     eventemitter3: "npm:^5.0.1"
-    log-update: "npm:^6.0.0"
+    log-update: "npm:^6.1.0"
     rfdc: "npm:^1.4.1"
     wrap-ansi: "npm:^9.0.0"
-  checksum: 10c0/44404ecfcb49719538b39aceaa1c7f5a61e6ed88456769c8c876bfc326fc69c26c88cc1cc81ea6cc8341f5ca14ed56558b65263f3ec4d396e83ff02ee8a69508
+  checksum: 10c0/df5b129e9767de1997973cec6103cd4bd6fc3b3367685b7c23048d12b61d5b7e44fecd8a3d3534c0e1c963bd5ac43ca501d14712f46fa101050037be323a5c16
   languageName: node
   linkType: hard
 
@@ -19104,7 +19104,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"log-update@npm:^6.0.0":
+"log-update@npm:^6.1.0":
   version: 6.1.0
   resolution: "log-update@npm:6.1.0"
   dependencies:
@@ -19192,12 +19192,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"lucide-react@npm:^0.429.0":
-  version: 0.429.0
-  resolution: "lucide-react@npm:0.429.0"
+"lucide-react@npm:^0.445.0":
+  version: 0.445.0
+  resolution: "lucide-react@npm:0.445.0"
   peerDependencies:
     react: ^16.5.1 || ^17.0.0 || ^18.0.0 || ^19.0.0-rc
-  checksum: 10c0/256d18dce24114fe705755030ab57b6be698f275f3a75565678f8b1de1ce85075f16aed0950b0a762d25be02176f4eb0650cf34bd934ace44fc60fd222bd6b70
+  checksum: 10c0/4cf20d21c139d524a7e93c67679ac0e9e45573a77a3e1f074324058bee677ebf316c1406ecb2311b5bed96e617873150c09a223f27321e69755bd9b56d7b3b43
   languageName: node
   linkType: hard
 
@@ -23264,7 +23264,7 @@ __metadata:
     "@redwoodjs/project-config": "npm:7.7.4"
     "@tailwindcss/forms": "npm:^0.5.7"
     prettier-plugin-tailwindcss: "npm:0.4.1"
-    rw-shad: "npm:^1.0.0"
+    rw-shad: "npm:^1.1.0"
     thanker-cli: "npm:^1.0.0"
     web: "workspace:^"
   languageName: unknown
@@ -23295,21 +23295,21 @@ __metadata:
   languageName: node
   linkType: hard
 
-"rw-shad@npm:^1.0.0":
-  version: 1.0.0
-  resolution: "rw-shad@npm:1.0.0"
+"rw-shad@npm:^1.1.0":
+  version: 1.1.0
+  resolution: "rw-shad@npm:1.1.0"
   dependencies:
-    "@listr2/prompt-adapter-enquirer": "https://verdaccio.tobbe.dev/@listr2/prompt-adapter-enquirer/-/prompt-adapter-enquirer-2.0.16.tgz"
+    "@listr2/prompt-adapter-enquirer": "https://verdaccio.tobbe.dev/@listr2/prompt-adapter-enquirer/-/prompt-adapter-enquirer-2.0.17.tgz"
     "@redwoodjs/cli-helpers": "npm:5.4.3"
     enquirer: "npm:2.4.1"
     execa: "npm:5.1.1"
     findup-sync: "npm:5.0.0"
-    listr2: "npm:8.2.3"
+    listr2: "npm:8.2.4"
     pascalcase: "npm:1.0.0"
     yargs: "npm:17.7.1"
   bin:
     rw-shad: dist/cli.js
-  checksum: 10c0/29023ffaba03844ac4711076f158f0f3a0236f346d16d1904210368d012435be120ff775ab07ea7bd567dbf482f363c584a5c888696634cb49c8cf50fda4deac
+  checksum: 10c0/0620b1595408897f8f0bcccd2c1dc3bce84d9064fbbdbc9b2eacbccb0aaa05d85deaafddc2f487e59a67d1b6e04daf31aa8ff9ce0147e429a69742931a7a6041
   languageName: node
   linkType: hard
 
@@ -24741,10 +24741,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"tailwind-merge@npm:^2.4.0":
-  version: 2.4.0
-  resolution: "tailwind-merge@npm:2.4.0"
-  checksum: 10c0/77bd20647d08db78a0bdf7b57d4b904479aee7727f44570f8834d62a1aa56f42d7ae68ac959e3d610c9f188aa164eeefb6c43df4f0c8bb7cfc3418e1575bfecb
+"tailwind-merge@npm:^2.5.2":
+  version: 2.5.2
+  resolution: "tailwind-merge@npm:2.5.2"
+  checksum: 10c0/e43a9a468f7ba4ed5b4a399558d96d6270a3d8131dca111cccc803e71cc23885060d18d721f312a24fff0a75c567dbb30b2a87c18aba25eb4255df197d8170ab
   languageName: node
   linkType: hard
 
@@ -26433,12 +26433,12 @@ __metadata:
     clsx: "npm:^2.1.1"
     humanize-string: "npm:2.1.0"
     jspdf: "npm:^2.5.1"
-    lucide-react: "npm:^0.429.0"
+    lucide-react: "npm:^0.445.0"
     postcss: "npm:^8.4.38"
     postcss-loader: "npm:^8.1.1"
     react: "npm:18.2.0"
     react-dom: "npm:18.2.0"
-    tailwind-merge: "npm:^2.4.0"
+    tailwind-merge: "npm:^2.5.2"
     tailwindcss: "npm:^3.4.3"
     tailwindcss-animate: "npm:^1.0.7"
     zustand: "npm:^4.5.2"
