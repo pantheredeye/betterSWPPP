@@ -1,7 +1,7 @@
 import { useAuth } from 'src/auth'
 import QuickActionsCard from 'src/components/QuickActionsCard'
-import RecentActivityCard from 'src/components/RecentActivityCard/RecentActivityCard'
-import StatisticsCard from 'src/components/StatisticsCard/StatisticsCard'
+import RecentActivityCard from 'src/components/RecentActivityCard'
+import StatisticsCard from 'src/components/StatisticsCard'
 import WelcomeCard from 'src/components/WelcomeCard'
 
 const DashboardPage = () => {
@@ -13,7 +13,7 @@ const DashboardPage = () => {
   ]
 
   return (
-    <div className="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3">
+    <div className="grid grid-cols-1 gap-8 px-4 sm:px-6 md:grid-cols-2 lg:grid-cols-3 lg:px-8">
       <WelcomeCard user={currentUser} />
       <QuickActionsCard />
       <RecentActivityCard activities={activities} />

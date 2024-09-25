@@ -1,9 +1,11 @@
 const WelcomeCard = ({ user }) => {
   return (
-    <div className="rounded-md bg-white p-6 shadow">
-      <h3 className="mb-4 text-xl text-blue-600">Welcome, {user.firstName}!</h3>
-      <p className="text-gray-700">
-        Here&apos;s a quick overview of your account.
+    <div className="rounded-xl bg-gray-800 p-6 shadow-lg md:col-span-2 lg:col-span-3">
+      <h2 className="text-2xl font-bold text-gray-200">
+        Welcome back, {user?.firstName ?? 'User'}!
+      </h2>
+      <p className="mt-2 text-gray-300">
+        Here's what's happening with your sites today.
       </p>
     </div>
   )

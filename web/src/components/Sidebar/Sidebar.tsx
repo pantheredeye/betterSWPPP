@@ -6,14 +6,14 @@ import {
   FolderIcon,
   DocumentDuplicateIcon,
   Cog6ToothIcon,
-  BellIcon,
   ChevronLeftIcon,
   ChevronRightIcon,
   ArrowLeftOnRectangleIcon, // Logout icon
   ArrowUturnLeftIcon, // Back icon
+  UserIcon,
 } from '@heroicons/react/24/outline'
 
-import { Link, routes } from '@redwoodjs/router'
+import { Link } from '@redwoodjs/router'
 
 import { useAuth } from 'src/auth'
 
@@ -27,6 +27,12 @@ const navigation = [
   { name: 'Sites', href: 'dashboard', icon: FolderIcon },
   { name: 'BMPs', href: 'dashboard', icon: DocumentDuplicateIcon },
   { name: 'Settings', href: 'dashboard', icon: Cog6ToothIcon },
+  { name: 'Profile', href: 'profile', icon: UserIcon },
+]
+
+const actions = [
+  { name: 'Back', action: 'back', icon: ArrowUturnLeftIcon },
+  { name: 'Logout', action: 'logout', icon: ArrowLeftOnRectangleIcon },
 ]
 
 const Sidebar = () => {
@@ -39,7 +45,7 @@ const Sidebar = () => {
         'flex flex-col transition-all duration-300',
         isCollapsed ? 'w-20' : 'w-64',
         'bg-gray-900 text-gray-300',
-        'shadow-inner' // Neuromorphism effect
+        'shadow-inner'
       )}
     >
       {/* Header with Title and Collapse Button */}
@@ -65,11 +71,11 @@ const Sidebar = () => {
           {navigation.map((item) => (
             <li key={item.name}>
               <Link
-                to={routes[item.href]()}
+                to={item.href}
                 className={classNames(
                   'group relative flex items-center rounded-xl px-2 py-2 text-sm font-medium',
                   'bg-gray-800 hover:bg-gray-700',
-                  'shadow-lg', // Neuromorphism effect
+                  'shadow-lg',
                   isCollapsed ? 'justify-center' : 'justify-start'
                 )}
               >
@@ -91,62 +97,42 @@ const Sidebar = () => {
         </ul>
       </nav>
 
-      {/* Profile Section at the Bottom */}
-      <div className="px-4 pb-4">
-        <div className="border-t border-gray-700 pt-4">
-          <div className="flex items-center">
-            <div className="relative">
-              <img
-                className="h-10 w-10 rounded-full bg-gray-800 shadow-lg"
-                src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e"
-                alt=""
-              />
-              {/* Status indicator */}
-              <span className="absolute bottom-0 right-0 block h-3 w-3 rounded-full bg-green-500 ring-2 ring-gray-900"></span>
-            </div>
-            {!isCollapsed && (
-              <div className="ml-3">
-                {/* <p className="text-sm font-medium text-gray-200">
-                  {currentUser?.firstName ?? 'User'}
-                </p> */}
-                <div className="mt-1 flex space-x-2">
-                  <button
-                    onClick={logOut}
-                    className="flex items-center text-xs text-gray-400 hover:text-gray-200 focus:outline-none"
-                  >
-                    <ArrowLeftOnRectangleIcon
-                      className="mr-1 h-4 w-4"
-                      aria-hidden="true"
-                    />
-                    Logout
-                  </button>
-                  <button
-                    onClick={() => window.history.back()}
-                    className="flex items-center text-xs text-gray-400 hover:text-gray-200 focus:outline-none"
-                  >
-                    <ArrowUturnLeftIcon
-                      className="mr-1 h-4 w-4"
-                      aria-hidden="true"
-                    />
-                    Back
-                  </button>
-                </div>
-              </div>
-            )}
-          </div>
-          {/* Notifications Icon */}
-          <div className="mt-4 flex items-center">
-            <button
-              type="button"
-              className="flex items-center text-gray-400 hover:text-gray-200 focus:outline-none"
-            >
-              <BellIcon className="h-6 w-6" aria-hidden="true" />
-              {!isCollapsed && (
-                <span className="ml-2 text-sm">Notifications</span>
-              )}
-            </button>
-          </div>
-        </div>
+      {/* Actions at the Bottom */}
+      <div className="px-2 py-2 pb-4">
+        <ul className="space-y-2">
+          {actions.map((action) => (
+            <li key={action.name}>
+              <button
+                onClick={() => {
+                  if (action.action === 'back') {
+                    window.history.back()
+                  } else if (action.action === 'logout') {
+                    logOut()
+                  }
+                }}
+                className={classNames(
+                  'group relative flex w-full items-center rounded-xl px-2 py-2 text-sm font-medium',
+                  'bg-gray-800 hover:bg-gray-700',
+                  'shadow-lg',
+                  isCollapsed ? 'justify-center' : 'justify-start'
+                )}
+              >
+                <action.icon
+                  className="h-6 w-6 text-gray-400 group-hover:text-gray-200"
+                  aria-hidden="true"
+                />
+                {!isCollapsed && (
+                  <span className="ml-3 text-gray-200">{action.name}</span>
+                )}
+                {isCollapsed && (
+                  <span className="absolute left-full ml-3 w-auto min-w-max whitespace-nowrap rounded-md bg-gray-800 px-2 py-1 text-xs text-gray-200 opacity-0 group-hover:opacity-100">
+                    {action.name}
+                  </span>
+                )}
+              </button>
+            </li>
+          ))}
+        </ul>
       </div>
     </div>
   )

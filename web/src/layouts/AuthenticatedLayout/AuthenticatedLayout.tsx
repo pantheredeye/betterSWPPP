@@ -10,11 +10,11 @@ import { Bars3Icon, XMarkIcon } from '@heroicons/react/24/outline'
 
 import Sidebar from 'src/components/Sidebar'
 
-interface MainLayoutProps {
+interface AuthenticatedLayoutProps {
   children: ReactNode
 }
 
-const MainLayout = ({ children }: MainLayoutProps) => {
+const AuthenticatedLayout = ({ children }: AuthenticatedLayoutProps) => {
   const [sidebarOpen, setSidebarOpen] = useState(false)
 
   return (
@@ -77,23 +77,23 @@ const MainLayout = ({ children }: MainLayoutProps) => {
       </Transition>
 
       {/* Desktop Sidebar */}
-      <div className="hidden lg:flex lg:w-64 lg:flex-col">
+      <div className="hidden lg:flex lg:w-64 lg:flex-col lg:shadow-lg">
         <Sidebar />
       </div>
 
       {/* Main Content */}
-      <div className="flex flex-1 flex-col">
-        {/* Header */}
-        <header className="sticky top-0 z-40 flex h-16 items-center bg-gray-900 px-4 shadow-lg sm:px-6 lg:px-8">
+      <div className="flex flex-1 flex-col border-l border-gray-700">
+        {/* Mobile Sidebar Toggle */}
+        <div className="px-4 py-2 lg:hidden">
           <button
             type="button"
-            className="text-gray-300 hover:text-gray-200 focus:outline-none lg:hidden"
+            className="text-gray-300 hover:text-gray-200 focus:outline-none"
             onClick={() => setSidebarOpen(true)}
           >
             <span className="sr-only">Open sidebar</span>
             <Bars3Icon className="h-6 w-6" aria-hidden="true" />
           </button>
-        </header>
+        </div>
 
         {/* Main Section */}
         <main className="flex-grow py-10">
@@ -116,4 +116,4 @@ const MainLayout = ({ children }: MainLayoutProps) => {
   )
 }
 
-export default MainLayout
+export default AuthenticatedLayout

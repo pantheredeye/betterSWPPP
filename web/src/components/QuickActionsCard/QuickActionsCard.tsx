@@ -18,29 +18,33 @@ const QuickActionsCard = () => {
   const hasStandardBmps = data.standardBmps.length > 0
 
   return (
-    <div className="rounded-md bg-white p-6 shadow">
-      <h3 className="mb-4 text-xl text-blue-600">Quick Actions</h3>
-      <Link
-        to={routes.newInspection()}
-        className="mb-2 block w-full rounded-md bg-blue-600 px-4 py-2 text-center text-white hover:bg-blue-700"
-      >
-        New Inspection
-      </Link>
-      {!hasStandardBmps ? (
+    <div className="rounded-xl bg-gray-800 p-6 shadow-lg">
+      <h3 className="mb-4 text-xl font-semibold text-gray-200">
+        Quick Actions
+      </h3>
+      <div className="space-y-2">
         <Link
-          to={routes.standardBmpSettings()}
-          className="mb-2 block w-full rounded-md bg-blue-600 px-4 py-2 text-center text-white hover:bg-blue-700"
+          to={routes.newInspection()}
+          className="flex w-full items-center justify-center rounded-xl bg-indigo-600 px-4 py-2 font-medium text-white shadow-lg hover:bg-indigo-500 focus:outline-none"
         >
-          Configure Standard BMPs
+          New Inspection
         </Link>
-      ) : (
-        <Link
-          to={routes.newSite()}
-          className="mb-2 block w-full rounded-md bg-blue-600 px-4 py-2 text-center text-white hover:bg-blue-700"
-        >
-          Add Site
-        </Link>
-      )}
+        {!hasStandardBmps ? (
+          <Link
+            to={routes.standardBmpSettings()}
+            className="flex w-full items-center justify-center rounded-xl bg-indigo-600 px-4 py-2 font-medium text-white shadow-lg hover:bg-indigo-500 focus:outline-none"
+          >
+            Configure Standard BMPs
+          </Link>
+        ) : (
+          <Link
+            to={routes.newSite()}
+            className="flex w-full items-center justify-center rounded-xl bg-indigo-600 px-4 py-2 font-medium text-white shadow-lg hover:bg-indigo-500 focus:outline-none"
+          >
+            Add Site
+          </Link>
+        )}
+      </div>
     </div>
   )
 }

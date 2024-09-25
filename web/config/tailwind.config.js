@@ -23,7 +23,14 @@ module.exports = {
         md: 'calc(var(--radius) - 2px)',
         sm: 'calc(var(--radius) - 4px)',
       },
+      boxShadow: {
+        neuromorphic: '9px 9px 16px #1c1c1c, -9px -9px 16px #3a3a3a',
+      },
       colors: {
+        gray: {
+          950: '#0a0a0a',
+          'dark-gray': '#2e2e2e',
+        },
         accent: {
           DEFAULT: 'hsl(var(--accent))',
           foreground: 'hsl(var(--accent-foreground))',
