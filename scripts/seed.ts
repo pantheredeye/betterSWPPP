@@ -5,17 +5,6 @@ import { hashPassword } from '@redwoodjs/auth-dbauth-api'
 
 export default async () => {
   try {
-    // Seed data for roles
-    const roles: Prisma.RoleCreateInput[] = [
-      { name: 'ADMIN' },
-      { name: 'SITE_OWNER' },
-      { name: 'INSPECTOR' },
-    ]
-
-    const createdRoles = await Promise.all(
-      roles.map((role) => db.role.create({ data: role }))
-    )
-
     // Seed data for Standard BMPs
     const standardBMPs: Prisma.BmpCreateInput[] = [
       {
@@ -106,29 +95,17 @@ export default async () => {
       {
         email: 'admin@example.com',
         password: 'adminpassword',
-        role: {
-          connect: {
-            id: createdRoles.find((role) => role.name === 'ADMIN')?.id,
-          },
-        },
+        roles: 'admin'
       },
       {
         email: 'siteowner@example.com',
         password: 'siteownerpassword',
-        role: {
-          connect: {
-            id: createdRoles.find((role) => role.name === 'SITE_OWNER')?.id,
-          },
-        },
+        roles: 'user'
       },
       {
         email: 'inspector@example.com',
         password: 'inspectorpassword',
-        role: {
-          connect: {
-            id: createdRoles.find((role) => role.name === 'INSPECTOR')?.id,
-          },
-        },
+        roles:'user'
       },
     ]
 
@@ -139,7 +116,7 @@ export default async () => {
           email: user.email,
           hashedPassword,
           salt,
-          role: user.role,
+          roles: user.roles,
         },
       })
     }

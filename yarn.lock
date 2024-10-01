@@ -1858,7 +1858,25 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@cloudinary/url-gen@npm:^1.19.0, @cloudinary/url-gen@npm:^1.7.0":
+"@cloudinary/transformation-builder-sdk@npm:^1.15.1":
+  version: 1.15.1
+  resolution: "@cloudinary/transformation-builder-sdk@npm:1.15.1"
+  dependencies:
+    "@cloudinary/url-gen": "npm:^1.7.0"
+  checksum: 10c0/0926bb8be01b437637dccdec4505e3fbaba9e334fe5a304dde0b9f8ecbffb6fac2605e00cc2d121ad7f3b52340509ce6963eda8682e9df09cfafab65f3ea463e
+  languageName: node
+  linkType: hard
+
+"@cloudinary/url-gen@npm:^1.21.0":
+  version: 1.21.0
+  resolution: "@cloudinary/url-gen@npm:1.21.0"
+  dependencies:
+    "@cloudinary/transformation-builder-sdk": "npm:^1.15.1"
+  checksum: 10c0/e8b776c0f116a53830b55322f2c23475d7da633bd11b9863dfb4cca1ef82ebc25b1a201f40bf70ecf955d111f295eebae1774d44743d09fc8dbe429334313044
+  languageName: node
+  linkType: hard
+
+"@cloudinary/url-gen@npm:^1.7.0":
   version: 1.19.0
   resolution: "@cloudinary/url-gen@npm:1.19.0"
   dependencies:
@@ -19756,16 +19774,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"typescript@npm:^4.1.2":
-  version: 4.9.5
-  resolution: "typescript@npm:4.9.5"
-  bin:
-    tsc: bin/tsc
-    tsserver: bin/tsserver
-  checksum: 10c0/5f6cad2e728a8a063521328e612d7876e12f0d8a8390d3b3aaa452a6a65e24e9ac8ea22beb72a924fd96ea0a49ea63bb4e251fb922b12eedfb7f7a26475e5c56
-  languageName: node
-  linkType: hard
-
 "typescript@patch:typescript@npm%3A5.6.2#optional!builtin<compat/typescript>":
   version: 5.6.2
   resolution: "typescript@patch:typescript@npm%3A5.6.2#optional!builtin<compat/typescript>::version=5.6.2&hash=74658d"
@@ -19773,16 +19781,6 @@ __metadata:
     tsc: bin/tsc
     tsserver: bin/tsserver
   checksum: 10c0/e6c1662e4852e22fe4bbdca471dca3e3edc74f6f1df043135c44a18a7902037023ccb0abdfb754595ca9028df8920f2f8492c00fc3cbb4309079aae8b7de71cd
-  languageName: node
-  linkType: hard
-
-"typescript@patch:typescript@npm%3A^4.1.2#optional!builtin<compat/typescript>":
-  version: 4.9.5
-  resolution: "typescript@patch:typescript@npm%3A4.9.5#optional!builtin<compat/typescript>::version=4.9.5&hash=289587"
-  bin:
-    tsc: bin/tsc
-    tsserver: bin/tsserver
-  checksum: 10c0/e3333f887c6829dfe0ab6c1dbe0dd1e3e2aeb56c66460cb85c5440c566f900c833d370ca34eb47558c0c69e78ced4bfe09b8f4f98b6de7afed9b84b8d1dd06a1
   languageName: node
   linkType: hard
 
@@ -20389,7 +20387,7 @@ __metadata:
   resolution: "web@workspace:web"
   dependencies:
     "@cloudinary/react": "npm:^1.13.0"
-    "@cloudinary/url-gen": "npm:^1.19.0"
+    "@cloudinary/url-gen": "npm:^1.21.0"
     "@radix-ui/react-dropdown-menu": "npm:^2.1.1"
     "@react-pdf/renderer": "npm:^3.4.4"
     "@redwoodjs/auth-dbauth-web": "npm:8.3.0"

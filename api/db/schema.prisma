@@ -19,18 +19,11 @@ model User {
   firstName           String?
   lastName            String?
   phoneNumber         String?
-  roles               Role[]
-  roleId              Int
+  roles               String       @default("user")
   createdAt           DateTime     @default(now())
   updatedAt           DateTime     @updatedAt
   inspections         Inspection[]
   sites               Site[]
-}
-
-model Role {
-  id    Int    @id @default(autoincrement())
-  name  String @unique
-  users User[]
 }
 
 model Site {
