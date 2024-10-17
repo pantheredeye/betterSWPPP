@@ -7,7 +7,6 @@ const InspectionsPage = () => {
     <>
       <Metadata title="Inspections" description="Inspections page" />
 
-      <h1>InspectionsPage</h1>
       <InspectionsListCell />
     </>
   )

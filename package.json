@@ -7,9 +7,9 @@
     ]
   },
   "devDependencies": {
-    "@redwoodjs/auth-dbauth-setup": "8.3.0",
-    "@redwoodjs/core": "8.3.0",
-    "@redwoodjs/project-config": "8.3.0",
+    "@redwoodjs/auth-dbauth-setup": "8.4.0",
+    "@redwoodjs/core": "8.4.0",
+    "@redwoodjs/project-config": "8.4.0",
     "prettier-plugin-tailwindcss": "0.4.1"
   },
   "eslintConfig": {
@@ -29,7 +29,6 @@
     "@radix-ui/react-label": "^2.1.0",
     "@tailwindcss/forms": "^0.5.7",
     "rw-shad": "^1.1.0",
-    "thanker-cli": "^1.0.0",
     "web": "workspace:^"
   },
   "resolutions": {

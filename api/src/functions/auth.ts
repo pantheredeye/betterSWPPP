@@ -136,7 +136,7 @@ export const handler = async (
           email: username,
           hashedPassword: hashedPassword,
           salt: salt,
-          role: { connect: { name: 'INSPECTOR' } },
+          roles: "Inspector",
           // name: userAttributes.name
         },
       })

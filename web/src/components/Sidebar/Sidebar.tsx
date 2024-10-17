@@ -21,14 +21,7 @@ function classNames(...classes) {
   return classes.filter(Boolean).join(' ')
 }
 
-const navigation = [
-  { name: 'Dashboard', href: 'dashboard', icon: HomeIcon },
-  { name: 'Inspections', href: 'inspections', icon: UsersIcon },
-  { name: 'Sites', href: 'dashboard', icon: FolderIcon },
-  { name: 'BMPs', href: 'dashboard', icon: DocumentDuplicateIcon },
-  { name: 'Settings', href: 'dashboard', icon: Cog6ToothIcon },
-  { name: 'Profile', href: 'profile', icon: UserIcon },
-]
+
 
 const actions = [
   { name: 'Back', action: 'back', icon: ArrowUturnLeftIcon },
@@ -38,7 +31,20 @@ const actions = [
 const Sidebar = () => {
   const [isCollapsed, setIsCollapsed] = useState(false)
   const { logOut } = useAuth()
+  const { currentUser } = useAuth()
 
+  const navigation = [
+    { name: 'Dashboard', href: '/dashboard', icon: HomeIcon },
+    { name: 'Inspections', href: '/inspections', icon: UsersIcon },
+    { name: 'Sites', href: '/sites', icon: FolderIcon },
+    { name: 'BMPs', href: '/bmps', icon: DocumentDuplicateIcon },
+    { name: 'Settings', href: '/settings', icon: Cog6ToothIcon },
+    {
+      name: 'Profile',
+      href: currentUser ? `/profile/${currentUser.id}` : '/profile',
+      icon: UserIcon,
+    },
+  ]
   return (
     <div
       className={classNames(

@@ -12,7 +12,6 @@ const Routes = () => {
         <Route path="/" page={HomePage} name="home" />
         <Route path="/login" page={LoginPage} name="login" />
         <Route path="/signup" page={SignupPage} name="signup" />
-
         <Route path="/forgot-password" page={ForgotPasswordPage} name="forgotPassword" />
         <Route path="/reset-password" page={ResetPasswordPage} name="resetPassword" />
         <Route path="/inspections" page={InspectionsPage} name="inspections" />
@@ -20,6 +19,7 @@ const Routes = () => {
       <PrivateSet unauthenticated="login" wrap={AuthenticatedLayout}>
         <Route path="/profile/{id}" page={ProfilePage} name="profile" />
         <Route path="/view-inspection" page={ViewInspectionPage} name="viewInspection" />
+        <Route path="/inspections" page={InspectionsPage} name="inspections" />
 
         <Route path="/new-inspection" page={NewInspectionPage} name="newInspection" />
         <Route path="/new-site" page={NewSitePage} name="newSite" />

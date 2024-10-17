@@ -32,14 +32,14 @@ const InspectionsTable = <TData, TValue>({
   })
 
   return (
-    <div className="rounded-md border">
-      <Table>
-        <TableHeader>
+    <div className="rounded-xl border border-gray-700 bg-gray-800 shadow-lg">
+      <Table className="w-full text-gray-200">
+        <TableHeader className="bg-gray-900">
           {table.getHeaderGroups().map((headerGroup) => (
-            <TableRow key={headerGroup.id}>
+            <TableRow key={headerGroup.id} className="border-b border-gray-700">
               {headerGroup.headers.map((header) => {
                 return (
-                  <TableHead key={header.id}>
+                  <TableHead key={header.id} className="px-4 py-2 text-sm font-semibold text-gray-300">
                     {header.isPlaceholder
                       ? null
                       : flexRender(
@@ -58,9 +58,10 @@ const InspectionsTable = <TData, TValue>({
               <TableRow
                 key={row.id}
                 data-state={row.getIsSelected() && 'selected'}
+                className="hover:bg-gray-700"
               >
                 {row.getVisibleCells().map((cell) => (
-                  <TableCell key={cell.id}>
+                  <TableCell key={cell.id} className="px-4 py-2">
                     {flexRender(cell.column.columnDef.cell, cell.getContext())}
                   </TableCell>
                 ))}
@@ -68,7 +69,7 @@ const InspectionsTable = <TData, TValue>({
             ))
           ) : (
             <TableRow>
-              <TableCell colSpan={columns.length} className="h-24 text-center">
+              <TableCell colSpan={columns.length} className="h-24 text-center text-gray-400">
                 No results.
               </TableCell>
             </TableRow>
