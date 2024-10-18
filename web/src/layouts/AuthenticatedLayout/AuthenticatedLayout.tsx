@@ -99,7 +99,7 @@ const AuthenticatedLayout = ({ children }: AuthenticatedLayoutProps) => {
         <main className="flex-grow py-10">
           <div className="px-4 sm:px-6 lg:px-8">
             {/* Example of a card/container following the style guide */}
-            <div className="rounded-xl bg-gray-800 p-6 shadow-lg">
+            <div className="rounded-xl bg-gray-800 p-3 shadow-lg">
               {children}
             </div>
           </div>
