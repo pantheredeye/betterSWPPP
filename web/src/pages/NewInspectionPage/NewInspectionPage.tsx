@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-
+import { useAuth } from 'src/auth'
 import {
   Form,
   FieldError,
@@ -41,6 +41,7 @@ const NewInspectionPage = () => {
   const [uploadPreset] = useState('swppp_unsigned')
   const [selectedImage, setSelectedImage] = useState(null)
 
+  const { currentUser } = useAuth()
   const [uwConfig] = useState({
     cloudName,
     uploadPreset,
@@ -58,7 +59,7 @@ const NewInspectionPage = () => {
       date: formattedDate,
       startTime: formattedTime,
       endTime: '',
-      inspectorId: '',
+      inspectorId: currentUser.id,
       siteId: '',
       permitOnSite: false,
       swpppOnSite: false,
@@ -210,7 +211,7 @@ const NewInspectionPage = () => {
             <div className="mt-8 grid grid-cols-1 gap-6 sm:grid-cols-6">
               {/* Site Name */}
               <div className="sm:col-span-3">
-                <Label name="siteId" className="text-gray-200">
+                <Label name="siteId" className="block text-sm font-medium text-gray-200">
                   Site Name*
                 </Label>
                 <div className="mt-2">
@@ -220,11 +221,11 @@ const NewInspectionPage = () => {
               </div>
               {/* Inspector */}
               <div className="sm:col-span-3">
-                <Label name="inspectorId" className="text-gray-200">
+                <Label name="inspectorId" className="block text-sm font-medium text-gray-200">
                   Inspector*
                 </Label>
                 <div className="mt-2">
-                  <UsersCell />
+                  <UsersCell currentUserId={currentUser.id}/>
                   <FieldError
                     name="inspectorId"
                     className="mt-1 text-red-500"
@@ -233,7 +234,7 @@ const NewInspectionPage = () => {
               </div>
               {/* Date */}
               <div className="sm:col-span-2">
-                <Label name="date" className="text-gray-200">
+                <Label name="date" className="block text-sm font-medium text-gray-200">
                   Date*
                 </Label>
                 <div className="mt-2">
@@ -241,7 +242,7 @@ const NewInspectionPage = () => {
                     name="date"
                     value={formData.date}
                     onChange={handleChange}
-                    className="input-field"
+                    className="block w-full rounded-xl border border-gray-700 bg-gray-800 py-1.5 text-gray-200 placeholder-gray-500 focus:border-indigo-500 focus:ring-indigo-500"
                     validation={{ required: true }}
                   />
                   <FieldError name="date" className="mt-1 text-red-500" />
@@ -249,7 +250,7 @@ const NewInspectionPage = () => {
               </div>
               {/* Start Time */}
               <div className="sm:col-span-2">
-                <Label name="startTime" className="text-gray-200">
+                <Label name="startTime" className="block text-sm font-medium text-gray-200">
                   Start Time*
                 </Label>
                 <div className="mt-2">
@@ -257,7 +258,7 @@ const NewInspectionPage = () => {
                     name="startTime"
                     value={formData.startTime}
                     onChange={handleChange}
-                    className="input-field"
+                    className="block w-full rounded-xl border border-gray-700 bg-gray-800 py-1.5 text-gray-200 placeholder-gray-500 focus:border-indigo-500 focus:ring-indigo-500"
                     validation={{ required: true }}
                   />
                   <FieldError name="startTime" className="mt-1 text-red-500" />
@@ -265,7 +266,7 @@ const NewInspectionPage = () => {
               </div>
               {/* End Time */}
               <div className="sm:col-span-2">
-                <Label name="endTime" className="text-gray-200">
+                <Label name="endTime" className="block text-sm font-medium text-gray-200">
                   End Time*
                 </Label>
                 <div className="mt-2">
@@ -273,7 +274,7 @@ const NewInspectionPage = () => {
                     name="endTime"
                     value={formData.endTime}
                     onChange={handleChange}
-                    className="input-field"
+                    className="block w-full rounded-xl border border-gray-700 bg-gray-800 py-1.5 text-gray-200 placeholder-gray-500 focus:border-indigo-500 focus:ring-indigo-500"
                     validation={{ required: true }}
                   />
                   <FieldError name="endTime" className="mt-1 text-red-500" />
@@ -281,7 +282,7 @@ const NewInspectionPage = () => {
               </div>
               {/* Whom To Contact */}
               <div className="sm:col-span-3">
-                <Label name="whomToContact" className="text-gray-200">
+                <Label name="whomToContact" className="block text-sm font-medium text-gray-200">
                   Whom To Contact
                 </Label>
                 <div className="mt-2">
@@ -289,13 +290,13 @@ const NewInspectionPage = () => {
                     name="whomToContact"
                     value={formData.whomToContact}
                     onChange={handleChange}
-                    className="input-field"
+                    className="block w-full rounded-xl border border-gray-700 bg-gray-800 py-1.5 text-gray-200 placeholder-gray-500 focus:border-indigo-500 focus:ring-indigo-500"
                   />
                 </div>
               </div>
               {/* Title */}
               <div className="sm:col-span-6">
-                <Label name="title" className="text-gray-200">
+                <Label name="title" className="block text-sm font-medium text-gray-200">
                   Title*
                 </Label>
                 <div className="mt-2">
@@ -303,7 +304,7 @@ const NewInspectionPage = () => {
                     name="title"
                     value={formData.title}
                     onChange={handleChange}
-                    className="input-field"
+                    className="block w-full rounded-xl border border-gray-700 bg-gray-800 py-1.5 text-gray-200 placeholder-gray-500 focus:border-indigo-500 focus:ring-indigo-500"
                     validation={{ required: true }}
                   />
                   <FieldError name="title" className="mt-1 text-red-500" />
@@ -311,7 +312,7 @@ const NewInspectionPage = () => {
               </div>
               {/* Description */}
               <div className="sm:col-span-6">
-                <Label name="description" className="text-gray-200">
+                <Label name="description" className="block text-sm font-medium text-gray-200">
                   Description*
                 </Label>
                 <div className="mt-2">
@@ -319,7 +320,7 @@ const NewInspectionPage = () => {
                     name="description"
                     value={formData.description}
                     onChange={handleChange}
-                    className="input-field"
+                    className="block w-full rounded-xl border border-gray-700 bg-gray-800 py-1.5 text-gray-200 placeholder-gray-500 focus:border-indigo-500 focus:ring-indigo-500"
                     validation={{ required: true }}
                   />
                   <FieldError
@@ -330,7 +331,7 @@ const NewInspectionPage = () => {
               </div>
               {/* Inspection Type */}
               <div className="sm:col-span-3">
-                <Label name="inspectionType" className="text-gray-200">
+                <Label name="inspectionType" className="block text-sm font-medium text-gray-200">
                   Inspection Type*
                 </Label>
                 <div className="mt-2">
@@ -338,7 +339,7 @@ const NewInspectionPage = () => {
                     name="inspectionType"
                     value={formData.inspectionType}
                     onChange={handleChange}
-                    className="input-field"
+                    className="block w-full rounded-xl border border-gray-700 bg-gray-800 py-1.5 text-gray-200 placeholder-gray-500 focus:border-indigo-500 focus:ring-indigo-500"
                     validation={{ required: true }}
                   >
                     <option value="PRE_STORM">Pre Storm</option>
@@ -354,7 +355,7 @@ const NewInspectionPage = () => {
               </div>
               {/* Severity */}
               <div className="sm:col-span-3">
-                <Label name="severity" className="text-gray-200">
+                <Label name="severity" className="block text-sm font-medium text-gray-200">
                   Severity*
                 </Label>
                 <div className="mt-2">
@@ -362,7 +363,7 @@ const NewInspectionPage = () => {
                     name="severity"
                     value={formData.severity}
                     onChange={handleChange}
-                    className="input-field"
+                    className="block w-full rounded-xl border border-gray-700 bg-gray-800 py-1.5 text-gray-200 placeholder-gray-500 focus:border-indigo-500 focus:ring-indigo-500"
                     validation={{ required: true }}
                   >
                     <option value="HIGH">High</option>
@@ -374,7 +375,7 @@ const NewInspectionPage = () => {
               </div>
               {/* Checkboxes */}
               <div className="sm:col-span-3">
-                <Label name="permitOnSite" className="text-gray-200">
+                <Label name="permitOnSite" className="block text-sm font-medium text-gray-200">
                   Permit on Site
                 </Label>
                 <div className="mt-2">
@@ -387,7 +388,7 @@ const NewInspectionPage = () => {
                 </div>
               </div>
               <div className="sm:col-span-3">
-                <Label name="swpppOnSite" className="text-gray-200">
+                <Label name="swpppOnSite" className="block text-sm font-medium text-gray-200">
                   SWPPP on Site
                 </Label>
                 <div className="mt-2">
@@ -400,7 +401,7 @@ const NewInspectionPage = () => {
                 </div>
               </div>
               <div className="sm:col-span-3">
-                <Label name="bmpsInstalledPerSwppp" className="text-gray-200">
+                <Label name="bmpsInstalledPerSwppp" className="block text-sm font-medium text-gray-200">
                   BMPs Installed per SWPPP
                 </Label>
                 <div className="mt-2">
@@ -413,7 +414,7 @@ const NewInspectionPage = () => {
                 </div>
               </div>
               <div className="sm:col-span-3">
-                <Label name="siteInspectionReports" className="text-gray-200">
+                <Label name="siteInspectionReports" className="block text-sm font-medium text-gray-200">
                   Site Inspection Reports
                 </Label>
                 <div className="mt-2">
@@ -427,7 +428,7 @@ const NewInspectionPage = () => {
               </div>
               {/* Violations/Notes */}
               <div className="sm:col-span-6">
-                <Label name="violationsNotes" className="text-gray-200">
+                <Label name="violationsNotes" className="block text-sm font-medium text-gray-200">
                   Violations/Notes
                 </Label>
                 <div className="mt-2">
@@ -435,7 +436,7 @@ const NewInspectionPage = () => {
                     name="violationsNotes"
                     value={formData.violationsNotes}
                     onChange={handleChange}
-                    className="input-field"
+                    className="block w-full rounded-xl border border-gray-700 bg-gray-800 py-1.5 text-gray-200 placeholder-gray-500 focus:border-indigo-500 focus:ring-indigo-500"
                   />
                 </div>
               </div>
@@ -454,7 +455,7 @@ const NewInspectionPage = () => {
             <div className="mt-8 grid grid-cols-1 gap-6 sm:grid-cols-6">
               {/* Weather at time */}
               <div className="sm:col-span-4">
-                <Label name="weatherAtTime" className="text-gray-200">
+                <Label name="weatherAtTime" className="block text-sm font-medium text-gray-200">
                   Weather at time of inspection*
                 </Label>
                 <div className="mt-2">
@@ -462,7 +463,7 @@ const NewInspectionPage = () => {
                     name="weatherAtTime"
                     value={formData.weatherAtTime}
                     onChange={handleChange}
-                    className="input-field"
+                    className="block w-full rounded-xl border border-gray-700 bg-gray-800 py-1.5 text-gray-200 placeholder-gray-500 focus:border-indigo-500 focus:ring-indigo-500"
                     validation={{ required: true }}
                   >
                     <option value="CLEAR">Clear</option>
@@ -482,7 +483,7 @@ const NewInspectionPage = () => {
               </div>
               {/* Temperature */}
               <div className="sm:col-span-2">
-                <Label name="temperature" className="text-gray-200">
+                <Label name="temperature" className="block text-sm font-medium text-gray-200">
                   Temperature
                 </Label>
                 <div className="mt-2">
@@ -490,13 +491,13 @@ const NewInspectionPage = () => {
                     name="temperature"
                     value={formData.temperature}
                     onChange={handleChange}
-                    className="input-field"
+                    className="block w-full rounded-xl border border-gray-700 bg-gray-800 py-1.5 text-gray-200 placeholder-gray-500 focus:border-indigo-500 focus:ring-indigo-500"
                   />
                 </div>
               </div>
               {/* New Storm Event */}
               <div className="sm:col-span-6">
-                <Label name="newStormEvent" className="text-gray-200">
+                <Label name="newStormEvent" className="block text-sm font-medium text-gray-200">
                   Has there been a storm event since the last inspection?
                 </Label>
                 <div className="mt-2">
@@ -510,7 +511,7 @@ const NewInspectionPage = () => {
               </div>
               {/* Storm Date-Time */}
               <div className="sm:col-span-3">
-                <Label name="stormDateTime" className="text-gray-200">
+                <Label name="stormDateTime" className="block text-sm font-medium text-gray-200">
                   Storm Date-Time
                 </Label>
                 <div className="mt-2">
@@ -518,13 +519,13 @@ const NewInspectionPage = () => {
                     name="stormDateTime"
                     value={formData.stormDateTime}
                     onChange={handleChange}
-                    className="input-field"
+                    className="block w-full rounded-xl border border-gray-700 bg-gray-800 py-1.5 text-gray-200 placeholder-gray-500 focus:border-indigo-500 focus:ring-indigo-500"
                   />
                 </div>
               </div>
               {/* Storm Duration */}
               <div className="sm:col-span-3">
-                <Label name="stormDuration" className="text-gray-200">
+                <Label name="stormDuration" className="block text-sm font-medium text-gray-200">
                   Storm Duration
                 </Label>
                 <div className="mt-2">
@@ -532,7 +533,7 @@ const NewInspectionPage = () => {
                     name="stormDuration"
                     value={formData.stormDuration}
                     onChange={handleChange}
-                    className="input-field"
+                    className="block w-full rounded-xl border border-gray-700 bg-gray-800 py-1.5 text-gray-200 placeholder-gray-500 focus:border-indigo-500 focus:ring-indigo-500"
                   />
                 </div>
               </div>
@@ -540,7 +541,7 @@ const NewInspectionPage = () => {
               <div className="sm:col-span-3">
                 <Label
                   name="approximatePrecipitation"
-                  className="text-gray-200"
+                  className="block text-sm font-medium text-gray-200"
                 >
                   Approximate Precipitation (in.)
                 </Label>
@@ -549,7 +550,7 @@ const NewInspectionPage = () => {
                     name="approximatePrecipitation"
                     value={formData.approximatePrecipitation}
                     onChange={handleChange}
-                    className="input-field"
+                    className="block w-full rounded-xl border border-gray-700 bg-gray-800 py-1.5 text-gray-200 placeholder-gray-500 focus:border-indigo-500 focus:ring-indigo-500"
                   />
                 </div>
               </div>
@@ -557,7 +558,7 @@ const NewInspectionPage = () => {
               <div className="sm:col-span-6">
                 <div className="grid grid-cols-2 gap-4">
                   <div>
-                    <Label name="previousDischarge" className="text-gray-200">
+                    <Label name="previousDischarge" className="block text-sm font-medium text-gray-200">
                       Previous Discharge
                     </Label>
                     <CheckboxField
@@ -568,7 +569,7 @@ const NewInspectionPage = () => {
                     />
                   </div>
                   <div>
-                    <Label name="newDischarges" className="text-gray-200">
+                    <Label name="newDischarges" className="block text-sm font-medium text-gray-200">
                       New Discharges
                     </Label>
                     <CheckboxField
@@ -583,7 +584,7 @@ const NewInspectionPage = () => {
               <div className="sm:col-span-6">
                 <div className="grid grid-cols-2 gap-4">
                   <div>
-                    <Label name="dischargeAtThisTime" className="text-gray-200">
+                    <Label name="dischargeAtThisTime" className="block text-sm font-medium text-gray-200">
                       Discharge at This Time
                     </Label>
                     <CheckboxField
@@ -594,7 +595,7 @@ const NewInspectionPage = () => {
                     />
                   </div>
                   <div>
-                    <Label name="currentDischarges" className="text-gray-200">
+                    <Label name="currentDischarges" className="block text-sm font-medium text-gray-200">
                       Current Discharges
                     </Label>
                     <CheckboxField
@@ -635,7 +636,7 @@ const NewInspectionPage = () => {
           <CloudinaryUploadWidget uwConfig={uwConfig} addMedia={addMedia} />
 
           <div className="mt-8">
-            <Label name="media" className="text-gray-200">
+            <Label name="media" className="block text-sm font-medium text-gray-200">
               Uploaded Images
             </Label>
             <div className="mt-4 grid grid-cols-1 gap-4 sm:grid-cols-3">

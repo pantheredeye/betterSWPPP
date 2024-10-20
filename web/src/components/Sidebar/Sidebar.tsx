@@ -38,7 +38,6 @@ const Sidebar = () => {
     { name: 'Inspections', href: '/inspections', icon: UsersIcon },
     { name: 'Sites', href: '/sites', icon: FolderIcon },
     { name: 'BMPs', href: '/bmps', icon: DocumentDuplicateIcon },
-    { name: 'Settings', href: '/settings', icon: Cog6ToothIcon },
     {
       name: 'Profile',
       href: currentUser ? `/profile/${currentUser.id}` : '/profile',

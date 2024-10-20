@@ -30,8 +30,8 @@ export const Success = ({ sites }: CellSuccessProps<SitesQuery>) => {
     <SelectField
       name="siteId"
       validation={{ required: true }}
-      className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6"
-    >
+      className="block w-full rounded-xl border border-gray-700 bg-gray-800 py-1.5 text-gray-200 placeholder-gray-500 focus:border-indigo-500 focus:ring-indigo-500"
+      >
       {sites.map((site) => (
         <option key={site.id} value={site.id}>
           {site.name}

@@ -1,12 +1,6 @@
-import {
-  Form,
-  TextField,
-  EmailField,
-  Submit,
-  FieldError,
-} from '@redwoodjs/forms'
+import { Form, TextField, EmailField, Submit, FieldError } from '@redwoodjs/forms'
 import { useMutation } from '@redwoodjs/web'
-
+import { useLocation, navigate} from '@redwoodjs/router'
 import { Label } from 'src/components/ui/Label'
 
 export const UPDATE_USER_MUTATION = gql`
@@ -27,6 +21,10 @@ const ProfileForm = ({ user }) => {
       // Handle successful update (e.g., show a notification)
     },
   })
+  const { search } = useLocation()
+
+  const queryParams = new URLSearchParams(search)
+  const isFirstTime = queryParams.get('firstTime') === 'true'
 
   const onSubmit = (data) => {
     updateUser({
@@ -34,8 +32,13 @@ const ProfileForm = ({ user }) => {
         id: user.id,
         input: data,
       },
+    }).then(() => {
+      if (isFirstTime) {
+        navigate('/dashboard')
+      }
     })
   }
+
   return (
     <Form
     onSubmit={onSubmit}
