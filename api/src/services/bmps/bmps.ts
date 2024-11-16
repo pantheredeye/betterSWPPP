@@ -26,7 +26,7 @@ export const inspectionBmps: QueryResolvers['inspectionBmps'] = ({
   isStandard,
   siteId,
 }) => {
-  const where: any = {}
+  const where: { isStandard?: boolean; siteId?: number } = {}
   if (isStandard !== undefined) {
     where.isStandard = isStandard
   }
