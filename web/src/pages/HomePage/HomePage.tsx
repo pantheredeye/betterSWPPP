@@ -94,7 +94,7 @@ const HomePage = () => {
           What Inspectors Are Saying
         </h2>
         <p className="mt-4 italic text-gray-400">
-          "This app makes stormwater inspections easier than ever!" -
+          &quot;This app makes stormwater inspections easier than ever!&quot; -
           Placeholder Quote
         </p>
       </div>
