@@ -5,7 +5,6 @@ import {
   UsersIcon,
   FolderIcon,
   DocumentDuplicateIcon,
-  Cog6ToothIcon,
   ChevronLeftIcon,
   ChevronRightIcon,
   ArrowLeftOnRectangleIcon, // Logout icon

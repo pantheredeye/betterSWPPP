@@ -1,4 +1,3 @@
-import { Select } from '@headlessui/react'
 import type { SitesQuery, SitesQueryVariables } from 'types/graphql'
 
 import { SelectField } from '@redwoodjs/forms'

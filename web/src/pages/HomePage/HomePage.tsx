@@ -1,19 +1,3 @@
-import { useState } from 'react'
-
-import { Dialog } from '@headlessui/react'
-import { Bars3Icon, XMarkIcon } from '@heroicons/react/24/outline'
-
-import { navigate, routes } from '@redwoodjs/router'
-
-import Button from 'src/components/Button/Button'
-
-const navigation = [
-  { name: 'Product', href: '#' },
-  { name: 'Features', href: '#' },
-  { name: 'Marketplace', href: '#' },
-  { name: 'Company', href: '#' },
-]
-
 const features = [
   {
     id: 1,
@@ -25,8 +9,6 @@ const features = [
 const futureFeatures = [{ id: 1, icon: '', title: '', description: '' }]
 
 const HomePage = () => {
-  const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
-
   return (
     <>
       <div className="relative min-h-screen bg-gray-900">
