@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { useAuth } from 'src/auth'
+
 import {
   Form,
   FieldError,
@@ -15,6 +15,7 @@ import {
 } from '@redwoodjs/forms'
 import { useMutation } from '@redwoodjs/web'
 
+import { useAuth } from 'src/auth'
 import BmpsCell from 'src/components/BmpsCell'
 import CloudinaryUploadWidget from 'src/components/CloudinaryUploadWidget/CloudinaryUploadWidget'
 import SitesCell from 'src/components/SitesCell'
@@ -211,7 +212,10 @@ const NewInspectionPage = () => {
             <div className="mt-8 grid grid-cols-1 gap-6 sm:grid-cols-6">
               {/* Site Name */}
               <div className="sm:col-span-3">
-                <Label name="siteId" className="block text-sm font-medium text-gray-200">
+                <Label
+                  name="siteId"
+                  className="block text-sm font-medium text-gray-200"
+                >
                   Site Name*
                 </Label>
                 <div className="mt-2">
@@ -221,11 +225,14 @@ const NewInspectionPage = () => {
               </div>
               {/* Inspector */}
               <div className="sm:col-span-3">
-                <Label name="inspectorId" className="block text-sm font-medium text-gray-200">
+                <Label
+                  name="inspectorId"
+                  className="block text-sm font-medium text-gray-200"
+                >
                   Inspector*
                 </Label>
                 <div className="mt-2">
-                  <UsersCell currentUserId={currentUser.id}/>
+                  <UsersCell currentUserId={currentUser.id} />
                   <FieldError
                     name="inspectorId"
                     className="mt-1 text-red-500"
@@ -234,7 +241,10 @@ const NewInspectionPage = () => {
               </div>
               {/* Date */}
               <div className="sm:col-span-2">
-                <Label name="date" className="block text-sm font-medium text-gray-200">
+                <Label
+                  name="date"
+                  className="block text-sm font-medium text-gray-200"
+                >
                   Date*
                 </Label>
                 <div className="mt-2">
@@ -250,7 +260,10 @@ const NewInspectionPage = () => {
               </div>
               {/* Start Time */}
               <div className="sm:col-span-2">
-                <Label name="startTime" className="block text-sm font-medium text-gray-200">
+                <Label
+                  name="startTime"
+                  className="block text-sm font-medium text-gray-200"
+                >
                   Start Time*
                 </Label>
                 <div className="mt-2">
@@ -266,7 +279,10 @@ const NewInspectionPage = () => {
               </div>
               {/* End Time */}
               <div className="sm:col-span-2">
-                <Label name="endTime" className="block text-sm font-medium text-gray-200">
+                <Label
+                  name="endTime"
+                  className="block text-sm font-medium text-gray-200"
+                >
                   End Time*
                 </Label>
                 <div className="mt-2">
@@ -282,7 +298,10 @@ const NewInspectionPage = () => {
               </div>
               {/* Whom To Contact */}
               <div className="sm:col-span-3">
-                <Label name="whomToContact" className="block text-sm font-medium text-gray-200">
+                <Label
+                  name="whomToContact"
+                  className="block text-sm font-medium text-gray-200"
+                >
                   Whom To Contact
                 </Label>
                 <div className="mt-2">
@@ -296,7 +315,10 @@ const NewInspectionPage = () => {
               </div>
               {/* Title */}
               <div className="sm:col-span-6">
-                <Label name="title" className="block text-sm font-medium text-gray-200">
+                <Label
+                  name="title"
+                  className="block text-sm font-medium text-gray-200"
+                >
                   Title*
                 </Label>
                 <div className="mt-2">
@@ -312,7 +334,10 @@ const NewInspectionPage = () => {
               </div>
               {/* Description */}
               <div className="sm:col-span-6">
-                <Label name="description" className="block text-sm font-medium text-gray-200">
+                <Label
+                  name="description"
+                  className="block text-sm font-medium text-gray-200"
+                >
                   Description*
                 </Label>
                 <div className="mt-2">
@@ -331,7 +356,10 @@ const NewInspectionPage = () => {
               </div>
               {/* Inspection Type */}
               <div className="sm:col-span-3">
-                <Label name="inspectionType" className="block text-sm font-medium text-gray-200">
+                <Label
+                  name="inspectionType"
+                  className="block text-sm font-medium text-gray-200"
+                >
                   Inspection Type*
                 </Label>
                 <div className="mt-2">
@@ -355,7 +383,10 @@ const NewInspectionPage = () => {
               </div>
               {/* Severity */}
               <div className="sm:col-span-3">
-                <Label name="severity" className="block text-sm font-medium text-gray-200">
+                <Label
+                  name="severity"
+                  className="block text-sm font-medium text-gray-200"
+                >
                   Severity*
                 </Label>
                 <div className="mt-2">
@@ -375,7 +406,10 @@ const NewInspectionPage = () => {
               </div>
               {/* Checkboxes */}
               <div className="sm:col-span-3">
-                <Label name="permitOnSite" className="block text-sm font-medium text-gray-200">
+                <Label
+                  name="permitOnSite"
+                  className="block text-sm font-medium text-gray-200"
+                >
                   Permit on Site
                 </Label>
                 <div className="mt-2">
@@ -388,7 +422,10 @@ const NewInspectionPage = () => {
                 </div>
               </div>
               <div className="sm:col-span-3">
-                <Label name="swpppOnSite" className="block text-sm font-medium text-gray-200">
+                <Label
+                  name="swpppOnSite"
+                  className="block text-sm font-medium text-gray-200"
+                >
                   SWPPP on Site
                 </Label>
                 <div className="mt-2">
@@ -401,7 +438,10 @@ const NewInspectionPage = () => {
                 </div>
               </div>
               <div className="sm:col-span-3">
-                <Label name="bmpsInstalledPerSwppp" className="block text-sm font-medium text-gray-200">
+                <Label
+                  name="bmpsInstalledPerSwppp"
+                  className="block text-sm font-medium text-gray-200"
+                >
                   BMPs Installed per SWPPP
                 </Label>
                 <div className="mt-2">
@@ -414,7 +454,10 @@ const NewInspectionPage = () => {
                 </div>
               </div>
               <div className="sm:col-span-3">
-                <Label name="siteInspectionReports" className="block text-sm font-medium text-gray-200">
+                <Label
+                  name="siteInspectionReports"
+                  className="block text-sm font-medium text-gray-200"
+                >
                   Site Inspection Reports
                 </Label>
                 <div className="mt-2">
@@ -428,7 +471,10 @@ const NewInspectionPage = () => {
               </div>
               {/* Violations/Notes */}
               <div className="sm:col-span-6">
-                <Label name="violationsNotes" className="block text-sm font-medium text-gray-200">
+                <Label
+                  name="violationsNotes"
+                  className="block text-sm font-medium text-gray-200"
+                >
                   Violations/Notes
                 </Label>
                 <div className="mt-2">
@@ -455,7 +501,10 @@ const NewInspectionPage = () => {
             <div className="mt-8 grid grid-cols-1 gap-6 sm:grid-cols-6">
               {/* Weather at time */}
               <div className="sm:col-span-4">
-                <Label name="weatherAtTime" className="block text-sm font-medium text-gray-200">
+                <Label
+                  name="weatherAtTime"
+                  className="block text-sm font-medium text-gray-200"
+                >
                   Weather at time of inspection*
                 </Label>
                 <div className="mt-2">
@@ -483,7 +532,10 @@ const NewInspectionPage = () => {
               </div>
               {/* Temperature */}
               <div className="sm:col-span-2">
-                <Label name="temperature" className="block text-sm font-medium text-gray-200">
+                <Label
+                  name="temperature"
+                  className="block text-sm font-medium text-gray-200"
+                >
                   Temperature
                 </Label>
                 <div className="mt-2">
@@ -497,7 +549,10 @@ const NewInspectionPage = () => {
               </div>
               {/* New Storm Event */}
               <div className="sm:col-span-6">
-                <Label name="newStormEvent" className="block text-sm font-medium text-gray-200">
+                <Label
+                  name="newStormEvent"
+                  className="block text-sm font-medium text-gray-200"
+                >
                   Has there been a storm event since the last inspection?
                 </Label>
                 <div className="mt-2">
@@ -511,7 +566,10 @@ const NewInspectionPage = () => {
               </div>
               {/* Storm Date-Time */}
               <div className="sm:col-span-3">
-                <Label name="stormDateTime" className="block text-sm font-medium text-gray-200">
+                <Label
+                  name="stormDateTime"
+                  className="block text-sm font-medium text-gray-200"
+                >
                   Storm Date-Time
                 </Label>
                 <div className="mt-2">
@@ -525,7 +583,10 @@ const NewInspectionPage = () => {
               </div>
               {/* Storm Duration */}
               <div className="sm:col-span-3">
-                <Label name="stormDuration" className="block text-sm font-medium text-gray-200">
+                <Label
+                  name="stormDuration"
+                  className="block text-sm font-medium text-gray-200"
+                >
                   Storm Duration
                 </Label>
                 <div className="mt-2">
@@ -558,7 +619,10 @@ const NewInspectionPage = () => {
               <div className="sm:col-span-6">
                 <div className="grid grid-cols-2 gap-4">
                   <div>
-                    <Label name="previousDischarge" className="block text-sm font-medium text-gray-200">
+                    <Label
+                      name="previousDischarge"
+                      className="block text-sm font-medium text-gray-200"
+                    >
                       Previous Discharge
                     </Label>
                     <CheckboxField
@@ -569,7 +633,10 @@ const NewInspectionPage = () => {
                     />
                   </div>
                   <div>
-                    <Label name="newDischarges" className="block text-sm font-medium text-gray-200">
+                    <Label
+                      name="newDischarges"
+                      className="block text-sm font-medium text-gray-200"
+                    >
                       New Discharges
                     </Label>
                     <CheckboxField
@@ -584,7 +651,10 @@ const NewInspectionPage = () => {
               <div className="sm:col-span-6">
                 <div className="grid grid-cols-2 gap-4">
                   <div>
-                    <Label name="dischargeAtThisTime" className="block text-sm font-medium text-gray-200">
+                    <Label
+                      name="dischargeAtThisTime"
+                      className="block text-sm font-medium text-gray-200"
+                    >
                       Discharge at This Time
                     </Label>
                     <CheckboxField
@@ -595,7 +665,10 @@ const NewInspectionPage = () => {
                     />
                   </div>
                   <div>
-                    <Label name="currentDischarges" className="block text-sm font-medium text-gray-200">
+                    <Label
+                      name="currentDischarges"
+                      className="block text-sm font-medium text-gray-200"
+                    >
                       Current Discharges
                     </Label>
                     <CheckboxField
@@ -636,7 +709,10 @@ const NewInspectionPage = () => {
           <CloudinaryUploadWidget uwConfig={uwConfig} addMedia={addMedia} />
 
           <div className="mt-8">
-            <Label name="media" className="block text-sm font-medium text-gray-200">
+            <Label
+              name="media"
+              className="block text-sm font-medium text-gray-200"
+            >
               Uploaded Images
             </Label>
             <div className="mt-4 grid grid-cols-1 gap-4 sm:grid-cols-3">
