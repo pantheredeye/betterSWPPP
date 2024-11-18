@@ -7,8 +7,8 @@ const MainLayout = ({ children }) => {
   const location = useLocation()
 
   return (
-    <div className="flex min-h-screen flex-col bg-gradient-to-b from-indigo-100/20 text-gray-900">
-      <header className="flex items-center justify-between bg-blue-600 px-6 py-4 text-white shadow">
+    <div className="flex min-h-screen flex-col  bg-gray-900 text-gray-900">
+      <header className="flex items-center justify-between  bg-gray-900 px-6 py-4 text-white shadow">
         <h1 className="text-2xl font-bold">BetterSWPPP</h1>
         <nav>
           <Link to={routes.home()} className="px-4">
@@ -41,7 +41,7 @@ const MainLayout = ({ children }) => {
         </nav>
       </header>
       <main className="flex-1 px-4 py-6 sm:px-6 lg:px-8">{children}</main>
-      <footer className="mt-auto bg-gray-100 py-4 text-center">
+      <footer className="mt-auto bg-gray-400 py-4 text-center">
         <p className="text-sm text-gray-700">
           &copy; 2024 BetterSWPPP. All rights reserved.
         </p>
