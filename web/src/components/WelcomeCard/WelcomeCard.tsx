@@ -5,7 +5,7 @@ const WelcomeCard = ({ user }) => {
         Welcome back, {user?.firstName ?? 'User'}!
       </h2>
       <p className="mt-2 text-gray-300">
-        Here&apos;s what&apos;s happening with your sites today.
+        Here's what's happening with your sites today.
       </p>
     </div>
   )

@@ -5,6 +5,7 @@ import {
   UsersIcon,
   FolderIcon,
   DocumentDuplicateIcon,
+  Cog6ToothIcon,
   ChevronLeftIcon,
   ChevronRightIcon,
   ArrowLeftOnRectangleIcon, // Logout icon
@@ -19,6 +20,8 @@ import { useAuth } from 'src/auth'
 function classNames(...classes) {
   return classes.filter(Boolean).join(' ')
 }
+
+
 
 const actions = [
   { name: 'Back', action: 'back', icon: ArrowUturnLeftIcon },

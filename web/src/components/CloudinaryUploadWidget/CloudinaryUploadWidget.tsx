@@ -8,7 +8,7 @@ declare global {
         config: object,
         callback: (
           error: Error | null,
-          result: { event: string; info: unknown }
+          result: { event: string; info: any }
         ) => void
       ) => { open: () => void }
     }

@@ -20,7 +20,7 @@ export const schema = gql`
   }
 
   input CreateMediaInput {
-    url: String!
+     url: String!
     description: String!
   }
 

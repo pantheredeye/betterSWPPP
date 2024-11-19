@@ -1,19 +1,84 @@
+import * as HeroIcons from '@heroicons/react/24/outline'
+
+import { Link, routes } from '@redwoodjs/router'
+
+import background from './Daytime Background.png'
+
 const features = [
   {
     id: 1,
-    icon: '',
+    icon: 'ClipboardDocumentCheckIcon',
     title: 'Digital Inspections',
-    description: 'Quickly enter inspection reports from your phone',
+    description:
+      'Quickly enter inspection reports from your phone, ensuring accurate and timely data.',
+  },
+  {
+    id: 2,
+    icon: 'MapPinIcon',
+    title: 'GPS Tagging',
+    description:
+      'Automatically tag inspection locations with GPS for precise tracking and accountability.',
+  },
+  {
+    id: 3,
+    icon: 'PhotoIcon',
+    title: 'Photo Upload',
+    description:
+      'Capture and upload site images directly into your inspection reports for comprehensive documentation.',
+  },
+  {
+    id: 4,
+    icon: 'BellIcon',
+    title: 'Real-Time Notifications',
+    description:
+      'Receive instant alerts for overdue inspections and corrective actions.',
   },
 ]
-const futureFeatures = [{ id: 1, icon: '', title: '', description: '' }]
+
+const futureFeatures = [
+  {
+    id: 1,
+    icon: 'ChatBubbleBottomCenterTextIcon',
+    title: 'Developer Communication',
+    description:
+      'Seamlessly communicate with developers, tracking compliance updates and corrective actions.',
+  },
+  {
+    id: 2,
+    icon: 'CloudIcon',
+    title: 'Weather Impact Tracking',
+    description:
+      'Overlay inspections with weather data to assess environmental impacts on compliance.',
+  },
+  {
+    id: 3,
+    icon: 'UsersIcon',
+    title: 'Team Management',
+    description:
+      'Coordinate inspections across teams, assign tasks, and monitor compliance efforts.',
+  },
+  {
+    id: 4,
+    icon: 'BookOpenIcon',
+    title: 'Terminology Glossary',
+    description:
+      'A built-in glossary for onboarding new inspectors with stormwater terminology.',
+  },
+]
 
 const HomePage = () => {
+  const IconRenderer = ({ iconName }) => {
+    const IconComponent = HeroIcons[iconName]
+    return IconComponent ? (
+      <IconComponent className="mx-auto h-12 w-12 text-indigo-500" />
+    ) : null
+  }
+
   return (
     <>
       <div className="relative min-h-screen bg-gray-900">
         <img
-          src="web\src\pages\HomePage\Daytime Background.png"
+          src={background}
           alt="Background"
           className="absolute inset-0 h-full w-full object-cover opacity-70"
         />
@@ -21,13 +86,17 @@ const HomePage = () => {
           <h1 className="text-4xl font-semibold text-gray-200">
             Effortless Compliance, Today and Tomorrow
           </h1>
-          <p className="text-lg text-gray-400">
+          <p className="text-lg text-black-900">
             Track stormwater inspections with ease and prepare for a new level
             of communication
           </p>
-          <button className="rounded-xl bg-indigo-600 px-6 py-3 text-lg font-medium text-white shadow-lg hover:bg-indigo-500 focus:outline-none">
+
+          <Link
+            to={routes.signup()}
+            className="rounded-xl bg-indigo-600 px-6 py-3 text-lg font-medium text-white shadow-lg hover:bg-indigo-500 focus:outline-none"
+          >
             Get Started Today
-          </button>
+          </Link>
         </div>
       </div>
 
@@ -41,7 +110,7 @@ const HomePage = () => {
               key={feature.id}
               className="rounded-xl bg-gray-800 p-6 shadow-lg"
             >
-              <feature.icon className="mx-auto h-12 w-12 text-indigo-500" />
+              <IconRenderer iconName={feature.icon} />
               <h3 className="mt-4 text-xl font-semibold text-gray-200">
                 {feature.title}
               </h3>
@@ -61,7 +130,7 @@ const HomePage = () => {
               key={feature.id}
               className="min-w-[200px] rounded-xl bg-gray-800 p-6 shadow-lg"
             >
-              <feature.icon className="mx-auto h-10 w-10 text-indigo-500" />
+              <IconRenderer iconName={feature.icon} />
               <h3 className="mt-4 text-lg font-semibold text-gray-200">
                 {feature.title}
               </h3>
@@ -86,9 +155,13 @@ const HomePage = () => {
           Ready to Start Your Compliance Journey?
         </h2>
         <div className="mt-6 flex flex-col items-center space-y-4 md:flex-row md:space-x-4 md:space-y-0">
-          <button className="rounded-xl bg-indigo-600 px-6 py-3 font-medium text-white shadow-lg hover:bg-indigo-500">
+          <Link
+            to={routes.signup()}
+            className="rounded-xl bg-indigo-600 px-6 py-3 font-medium text-white shadow-lg hover:bg-indigo-500"
+          >
             Get Started Today
-          </button>
+          </Link>
+
           <button className="rounded-xl bg-gray-700 px-6 py-3 font-medium text-white shadow-lg hover:bg-gray-600">
             Learn More About Future Features
           </button>

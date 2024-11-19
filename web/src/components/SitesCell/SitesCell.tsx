@@ -1,3 +1,4 @@
+import { Select } from '@headlessui/react'
 import type { SitesQuery, SitesQueryVariables } from 'types/graphql'
 
 import { SelectField } from '@redwoodjs/forms'
@@ -30,7 +31,7 @@ export const Success = ({ sites }: CellSuccessProps<SitesQuery>) => {
       name="siteId"
       validation={{ required: true }}
       className="block w-full rounded-xl border border-gray-700 bg-gray-800 py-1.5 text-gray-200 placeholder-gray-500 focus:border-indigo-500 focus:ring-indigo-500"
-    >
+      >
       {sites.map((site) => (
         <option key={site.id} value={site.id}>
           {site.name}

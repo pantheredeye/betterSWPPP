@@ -39,10 +39,7 @@ const InspectionsTable = <TData, TValue>({
             <TableRow key={headerGroup.id} className="border-b border-gray-700">
               {headerGroup.headers.map((header) => {
                 return (
-                  <TableHead
-                    key={header.id}
-                    className="px-4 py-2 text-sm font-semibold text-gray-300"
-                  >
+                  <TableHead key={header.id} className="px-4 py-2 text-sm font-semibold text-gray-300">
                     {header.isPlaceholder
                       ? null
                       : flexRender(
@@ -72,10 +69,7 @@ const InspectionsTable = <TData, TValue>({
             ))
           ) : (
             <TableRow>
-              <TableCell
-                colSpan={columns.length}
-                className="h-24 text-center text-gray-400"
-              >
+              <TableCell colSpan={columns.length} className="h-24 text-center text-gray-400">
                 No results.
               </TableCell>
             </TableRow>

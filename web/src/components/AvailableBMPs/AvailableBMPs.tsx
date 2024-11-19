@@ -1,12 +1,12 @@
 interface Bmp {
-  id: number
-  name: string
-  description: string
+  id: number;
+  name: string;
+  description: string;
 }
 
 interface AvailableBmpsProps {
-  bmps: Bmp[]
-  onSelect: (bmp: Bmp) => void
+  bmps: Bmp[];
+  onSelect: (bmp: Bmp) => void;
 }
 
 const AvailableBmps = ({ bmps, onSelect }: AvailableBmpsProps) => {
@@ -26,7 +26,7 @@ const AvailableBmps = ({ bmps, onSelect }: AvailableBmpsProps) => {
         ))}
       </ul>
     </div>
-  )
-}
+  );
+};
 
-export default AvailableBmps
+export default AvailableBmps;
