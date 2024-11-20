@@ -54,3 +54,17 @@ The development approach follows the principle of "Do the things that don't scal
 ## Conclusion
 
 BetterSWPPP aims to revolutionize stormwater inspection management by providing a user-friendly, efficient, and collaborative platform. By focusing on the core functionalities and iteratively enhancing the application, we strive to deliver a high-quality solution that meets the needs of our clients and contributes to effective stormwater management practices.
+
+---
+
+```sh
+yarn rw g secret
+yarn rw prisma migrate dev
+
+```
+
+# dev links
+
+* [local web](http://localhost:8910/)
+* [local web](http://localhost:8911/)
+* [local GraphQL](http://localhost:8911/graphql)
