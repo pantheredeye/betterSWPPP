@@ -21,8 +21,6 @@ function classNames(...classes) {
   return classes.filter(Boolean).join(' ')
 }
 
-
-
 const actions = [
   { name: 'Back', action: 'back', icon: ArrowUturnLeftIcon },
   { name: 'Logout', action: 'logout', icon: ArrowLeftOnRectangleIcon },
