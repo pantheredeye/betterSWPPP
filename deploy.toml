@@ -15,8 +15,8 @@
 
 [[production.servers]]
 host = "swppp.top"
-username = "root"
-privatekeypath = "C:\Users\bburnworth/ssh/hetzner"
+username = "devops"
+privatekeypath = "C://Users//39P3QC2//.ssh//id_ed25519"
 agentForward = false
 sides = ["api","web"]
 packageManagerCommand = "yarn"
