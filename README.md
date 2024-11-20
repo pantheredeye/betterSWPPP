@@ -54,3 +54,32 @@ The development approach follows the principle of "Do the things that don't scal
 ## Conclusion
 
 BetterSWPPP aims to revolutionize stormwater inspection management by providing a user-friendly, efficient, and collaborative platform. By focusing on the core functionalities and iteratively enhancing the application, we strive to deliver a high-quality solution that meets the needs of our clients and contributes to effective stormwater management practices.
+
+---
+#### **Feature Roadmap**
+
+| Feature                         | Description                                                  | Status            |
+|---------------------------------|--------------------------------------------------------------|-------------------|
+| **Enter Sites**                 | Add and manage site information.                            | ✅ Complete       |
+| **Enter Inspections**           | Log inspection details for compliance tracking.             | ✅ Complete    |
+| **Dashboard**                   | View recent violations and inspections in one place.        | 🛠️ Planned    |
+| **Multi-Tenant Schema**         | Support multiple organizations and user memberships.        | 🛠️ Planned        |
+| **Billing & Payments**          | Manage subscriptions and auto-deactivate unpaid accounts.   | 🛠️ Planned        |
+| **Notifications**               | Customizable alerts for key events (violations, inspections).| 🛠️ Planned       |
+| **Comms/Messaging with Audit Trail** | Track calls, emails, and messages sent from the app.     | 🛠️ Planned        |
+
+---
+
+#### **Planned Releases**
+- **MVP**
+  - Enter Sites
+  - Enter Inspections
+
+- **Phase 2**
+  - Multi-Tenant Schema
+  - Notifications
+  - Dashboard
+  - Billing & Payments
+
+- **Phase 3**
+  - Comms/Messaging with Audit Trail
