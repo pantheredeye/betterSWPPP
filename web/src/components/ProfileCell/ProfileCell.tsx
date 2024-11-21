@@ -8,23 +8,21 @@ import type {
 
 import ProfileForm from '../ProfileForm/ProfileForm'
 
-export const QUERY: TypedDocumentNode<
-  FindUserQuery,
-  FindUserQueryVariables
-> = gql`
-  query FindUserQuery($id: Int!) {
-    user(id: $id) {
-      id
-      firstName
-      lastName
-      # role {
-      #   name
-      # }
-      email
-      phoneNumber
+export const QUERY: TypedDocumentNode<FindUserQuery, FindUserQueryVariables> =
+  gql`
+    query FindUserQuery($id: Int!) {
+      user(id: $id) {
+        id
+        firstName
+        lastName
+        # role {
+        #   name
+        # }
+        email
+        phoneNumber
+      }
     }
-  }
-`
+  `
 
 export const Loading = () => <div>Loading...</div>
 

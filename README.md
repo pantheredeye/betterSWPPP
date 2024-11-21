@@ -125,3 +125,17 @@ To comply with regulatory requirements and streamline communication, the applica
 
 - **Phase 3**
   - Comms/Messaging with Audit Trail
+
+---
+
+```sh
+yarn rw g secret
+yarn rw prisma migrate dev
+
+```
+
+# dev links
+
+* [local web](http://localhost:8910/)
+* [local web](http://localhost:8911/)
+* [local GraphQL](http://localhost:8911/graphql)

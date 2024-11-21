@@ -1,0 +1,10 @@
+{
+  "image":"mcr.microsoft.com/devcontainers/universal:2",
+  "features": {
+    "ghcr.io/devcontainers/features/node:1": {
+      "installYarnUsingApt": false
+    }
+  },
+  // [web, api, websocket] ports
+  "forwardPorts": [8910, 8911, 18911]
+}
