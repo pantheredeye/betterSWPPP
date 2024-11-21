@@ -15,24 +15,23 @@ jobs:
         node-version: ['22.11.0']
 
     runs-on: ubuntu-24.04
-    
     steps:
       - name: Checkout Code
         uses: actions/checkout@v4
-
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
-        with: 
-          cache: 'yarn'
-          
+  
       - name: Enable Corepack
         run: corepack enable
   
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with: 
+          cache: 'yarn'   
+
       - name: Use Yarn 4.4.0
         run: corepack prepare yarn@4.4.0 --activate
     
       - name: Install Dependencies
-        run: yarn install
+        run: yarn install --immutable
 
       - name: Run Linter
         run: yarn rw lint
