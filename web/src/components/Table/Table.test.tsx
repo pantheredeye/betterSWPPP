@@ -8,7 +8,7 @@ import Table from './Table'
 describe('Table', () => {
   it('renders successfully', () => {
     expect(() => {
-      render(<Table />)
+      render(<Table headers={[]}>test-children</Table>)
     }).not.toThrow()
   })
 })

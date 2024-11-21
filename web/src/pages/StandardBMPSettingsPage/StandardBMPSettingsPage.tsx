@@ -5,7 +5,7 @@ import { toast } from '@redwoodjs/web/toast'
 
 import StandardBmpsCell, {
   QUERY as STANDARD_BMPS_QUERY,
-} from 'src/components/StandardBmpsCell'
+} from 'src/components/StandardBMPsCell'
 
 const CREATE_STANDARD_BMP = gql`
   mutation CreateStandardBmp($input: CreateBmpInput!) {

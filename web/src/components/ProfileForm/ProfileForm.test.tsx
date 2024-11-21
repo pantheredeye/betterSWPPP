@@ -8,7 +8,7 @@ import ProfileForm from './ProfileForm'
 describe('ProfileForm', () => {
   it('renders successfully', () => {
     expect(() => {
-      render(<ProfileForm />)
+      render(<ProfileForm user={{}} />)
     }).not.toThrow()
   })
 })

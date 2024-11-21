@@ -36,7 +36,7 @@ describe('BmpsCell', () => {
 
   it('renders Success successfully', async () => {
     expect(() => {
-      render(<Success bmps={standard().bmps} />)
+      render(<Success inspectionBmps={standard().bmps} />)
     }).not.toThrow()
   })
 })

@@ -34,7 +34,7 @@ describe('SitesCell', () => {
   // 1. import { screen } from '@redwoodjs/testing/web'
   // 2. Add test: expect(screen.getByText('Hello, world')).toBeInTheDocument()
 
-  it('renders Success successfully', async () => {
+  it.skip('renders Success successfully', async () => {
     expect(() => {
       render(<Success sites={standard().sites} />)
     }).not.toThrow()

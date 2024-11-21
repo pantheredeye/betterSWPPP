@@ -8,7 +8,20 @@ import BmpItem from './BmpItem'
 describe('BmpItem', () => {
   it('renders successfully', () => {
     expect(() => {
-      render(<BmpItem />)
+      render(
+        <BmpItem
+          bmp={{
+            id: 0,
+            name: 'test-name',
+            description: 'test-description',
+            implemented: false,
+            maintenanceRequired: false,
+            repeatOccurrence: false,
+            correctiveActionNeeded: 'test-correctiveActionNeeded',
+            notes: 'test-notes',
+          }}
+        />
+      )
     }).not.toThrow()
   })
 })
