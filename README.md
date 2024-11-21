@@ -40,7 +40,7 @@ Key features include:
 
 | Org                   | Core Functions                                                                 |
 |------------------------|-------------------------------------------------------------------------------|
-| **Inspectors**         | Add sites, perform inspections, document violations, and generate reports.    |
+| **Inspectors**         | Individual inspectors might pay and set up and manage sites before ever being part of an org. Add sites, perform inspections, document violations, and generate reports.    |
 | **Municipal Entities** | Assign inspectors, manage violations, and notify site owners.                 |
 | **State Entities**     | Oversee and report on compliance trends across jurisdictions.                 |
 | **Private Businesses** | Manage self-inspections and resolve violations.                              |
