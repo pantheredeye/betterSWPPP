@@ -8,7 +8,14 @@ import Table from './Table'
 describe('Table', () => {
   it('renders successfully', () => {
     expect(() => {
-      render(<Table headers={[]}>test-children</Table>)
+      render(
+        <Table headers={[]}>
+          <tr>
+            <th scope="row">Donuts</th>
+            <td>3,000</td>
+          </tr>
+        </Table>
+      )
     }).not.toThrow()
   })
 })
