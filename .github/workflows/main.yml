@@ -10,10 +10,6 @@ on:
 jobs:
   lint-and-test:
 
-    strategy:
-      matrix:
-        node-version: ['22.11.0']
-
     runs-on: ubuntu-24.04
     steps:
       - name: Checkout Code
@@ -26,6 +22,7 @@ jobs:
         uses: actions/setup-node@v4
         with:
           cache: 'yarn'
+          node-version-file: '.nvmrc'
 
       - name: Install Dependencies
         run: yarn install --immutable
