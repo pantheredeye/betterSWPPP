@@ -8,7 +8,7 @@ import RecentActivityCard from './RecentActivityCard'
 describe('RecentActivityCard', () => {
   it('renders successfully', () => {
     expect(() => {
-      render(<RecentActivityCard />)
+      render(<RecentActivityCard activities={[]} />)
     }).not.toThrow()
   })
 })

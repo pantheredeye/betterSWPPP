@@ -8,7 +8,7 @@ import InspectionsTable from './InspectionsTable'
 describe('InspectionsTable', () => {
   it('renders successfully', () => {
     expect(() => {
-      render(<InspectionsTable />)
+      render(<InspectionsTable columns={[]} data={[]} />)
     }).not.toThrow()
   })
 })

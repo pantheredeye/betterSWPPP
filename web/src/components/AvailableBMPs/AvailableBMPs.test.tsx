@@ -1,6 +1,6 @@
 import { render } from '@redwoodjs/testing/web'
 
-import AvailableBmps from './AvailableBmps'
+import AvailableBmps from './AvailableBMPs'
 
 //   Improve this test with help from the Redwood Testing Doc:
 //    https://redwoodjs.com/docs/testing#testing-components
@@ -8,7 +8,7 @@ import AvailableBmps from './AvailableBmps'
 describe('AvailableBmps', () => {
   it('renders successfully', () => {
     expect(() => {
-      render(<AvailableBmps />)
+      render(<AvailableBmps bmps={[]} onSelect={console.info} />)
     }).not.toThrow()
   })
 })

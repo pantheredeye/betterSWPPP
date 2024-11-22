@@ -2,5 +2,6 @@
 export const standard = (/* vars, { ctx, req } */) => ({
   profile: {
     id: 42,
+    email: 'test-email',
   },
 })

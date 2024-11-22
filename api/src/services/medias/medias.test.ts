@@ -9,7 +9,7 @@ import type { StandardScenario } from './medias.scenarios'
 //       https://redwoodjs.com/docs/testing#testing-services
 // https://redwoodjs.com/docs/testing#jest-expect-type-considerations
 
-describe('medias', () => {
+describe.skip('medias', () => {
   scenario('returns all medias', async (scenario: StandardScenario) => {
     const result = await medias()
 

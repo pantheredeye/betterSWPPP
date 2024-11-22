@@ -1,7 +1,6 @@
 import { render } from '@redwoodjs/testing/web'
 
-import { Loading, Empty, Failure, Success } from './StandardBmPsCell'
-import { standard } from './StandardBmPsCell.mock'
+import { Loading, Empty, Failure, Success } from './StandardBMPsCell'
 
 // Generated boilerplate tests do not account for all circumstances
 // and can fail without adjustments, e.g. Float and DateTime types.
@@ -36,7 +35,7 @@ describe('StandardBmPsCell', () => {
 
   it('renders Success successfully', async () => {
     expect(() => {
-      render(<Success standardBmPs={standard().standardBmPs} />)
+      render(<Success standardBmps={[]} />)
     }).not.toThrow()
   })
 })
