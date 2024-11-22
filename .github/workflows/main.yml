@@ -27,9 +27,6 @@ jobs:
         with:
           cache: 'yarn'
 
-      - name: Use Yarn 4.4.0
-        run: corepack prepare yarn@4.4.0 --activate
-
       - name: Install Dependencies
         run: yarn install --immutable
 
