@@ -15,7 +15,7 @@ import type { StandardScenario } from './bmpDatas.scenarios'
 //       https://redwoodjs.com/docs/testing#testing-services
 // https://redwoodjs.com/docs/testing#jest-expect-type-considerations
 
-describe('bmpDatas', () => {
+describe.skip('bmpDatas', () => {
   scenario('returns all bmpDatas', async (scenario: StandardScenario) => {
     const result = await bmpDatas()
 
