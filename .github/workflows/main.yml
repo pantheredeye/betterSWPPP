@@ -1,11 +1,11 @@
-name: CI - Master - Lint and Test
+name: CI - main - Lint and Test
 on:
   push:
     branches:
-      - master
+      - main
   pull_request:
     branches:
-      - master
+      - main
 
 jobs:
   lint-and-test:
