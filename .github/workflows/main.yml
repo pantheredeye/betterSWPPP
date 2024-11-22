@@ -9,7 +9,7 @@ on:
 
 jobs:
   lint-and-test:
-  
+
     strategy:
       matrix:
         node-version: ['22.11.0']
@@ -18,24 +18,23 @@ jobs:
     steps:
       - name: Checkout Code
         uses: actions/checkout@v4
-  
+
       - name: Enable Corepack
         run: corepack enable
-  
+
       - name: Setup Node.js
         uses: actions/setup-node@v4
-        with: 
-          cache: 'yarn'   
+        with:
+          cache: 'yarn'
 
       - name: Use Yarn 4.4.0
         run: corepack prepare yarn@4.4.0 --activate
-    
+
       - name: Install Dependencies
         run: yarn install --immutable
 
       - name: Run Linter
         run: yarn rw lint
 
-# Disabled tests - existing tests are failing 
-#      - name: Run Tests
-#        run: yarn rw test
+      - name: Run Tests
+        run: yarn rw test
