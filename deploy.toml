@@ -16,14 +16,13 @@
 [[production.servers]]
 host = "swppp.top"
 username = "devops"
-privatekeypath = "C://Users//39P3QC2//.ssh//id_ed25519"
-agentForward = false
+privateKeyPath = "C:/Users/39P3QC2/.ssh/id_ed25519"
 sides = ["api","web"]
 packageManagerCommand = "yarn"
 monitorCommand = "pm2"
-path = "/var/www/app"
+path = "/var/www/swppptop"
 processNames = ["serve"]
-repo = "git@github.com:pantheredeye/betterSWPPP.git"
+repo = "git@github.com:pantheredeye/swpppTop.git"
 branch = "main"
 keepReleases = 5
 freeSpaceRequired = 2048
