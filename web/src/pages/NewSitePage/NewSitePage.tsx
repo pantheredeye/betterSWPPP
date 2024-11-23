@@ -2,6 +2,19 @@
 
 import { useState, useEffect } from 'react'
 
+import {
+  Form,
+  FieldError,
+  Label,
+  SelectField,
+  TextField,
+  TextAreaField,
+  Submit,
+  CheckboxField,
+  DateField,
+  TimeField,
+  DatetimeLocalField,
+} from '@redwoodjs/forms'
 import { navigate, routes } from '@redwoodjs/router'
 import { useMutation, useQuery } from '@redwoodjs/web'
 import { toast } from '@redwoodjs/web/toast'
@@ -104,354 +117,369 @@ const NewSitePage = () => {
   if (error) return <div>Error loading data</div>
 
   return (
-    <form>
-      <div className="space-y-12">
-        <div className="grid grid-cols-1 gap-x-8 gap-y-10 border-b border-gray-900/10 pb-12 md:grid-cols-3">
-          <div className="px-4 sm:px-0">
-            <h2 className="text-base font-semibold leading-7 text-gray-900">
-              Site Details
-            </h2>
-            <p className="mt-1 text-sm leading-6 text-gray-600">
-              Please fill out the details for the new site.
-            </p>
-            <p className="mt-1 text-sm leading-6 text-red-600">* = required</p>
-          </div>
-          <div className="grid max-w-2xl grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6 md:col-span-2">
-            <div className="sm:col-span-4">
-              <label
-                htmlFor="name"
-                className="block text-sm font-medium leading-6 text-gray-900"
-              >
-                Site Name*
-              </label>
-              <div className="mt-2">
-                <input
-                  type="text"
-                  name="name"
-                  id="name"
-                  value={name}
-                  onChange={(e) => setName(e.target.value)}
-                  className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 required:border-red-500 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                  required
-                />
-              </div>
-            </div>
-            <div className="col-span-full">
-              <label
-                htmlFor="addressLine1"
-                className="block text-sm font-medium leading-6 text-gray-900"
-              >
-                Address Line 1*
-              </label>
-              <div className="mt-2">
-                <input
-                  type="text"
-                  name="addressLine1"
-                  id="addressLine1"
-                  value={addressLine1}
-                  onChange={(e) => setAddressLine1(e.target.value)}
-                  className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                />
-              </div>
-            </div>
-            <div className="col-span-full">
-              <label
-                htmlFor="addressLine2"
-                className="block text-sm font-medium leading-6 text-gray-900"
-              >
-                Address Line 2
-              </label>
-              <div className="mt-2">
-                <input
-                  type="text"
-                  name="addressLine2"
-                  id="addressLine2"
-                  value={addressLine2}
-                  onChange={(e) => setAddressLine2(e.target.value)}
-                  className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                />
-              </div>
-            </div>
-            <div className="sm:col-span-2">
-              <label
-                htmlFor="city"
-                className="block text-sm font-medium leading-6 text-gray-900"
-              >
-                City
-              </label>
-              <div className="mt-2">
-                <input
-                  type="text"
-                  name="city"
-                  id="city"
-                  value={city}
-                  onChange={(e) => setCity(e.target.value)}
-                  className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                />
-              </div>
-            </div>
-            <div className="sm:col-span-2">
-              <label
-                htmlFor="state"
-                className="block text-sm font-medium leading-6 text-gray-900"
-              >
-                State / Province
-              </label>
-              <div className="mt-2">
-                <input
-                  type="text"
-                  name="state"
-                  id="state"
-                  value={state}
-                  onChange={(e) => setState(e.target.value)}
-                  className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                />
-              </div>
-            </div>
-            <div className="sm:col-span-2">
-              <label
-                htmlFor="postalCode"
-                className="block text-sm font-medium leading-6 text-gray-900"
-              >
-                Postal Code
-              </label>
-              <div className="mt-2">
-                <input
-                  type="text"
-                  name="postalCode"
-                  id="postalCode"
-                  value={postalCode}
-                  onChange={(e) => setPostalCode(e.target.value)}
-                  className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                />
-              </div>
-            </div>
-            <div className="col-span-full">
-              <label
-                htmlFor="country"
-                className="block text-sm font-medium leading-6 text-gray-900"
-              >
-                Country
-              </label>
-              <div className="mt-2">
-                <input
-                  type="text"
-                  name="country"
-                  id="country"
-                  value={country}
-                  onChange={(e) => setCountry(e.target.value)}
-                  className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                />
-              </div>
-            </div>
-            <div className="col-span-full">
-              <label
-                htmlFor="npdesTrackingNo"
-                className="block text-sm font-medium leading-6 text-gray-900"
-              >
-                NPDES Tracking No
-              </label>
-              <div className="mt-2">
-                <input
-                  type="text"
-                  name="npdesTrackingNo"
-                  id="npdesTrackingNo"
-                  value={npdesTrackingNo}
-                  onChange={(e) => setNpdesTrackingNo(e.target.value)}
-                  className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                />
-              </div>
-            </div>
-            <div className="col-span-full">
-              <label
-                htmlFor="siteTypeId"
-                className="block text-sm font-medium leading-6 text-gray-900"
-              >
-                Site Type*
-              </label>
-              <div className="mt-2">
-                <select
-                  id="siteTypeId"
-                  name="siteTypeId"
-                  value={siteTypeId}
-                  onChange={(e) => setSiteTypeId(Number(e.target.value))}
-                  className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6"
-                >
-                  {data.siteTypes.map((type: { id: number; name: string }) => (
-                    <option key={type.id} value={type.id}>
-                      {type.name}
-                    </option>
-                  ))}
-                </select>
-              </div>
-            </div>
-            <div className="col-span-full">
-              <label
-                htmlFor="siteInspector"
-                className="block text-sm font-medium leading-6 text-gray-900"
-              >
-                Site Inspector
-              </label>
-              <div className="mt-2">
-                <input
-                  type="text"
-                  name="siteInspector"
-                  id="siteInspector"
-                  value={siteInspector}
-                  onChange={(e) => setSiteInspector(e.target.value)}
-                  className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                />
-              </div>
-            </div>
-            <div className="col-span-full">
-              <label
-                htmlFor="siteMap"
-                className="block text-sm font-medium leading-6 text-gray-900"
-              >
-                Site Map
-              </label>
-              <div className="mt-2 flex items-center gap-x-3">
-                <input
-                  type="file"
-                  name="siteMap"
-                  id="siteMap"
-                  onChange={(e) => setSiteMap(e.target.files?.[0]?.name ?? '')}
-                  className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                />
-              </div>
-            </div>
-            <div className="col-span-full">
-              <label
-                htmlFor="ownerName"
-                className="block text-sm font-medium leading-6 text-gray-900"
-              >
-                Owner Name*
-              </label>
-              <div className="mt-2">
-                <input
-                  type="text"
-                  name="ownerName"
-                  id="ownerName"
-                  value={ownerName}
-                  onChange={(e) => setOwnerName(e.target.value)}
-                  className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                />
-              </div>
-            </div>
-          </div>
-        </div>
-
-        {siteTypeId !== 2 && (
+    <div className="min-h-screen bg-gray-800">
+      <Form
+        id="new-site-form"
+        onSubmit={handleCreateSite}
+        className="mx-auto max-w-7xl rounded-xl bg-gray-900 p-8 shadow-2xl"
+      >
+        <div className="space-y-12">
           <div className="grid grid-cols-1 gap-x-8 gap-y-10 border-b border-gray-900/10 pb-12 md:grid-cols-3">
-            <div>
-              <h2 className="text-base font-semibold leading-7 text-gray-900">
-                BMPs
+            <div className="px-4 sm:px-0">
+              <h2 className="text-3xl font-bold text-gray-100">
+                Site Details
               </h2>
-              <p className="mt-1 text-sm leading-6 text-gray-600">
-                Add any custom BMPs for the site. Standard BMPs will show on the
-                inspection form automatically.
+              <p className="mt-2 text-sm text-gray-400">
+                Please fill out the details for the new site.
+              </p>
+              <p className="mt-1 text-sm leading-6 text-red-600">
+                * = required
               </p>
             </div>
             <div className="grid max-w-2xl grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6 md:col-span-2">
+              <div className="sm:col-span-4">
+                <Label
+                  name="name"
+                  className="block text-sm font-medium text-gray-200"
+                >
+                  Site Name*
+                </Label>
+                <div className="mt-2">
+                  <input
+                    type="text"
+                    name="name"
+                    id="name"
+                    value={name}
+                    onChange={(e) => setName(e.target.value)}
+                    className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 required:border-red-500 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                    required
+                  />
+                </div>
+              </div>
               <div className="col-span-full">
-                {bmps.length > 0 && (
-                  <ul className="space-y-4 bg-white p-4 shadow-sm ring-1 ring-gray-900/5 sm:rounded-xl">
-                    {bmps.map((bmp, index) => (
-                      <li
-                        key={index}
-                        className="flex items-center justify-between border-b border-gray-200 pb-4"
-                      >
-                        <div>
-                          <h3 className="text-lg font-medium leading-6 text-gray-900">
-                            {bmp.name}
-                          </h3>
-                          <p className="mt-2 text-sm text-gray-600">
-                            {bmp.description}
-                          </p>
-                        </div>
-                        <button
-                          type="button"
-                          onClick={() => handleRemoveBmp(index)}
-                          className="text-red-600 hover:text-red-900"
+                <Label
+                  name="addressLine1"
+                  className="block text-sm font-medium text-gray-200"
+                >
+                  Address Line 1*
+                </Label>
+                <div className="mt-2">
+                  <input
+                    type="text"
+                    name="addressLine1"
+                    id="addressLine1"
+                    value={addressLine1}
+                    onChange={(e) => setAddressLine1(e.target.value)}
+                    className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                  />
+                </div>
+              </div>
+              <div className="col-span-full">
+                <Label
+                  name="addressLine2"
+                  className="block text-sm font-medium text-gray-200"
+                >
+                  Address Line 2
+                </Label>
+                <div className="mt-2">
+                  <input
+                    type="text"
+                    name="addressLine2"
+                    id="addressLine2"
+                    value={addressLine2}
+                    onChange={(e) => setAddressLine2(e.target.value)}
+                    className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                  />
+                </div>
+              </div>
+              <div className="sm:col-span-2">
+                <Label
+                  name="city"
+                  className="block text-sm font-medium text-gray-200"
+                >
+                  City
+                </Label>
+                <div className="mt-2">
+                  <input
+                    type="text"
+                    name="city"
+                    id="city"
+                    value={city}
+                    onChange={(e) => setCity(e.target.value)}
+                    className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                  />
+                </div>
+              </div>
+              <div className="sm:col-span-2">
+                <Label
+                  name="state"
+                  className="block text-sm font-medium text-gray-200"
+                >
+                  State / Province
+                </Label>
+                <div className="mt-2">
+                  <input
+                    type="text"
+                    name="state"
+                    id="state"
+                    value={state}
+                    onChange={(e) => setState(e.target.value)}
+                    className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                  />
+                </div>
+              </div>
+              <div className="sm:col-span-2">
+                <Label
+                  name="postalCode"
+                  className="block text-sm font-medium text-gray-200"
+                >
+                  Postal Code
+                </Label>
+                <div className="mt-2">
+                  <input
+                    type="text"
+                    name="postalCode"
+                    id="postalCode"
+                    value={postalCode}
+                    onChange={(e) => setPostalCode(e.target.value)}
+                    className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                  />
+                </div>
+              </div>
+              <div className="col-span-full">
+                <Label
+                  name="country"
+                  className="block text-sm font-medium text-gray-200"
+                >
+                  Country
+                </Label>
+                <div className="mt-2">
+                  <input
+                    type="text"
+                    name="country"
+                    id="country"
+                    value={country}
+                    onChange={(e) => setCountry(e.target.value)}
+                    className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                  />
+                </div>
+              </div>
+              <div className="col-span-full">
+                <Label
+                  name="npdesTrackingNo"
+                  className="block text-sm font-medium text-gray-200"
+                >
+                  NPDES Tracking No
+                </Label>
+                <div className="mt-2">
+                  <input
+                    type="text"
+                    name="npdesTrackingNo"
+                    id="npdesTrackingNo"
+                    value={npdesTrackingNo}
+                    onChange={(e) => setNpdesTrackingNo(e.target.value)}
+                    className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                  />
+                </div>
+              </div>
+              <div className="col-span-full">
+                <Label
+                  name="siteTypeId"
+                  className="block text-sm font-medium text-gray-200"
+                >
+                  Site Type*
+                </Label>
+                <div className="mt-2">
+                  <select
+                    id="siteTypeId"
+                    name="siteTypeId"
+                    value={siteTypeId}
+                    onChange={(e) => setSiteTypeId(Number(e.target.value))}
+                    className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6"
+                  >
+                    {data.siteTypes.map(
+                      (type: { id: number; name: string }) => (
+                        <option key={type.id} value={type.id}>
+                          {type.name}
+                        </option>
+                      )
+                    )}
+                  </select>
+                </div>
+              </div>
+              <div className="col-span-full">
+                <Label
+                  name="siteInspector"
+                  className="block text-sm font-medium text-gray-200"
+                >
+                  Site Inspector
+                </Label>
+                <div className="mt-2">
+                  <input
+                    type="text"
+                    name="siteInspector"
+                    id="siteInspector"
+                    value={siteInspector}
+                    onChange={(e) => setSiteInspector(e.target.value)}
+                    className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                  />
+                </div>
+              </div>
+              <div className="col-span-full">
+                <Label
+                  name="siteMap"
+                  className="block text-sm font-medium text-gray-200"
+                >
+                  Site Map
+                </Label>
+                <div className="mt-2 flex items-center gap-x-3">
+                  <input
+                    type="file"
+                    name="siteMap"
+                    id="siteMap"
+                    onChange={(e) =>
+                      setSiteMap(e.target.files?.[0]?.name ?? '')
+                    }
+                    className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                  />
+                </div>
+              </div>
+              <div className="col-span-full">
+                <Label
+                  name="ownerName"
+                  className="block text-sm font-medium text-gray-200"
+                >
+                  Owner Name*
+                </Label>
+                <div className="mt-2">
+                  <input
+                    type="text"
+                    name="ownerName"
+                    id="ownerName"
+                    value={ownerName}
+                    onChange={(e) => setOwnerName(e.target.value)}
+                    className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {siteTypeId !== 2 && (
+            <div className="grid grid-cols-1 gap-x-8 gap-y-10 border-b border-gray-900/10 pb-12 md:grid-cols-3">
+              <div>
+                <h2 className="text-3xl font-bold text-gray-100">
+                  BMPs
+                </h2>
+                <p className="mt-2 text-sm text-gray-400">
+                  Add any custom BMPs for the site. Standard BMPs will show on
+                  the inspection form automatically.
+                </p>
+              </div>
+              <div className="grid max-w-2xl grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6 md:col-span-2">
+                <div className="col-span-full">
+                  {bmps.length > 0 && (
+                    <ul className="space-y-4 bg-white p-4 shadow-sm ring-1 ring-gray-900/5 sm:rounded-xl">
+                      {bmps.map((bmp, index) => (
+                        <li
+                          key={index}
+                          className="flex items-center justify-between border-b border-gray-200 pb-4"
                         >
-                          Remove
-                        </button>
-                      </li>
-                    ))}
-                  </ul>
-                )}
-                <div className="mt-4">
-                  <h3 className="text-lg font-medium leading-6 text-gray-900">
-                    Add New BMP
-                  </h3>
-                  <div className="grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
-                    <div className="col-span-full">
-                      <label
-                        htmlFor="newBmpName"
-                        className="block text-sm font-medium leading-6 text-gray-900"
-                      >
-                        BMP Name*
-                      </label>
-                      <div className="mt-2">
-                        <input
-                          type="text"
+                          <div>
+                            <h3 className="text-lg font-medium leading-6 text-gray-900">
+                              {bmp.name}
+                            </h3>
+                            <p className="mt-2 text-sm text-gray-600">
+                              {bmp.description}
+                            </p>
+                          </div>
+                          <button
+                            type="button"
+                            onClick={() => handleRemoveBmp(index)}
+                            className="text-red-600 hover:text-red-900"
+                          >
+                            Remove
+                          </button>
+                        </li>
+                      ))}
+                    </ul>
+                  )}
+                  <div className="mt-4">
+                    <h3 className="text-lg font-medium leading-6 text-gray-900">
+                      Add New BMP
+                    </h3>
+                    <div className="grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
+                      <div className="col-span-full">
+                        <Label
                           name="newBmpName"
-                          id="newBmpName"
-                          value={newBmpName}
-                          onChange={(e) => setNewBmpName(e.target.value)}
-                          className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                        />
+                          className="block text-sm font-medium text-gray-200"
+                          >
+                          BMP Name*
+                        </Label>
+                        <div className="mt-2">
+                          <input
+                            type="text"
+                            name="newBmpName"
+                            id="newBmpName"
+                            value={newBmpName}
+                            onChange={(e) => setNewBmpName(e.target.value)}
+                            className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                          />
+                        </div>
                       </div>
-                    </div>
-                    <div className="col-span-full">
-                      <label
-                        htmlFor="newBmpDescription"
-                        className="block text-sm font-medium leading-6 text-gray-900"
-                      >
-                        Description*
-                      </label>
-                      <div className="mt-2">
-                        <textarea
+                      <div className="col-span-full">
+                        <Label
                           name="newBmpDescription"
-                          id="newBmpDescription"
-                          value={newBmpDescription}
-                          onChange={(e) => setNewBmpDescription(e.target.value)}
-                          className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                        />
+                          className="block text-sm font-medium text-gray-200"
+                          >
+                          Description*
+                        </Label>
+                        <div className="mt-2">
+                          <textarea
+                            name="newBmpDescription"
+                            id="newBmpDescription"
+                            value={newBmpDescription}
+                            onChange={(e) =>
+                              setNewBmpDescription(e.target.value)
+                            }
+                            className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                          />
+                        </div>
                       </div>
                     </div>
                   </div>
                 </div>
-              </div>
-              <div className="col-span-full flex justify-end">
-                <button
-                  type="button"
-                  onClick={handleAddBmp}
-                  className="rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
-                >
-                  Add BMP
-                </button>
+                <div className="col-span-full flex justify-end">
+                  <button
+                    type="button"
+                    onClick={handleAddBmp}
+                    className="rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+                  >
+                    Add BMP
+                  </button>
+                </div>
               </div>
             </div>
+          )}
+        </div>
+        <div className="mt-6 flex items-center justify-end gap-x-6 ">
+          <div className="mt-12 flex justify-end">
+            <button
+              type="button"
+              className="text-sm font-semibold leading-6 text-gray-900"
+            >
+              Cancel
+            </button>
+            <Submit
+              disabled={loading}
+              className="rounded-md bg-indigo-600 px-6 py-2 font-semibold text-gray-100 hover:bg-indigo-500"
+            >
+              Create Site
+            </Submit>
           </div>
-        )}
-      </div>
-      <div className="mt-6 flex items-center justify-end gap-x-6 ">
-        <button
-          type="button"
-          className="text-sm font-semibold leading-6 text-gray-900"
-        >
-          Cancel
-        </button>
-        <button
-          type="button"
-          onClick={handleCreateSite}
-          className="rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
-        >
-          Create Site
-        </button>
-      </div>
-    </form>
+        </div>
+      </Form>
+    </div>
   )
 }
 
