@@ -19,6 +19,7 @@ const Routes = () => {
         <Route path="/profile/{id}" page={ProfilePage} name="profile" />
         <Route path="/view-inspection" page={ViewInspectionPage} name="viewInspection" />
         <Route path="/inspections" page={InspectionsPage} name="inspections" />
+        <Route path="/sites" page={SitesPage} name="sites" />
         <Route path="/bmps" page={StandardBMPSettingsPage} name="bmps" />
         <Route path="/new-inspection" page={NewInspectionPage} name="newInspection" />
         <Route path="/new-site" page={NewSitePage} name="newSite" />
