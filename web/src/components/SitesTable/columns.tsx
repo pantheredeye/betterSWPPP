@@ -15,8 +15,6 @@ import {
   DropdownMenuTrigger,
 } from 'src/components/ui/DropdownMenu'
 
-import ExportPDFButton from '../ExportPDFButton/ExportPDFButton'
-
 export type Site = {
   id: number
   name: string

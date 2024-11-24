@@ -1,14 +1,14 @@
-import { render } from "@redwoodjs/testing/web";
+import { render } from '@redwoodjs/testing/web'
 
-import SitesPage from "./SitesPage";
+import SitesPage from './SitesPage'
 
 //   Improve this test with help from the Redwood Testing Doc:
 //   https://redwoodjs.com/docs/testing#testing-pages-layouts
 
-describe("SitesPage", () => {
-  it("renders successfully", () => {
+describe('SitesPage', () => {
+  it('renders successfully', () => {
     expect(() => {
-      render(<SitesPage />);
-    }).not.toThrow();
-  });
-});
+      render(<SitesPage />)
+    }).not.toThrow()
+  })
+})

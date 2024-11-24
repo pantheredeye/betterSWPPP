@@ -10,10 +10,6 @@ import {
   TextField,
   TextAreaField,
   Submit,
-  CheckboxField,
-  DateField,
-  TimeField,
-  DatetimeLocalField,
 } from '@redwoodjs/forms'
 import { navigate, routes } from '@redwoodjs/router'
 import { useMutation, useQuery } from '@redwoodjs/web'
@@ -126,9 +122,7 @@ const NewSitePage = () => {
         <div className="space-y-12">
           <div className="grid grid-cols-1 gap-x-8 gap-y-10 border-b border-gray-900/10 pb-12 md:grid-cols-3">
             <div className="px-4 sm:px-0">
-              <h2 className="text-3xl font-bold text-gray-100">
-                Site Details
-              </h2>
+              <h2 className="text-3xl font-bold text-gray-100">Site Details</h2>
               <p className="mt-2 text-sm text-gray-400">
                 Please fill out the details for the new site.
               </p>
@@ -145,8 +139,7 @@ const NewSitePage = () => {
                   Site Name*
                 </Label>
                 <div className="mt-2">
-                  <input
-                    type="text"
+                  <TextField
                     name="name"
                     id="name"
                     value={name}
@@ -154,6 +147,7 @@ const NewSitePage = () => {
                     className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 required:border-red-500 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                     required
                   />
+                  <FieldError name="name" className="mt-1 text-red-500" />
                 </div>
               </div>
               <div className="col-span-full">
@@ -164,8 +158,7 @@ const NewSitePage = () => {
                   Address Line 1*
                 </Label>
                 <div className="mt-2">
-                  <input
-                    type="text"
+                  <TextField
                     name="addressLine1"
                     id="addressLine1"
                     value={addressLine1}
@@ -182,8 +175,7 @@ const NewSitePage = () => {
                   Address Line 2
                 </Label>
                 <div className="mt-2">
-                  <input
-                    type="text"
+                  <TextField
                     name="addressLine2"
                     id="addressLine2"
                     value={addressLine2}
@@ -200,8 +192,7 @@ const NewSitePage = () => {
                   City
                 </Label>
                 <div className="mt-2">
-                  <input
-                    type="text"
+                  <TextField
                     name="city"
                     id="city"
                     value={city}
@@ -218,8 +209,7 @@ const NewSitePage = () => {
                   State / Province
                 </Label>
                 <div className="mt-2">
-                  <input
-                    type="text"
+                  <TextField
                     name="state"
                     id="state"
                     value={state}
@@ -236,8 +226,7 @@ const NewSitePage = () => {
                   Postal Code
                 </Label>
                 <div className="mt-2">
-                  <input
-                    type="text"
+                  <TextField
                     name="postalCode"
                     id="postalCode"
                     value={postalCode}
@@ -254,8 +243,7 @@ const NewSitePage = () => {
                   Country
                 </Label>
                 <div className="mt-2">
-                  <input
-                    type="text"
+                  <TextField
                     name="country"
                     id="country"
                     value={country}
@@ -272,8 +260,7 @@ const NewSitePage = () => {
                   NPDES Tracking No
                 </Label>
                 <div className="mt-2">
-                  <input
-                    type="text"
+                  <TextField
                     name="npdesTrackingNo"
                     id="npdesTrackingNo"
                     value={npdesTrackingNo}
@@ -290,7 +277,7 @@ const NewSitePage = () => {
                   Site Type*
                 </Label>
                 <div className="mt-2">
-                  <select
+                  <SelectField
                     id="siteTypeId"
                     name="siteTypeId"
                     value={siteTypeId}
@@ -304,7 +291,7 @@ const NewSitePage = () => {
                         </option>
                       )
                     )}
-                  </select>
+                  </SelectField>
                 </div>
               </div>
               <div className="col-span-full">
@@ -315,8 +302,7 @@ const NewSitePage = () => {
                   Site Inspector
                 </Label>
                 <div className="mt-2">
-                  <input
-                    type="text"
+                  <TextField
                     name="siteInspector"
                     id="siteInspector"
                     value={siteInspector}
@@ -352,8 +338,7 @@ const NewSitePage = () => {
                   Owner Name*
                 </Label>
                 <div className="mt-2">
-                  <input
-                    type="text"
+                  <TextField
                     name="ownerName"
                     id="ownerName"
                     value={ownerName}
@@ -368,9 +353,7 @@ const NewSitePage = () => {
           {siteTypeId !== 2 && (
             <div className="grid grid-cols-1 gap-x-8 gap-y-10 border-b border-gray-900/10 pb-12 md:grid-cols-3">
               <div>
-                <h2 className="text-3xl font-bold text-gray-100">
-                  BMPs
-                </h2>
+                <h2 className="text-3xl font-bold text-gray-100">BMPs</h2>
                 <p className="mt-2 text-sm text-gray-400">
                   Add any custom BMPs for the site. Standard BMPs will show on
                   the inspection form automatically.
@@ -413,12 +396,11 @@ const NewSitePage = () => {
                         <Label
                           name="newBmpName"
                           className="block text-sm font-medium text-gray-200"
-                          >
+                        >
                           BMP Name*
                         </Label>
                         <div className="mt-2">
-                          <input
-                            type="text"
+                          <TextField
                             name="newBmpName"
                             id="newBmpName"
                             value={newBmpName}
@@ -431,11 +413,11 @@ const NewSitePage = () => {
                         <Label
                           name="newBmpDescription"
                           className="block text-sm font-medium text-gray-200"
-                          >
+                        >
                           Description*
                         </Label>
                         <div className="mt-2">
-                          <textarea
+                          <TextAreaField
                             name="newBmpDescription"
                             id="newBmpDescription"
                             value={newBmpDescription}
