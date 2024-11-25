@@ -1,0 +1,217 @@
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider      = "prisma-client-js"
+  binaryTargets = "native"
+}
+
+model User {
+  id                String       @id @default(cuid())
+  email             String       @unique
+  hashedPassword    String
+  salt              String
+  firstName         String?
+  lastName          String?
+  phoneNumber       String?
+  createdAt         DateTime     @default(now())
+  updatedAt         DateTime     @updatedAt
+  memberships       Membership[]
+  globalSettings    Json? // User's global preferences
+  Assignment        Assignment[]
+  Event             Event[]
+  lastLoginAt       DateTime?
+  loginAttempts     Int          @default(0)
+  isLocked          Boolean      @default(false)
+  passwordChangedAt DateTime?
+  Media             Media[]
+}
+
+model Organization {
+  id               String       @id @default(cuid())
+  name             String
+  createdAt        DateTime     @default(now())
+  users            Membership[]
+  sites            Site[]
+  settings         Json? // Stores settings specific to the organization
+  billingEmail     String?
+  stripeCustomerId String?
+  Inspection       Inspection[]
+  Event            Event[]
+}
+
+model Membership {
+  id                  String           @id @default(cuid())
+  user                User             @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId              String
+  organization        Organization     @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  organizationId      String
+  roles               MembershipRole[]
+  settings            Json? // Per-organization user-specific settings
+  status              MembershipStatus
+  invitationId        String?
+  invitedEmail        String?
+  invitationExpiresAt DateTime?
+  invitedAt           DateTime?
+  joinedAt            DateTime?
+  invitationAttempts  Int              @default(0)
+  lastInvitationSent  DateTime?
+
+  invitationChannel InvitationChannel
+
+  @@unique([userId, organizationId])
+  @@unique([invitationId, organizationId])
+}
+
+model MembershipRole {
+  id           String       @id @default(cuid())
+  name         String       @unique
+  Membership   Membership[]
+  Permission   Permission?  @relation(fields: [permissionId], references: [id])
+  permissionId String?
+}
+
+model Permission {
+  id             String           @id @default(cuid())
+  name           String           @unique
+  description    String?
+  MembershipRole MembershipRole[]
+}
+
+enum InvitationChannel {
+  EMAIL
+  SLACK
+  INTERNAL
+  EXTERNAL
+}
+
+enum MembershipStatus {
+  INVITED
+  ACTIVE
+  SUSPENDED
+  PENDING
+}
+
+model Site {
+  id        String    @id @default(cuid())
+  name      String
+  deletedAt DateTime?
+
+  organization   Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  organizationId String
+  metadata       Json?
+  currentData    Json?
+  assignments    Assignment[]
+  events         Event[]
+  createdAt      DateTime     @default(now())
+  updatedAt      DateTime     @updatedAt
+  Inspection     Inspection[]
+
+  @@index([deletedAt])
+}
+
+model Assignment {
+  id     String @id @default(cuid())
+  site   Site   @relation(fields: [siteId], references: [id])
+  siteId String
+  user   User   @relation(fields: [userId], references: [id])
+  userId String
+
+  @@unique([userId, siteId])
+}
+
+model Event {
+  id             String       @id @default(cuid())
+  type           EventType
+  site           Site         @relation(fields: [siteId], references: [id])
+  siteId         String
+  user           User?        @relation(fields: [userId], references: [id])
+  userId         String?
+  organization   Organization @relation(fields: [organizationId], references: [id])
+  organizationId String
+  details        Json?
+  createdAt      DateTime     @default(now())
+  Media          Media[]
+  metadata       Json?
+
+  InspectionEventDetails InspectionEventDetails?
+  Inspection             Inspection?             @relation(fields: [inspectionId], references: [id])
+  inspectionId           String?
+  EventTag               EventTag[]
+
+  @@index([organizationId, type, createdAt])
+  @@index([userId, type])
+  @@index([siteId, createdAt])
+}
+
+model EventTag {
+  id      String @id @default(cuid())
+  eventId String
+  tag     String
+  Event   Event  @relation(fields: [eventId], references: [id])
+
+  @@unique([eventId, tag]) // Prevent duplicate tagging.
+}
+
+model InspectionEventDetails {
+  id           String @id @default(cuid())
+  statusChange Json?
+  Event        Event  @relation(fields: [eventId], references: [id])
+  eventId      String @unique
+}
+
+enum EventType {
+  INSPECTION_CREATED
+  INSPECTION_UPDATED
+  BMP_ADDED
+  BMP_UPDATED
+  SITE_CREATED
+  SITE_UPDATED
+  MEDIA_UPLOADED
+}
+
+model Inspection {
+  id             String       @id @default(cuid())
+  organization   Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  organizationId String
+  site           Site         @relation(fields: [siteId], references: [id], onDelete: Cascade)
+  siteId         String
+  events         Event[] // Linked events
+  currentState   Json? // Reflects the latest state of the inspection
+
+  @@index([organizationId, siteId])
+}
+
+model Media {
+  id           String    @id @default(cuid())
+  url          String
+  description  String?
+  inspectionId String?
+  siteId       String?
+  Event        Event?    @relation(fields: [eventId], references: [id])
+  eventId      String?
+  type         MediaType
+  fileSize     Int?
+  mimeType     String?
+  uploadedBy   User?     @relation(fields: [userId], references: [id])
+  userId       String?
+}
+
+enum MediaType {
+  IMAGE
+  DOCUMENT
+  VIDEO
+  AUDIO
+}
+
+model AuditLog {
+  id           String   @id @default(cuid())
+  userId       String?
+  action       String
+  resourceType String
+  resourceId   String
+  changes      Json?
+  createdAt    DateTime @default(now())
+}
