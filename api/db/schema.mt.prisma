@@ -20,20 +20,20 @@ model User {
   updatedAt         DateTime     @updatedAt
   memberships       Membership[]
   globalSettings    Json? // User's global preferences
-  Assignment        Assignment[]
-  Event             Event[]
+  assignment        Assignment[]
+  event             Event[]
   lastLoginAt       DateTime?
   loginAttempts     Int          @default(0)
   isLocked          Boolean      @default(false)
   passwordChangedAt DateTime?
-  Media             Media[]
+  media             Media[]
 }
 
 model Organization {
   id               String       @id @default(cuid())
   name             String
   createdAt        DateTime     @default(now())
-  users            Membership[]
+  members          Membership[]
   sites            Site[]
   settings         Json? // Stores settings specific to the organization
   billingEmail     String?
@@ -60,6 +60,9 @@ model Membership {
   lastInvitationSent  DateTime?
 
   invitationChannel InvitationChannel
+  assignment        Assignment[]
+  event             Event[]
+  media             Media[]
 
   @@unique([userId, organizationId])
   @@unique([invitationId, organizationId])
@@ -68,16 +71,18 @@ model Membership {
 model MembershipRole {
   id           String       @id @default(cuid())
   name         String       @unique
-  Membership   Membership[]
-  Permission   Permission?  @relation(fields: [permissionId], references: [id])
+  membership   Membership[]
+  permission   Permission?  @relation(fields: [permissionId], references: [id])
   permissionId String?
+  site         Site?        @relation(fields: [siteId], references: [id])
+  siteId       String?
 }
 
 model Permission {
   id             String           @id @default(cuid())
   name           String           @unique
   description    String?
-  MembershipRole MembershipRole[]
+  membershipRole MembershipRole[]
 }
 
 enum InvitationChannel {
@@ -95,10 +100,10 @@ enum MembershipStatus {
 }
 
 model Site {
-  id        String    @id @default(cuid())
-  name      String
-  deletedAt DateTime?
-
+  id             String       @id @default(cuid())
+  name           String
+  deletedAt      DateTime?
+  isArchived
   organization   Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
   organizationId String
   metadata       Json?
@@ -113,11 +118,13 @@ model Site {
 }
 
 model Assignment {
-  id     String @id @default(cuid())
-  site   Site   @relation(fields: [siteId], references: [id])
-  siteId String
-  user   User   @relation(fields: [userId], references: [id])
-  userId String
+  id           String      @id @default(cuid())
+  site         Site        @relation(fields: [siteId], references: [id])
+  siteId       String
+  user         User?       @relation(fields: [userId], references: [id])
+  userId       String
+  membership   Membership? @relation(fields: [membershipId], references: [id])
+  membershipId String
 
   @@unique([userId, siteId])
 }
@@ -127,22 +134,24 @@ model Event {
   type           EventType
   site           Site         @relation(fields: [siteId], references: [id])
   siteId         String
-  user           User?        @relation(fields: [userId], references: [id])
-  userId         String?
+  membership     Membership   @relation(fields: [membershipId], references: [id])
+  membershipId   String
   organization   Organization @relation(fields: [organizationId], references: [id])
   organizationId String
   details        Json?
   createdAt      DateTime     @default(now())
-  Media          Media[]
+  media          Media[]
   metadata       Json?
 
-  InspectionEventDetails InspectionEventDetails?
-  Inspection             Inspection?             @relation(fields: [inspectionId], references: [id])
+  inspectionEventDetails InspectionEventDetails?
+  inspection             Inspection?             @relation(fields: [inspectionId], references: [id])
   inspectionId           String?
-  EventTag               EventTag[]
+  eventTag               EventTag[]
+  user                   User?                   @relation(fields: [userId], references: [id])
+  userId                 String?
 
   @@index([organizationId, type, createdAt])
-  @@index([userId, type])
+  @@index([membershipId, type])
   @@index([siteId, createdAt])
 }
 
@@ -150,7 +159,7 @@ model EventTag {
   id      String @id @default(cuid())
   eventId String
   tag     String
-  Event   Event  @relation(fields: [eventId], references: [id])
+  event   Event  @relation(fields: [eventId], references: [id])
 
   @@unique([eventId, tag]) // Prevent duplicate tagging.
 }
@@ -158,7 +167,7 @@ model EventTag {
 model InspectionEventDetails {
   id           String @id @default(cuid())
   statusChange Json?
-  Event        Event  @relation(fields: [eventId], references: [id])
+  event        Event  @relation(fields: [eventId], references: [id])
   eventId      String @unique
 }
 
@@ -180,23 +189,29 @@ model Inspection {
   siteId         String
   events         Event[] // Linked events
   currentState   Json? // Reflects the latest state of the inspection
+  media          Media[]
 
   @@index([organizationId, siteId])
 }
 
 model Media {
-  id           String    @id @default(cuid())
+  id           String     @id @default(cuid())
   url          String
   description  String?
+  inspection   Inspection @relation(fields: [inspectionId], references: [id])
   inspectionId String?
   siteId       String?
-  Event        Event?    @relation(fields: [eventId], references: [id])
+  event        Event?     @relation(fields: [eventId], references: [id])
   eventId      String?
   type         MediaType
   fileSize     Int?
   mimeType     String?
-  uploadedBy   User?     @relation(fields: [userId], references: [id])
+  uploadedBy   Membership @relation(fields: [membershipId], references: [id])
+  membershipId String
+  user         User?      @relation(fields: [userId], references: [id])
   userId       String?
+
+  @@index([inspectionId])
 }
 
 enum MediaType {
