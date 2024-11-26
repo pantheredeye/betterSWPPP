@@ -26,7 +26,6 @@ model User {
   loginAttempts     Int          @default(0)
   isLocked          Boolean      @default(false)
   passwordChangedAt DateTime?
-  media             Media[]
 }
 
 model Organization {
@@ -64,6 +63,10 @@ model Membership {
   invitationAttempts  Int               @default(0)
   lastInvitationSent  DateTime?
   invitationChannel   InvitationChannel
+  assignment          Assignment[]
+  event               Event[]
+  media               Media[]
+  auditLog            AuditLog[]
 
   @@unique([userId, organizationId])
   @@unique([invitationId, organizationId])
@@ -122,13 +125,14 @@ model Site {
   deletedAt      DateTime?
   organization   Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
   organizationId String
-  metadata       Json?
+  metadata       Json? // Could contain { claimedBy: "Southaven", pendingApproval: true }
   currentData    Json?
   assignments    Assignment[]
   events         Event[]
   createdAt      DateTime     @default(now())
   updatedAt      DateTime     @updatedAt
   inspection     Inspection[]
+  media          Media[]
 
   @@index([deletedAt])
   @@index([organizationId])
@@ -142,9 +146,11 @@ model Assignment {
   membershipId   String
   organization   Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
   organizationId String
+  user           User?        @relation(fields: [userId], references: [id])
+  userId         String?
 
-  @@unique([userId, siteId])
-  @@index([organizationId, userId])
+  @@unique([membershipId, siteId])
+  @@index([organizationId, membershipId])
 }
 
 model Event {
@@ -165,6 +171,8 @@ model Event {
   inspection             Inspection?             @relation(fields: [inspectionId], references: [id])
   inspectionId           String?
   eventTag               EventTag[]
+  user                   User?                   @relation(fields: [userId], references: [id])
+  userId                 String?
 
   @@index([organizationId, type, createdAt])
   @@index([membershipId, type])
@@ -212,6 +220,7 @@ model Inspection {
   siteId         String
   events         Event[]
   currentState   Json?
+  media          Media[]
 
   @@index([organizationId, siteId])
 }
@@ -222,9 +231,9 @@ model Media {
   description    String?
   inspection     Inspection?  @relation(fields: [inspectionId], references: [id])
   inspectionId   String?
-  site           Site         @relation(fields: [siteId], references: [id])
+  site           Site?        @relation(fields: [siteId], references: [id])
   siteId         String?
-  Event          Event?       @relation(fields: [eventId], references: [id])
+  event          Event?       @relation(fields: [eventId], references: [id])
   eventId        String?
   type           MediaType
   fileSize       Int?
