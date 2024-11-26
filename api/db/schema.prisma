@@ -1,6 +1,5 @@
-// schema.prisma
 datasource db {
-  provider = "sqlite"
+  provider = "postgresql"
   url      = env("DATABASE_URL")
 }
 
@@ -10,115 +9,248 @@ generator client {
 }
 
 model User {
-  id                  Int          @id @default(autoincrement())
-  email               String       @unique
-  hashedPassword      String
-  salt                String
-  resetToken          String?
-  resetTokenExpiresAt DateTime?
-  firstName           String?
-  lastName            String?
-  phoneNumber         String?
-  roles               String       @default("user")
-  createdAt           DateTime     @default(now())
-  updatedAt           DateTime     @updatedAt
-  inspections         Inspection[]
-  sites               Site[]
+  id                String       @id @default(cuid())
+  email             String       @unique
+  hashedPassword    String
+  salt              String
+  firstName         String?
+  lastName          String?
+  phoneNumber       String?
+  createdAt         DateTime     @default(now())
+  updatedAt         DateTime     @updatedAt
+  memberships       Membership[]
+  globalSettings    Json? // User's global preferences
+  Assignment        Assignment[]
+  Event             Event[]
+  lastLoginAt       DateTime?
+  loginAttempts     Int          @default(0)
+  isLocked          Boolean      @default(false)
+  passwordChangedAt DateTime?
+  Media             Media[]
+}
+
+model Organization {
+  id                     String                   @id @default(cuid())
+  name                   String
+  createdAt              DateTime                 @default(now())
+  users                  Membership[]
+  sites                  Site[]
+  settings               Json? // Stores settings specific to the organization
+  billingEmail           String?
+  stripeCustomerId       String?
+  Inspection             Inspection[]
+  Event                  Event[]
+  MembershipRole         MembershipRole[]
+  Media                  Media[]
+  InspectionEventDetails InspectionEventDetails[]
+  Assignment             Assignment[]
+  Permission             Permission[]
+}
+
+model Membership {
+  id                  String            @id @default(cuid())
+  user                User              @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId              String
+  organization        Organization      @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  organizationId      String
+  roles               MembershipRole[]
+  settings            Json? // Per-organization user-specific settings
+  status              MembershipStatus
+  invitationId        String?           @default(dbgenerated("concat('manual-join-', gen_random_uuid())"))
+  invitedEmail        String?
+  invitationExpiresAt DateTime?
+  invitedAt           DateTime?
+  joinedAt            DateTime?
+  invitationAttempts  Int               @default(0)
+  lastInvitationSent  DateTime?
+  invitationChannel   InvitationChannel
+
+  @@unique([userId, organizationId])
+  @@unique([invitationId, organizationId])
+  @@index([organizationId]) // Indexing organizationId
+}
+
+model MembershipRole {
+  id             String       @id @default(cuid())
+  name           String       @unique
+  Membership     Membership[]
+  organization   Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  organizationId String
+  Permission     Permission?  @relation(fields: [permissionId], references: [id])
+  permissionId   String?
+
+  @@index([organizationId]) // Indexing organizationId
+}
+
+model Permission {
+  id             String           @id @default(cuid())
+  name           String // Name of the permission (e.g., "READ", "WRITE")
+  description    String? // Optional description
+  scope          PermissionScope // Enum for scope (e.g., ORGANIZATION, SITE, etc.)
+  conditions     Json? // Optional JSON to specify dynamic conditions (e.g., `{ "resourceId": "xyz" }`)
+  MembershipRole MembershipRole[] // Links to roles
+  organization   Organization?    @relation(fields: [organizationId], references: [id])
+  organizationId String?
+
+  @@unique([name, scope]) // Prevent duplicates for the same scope
+  @@index([organizationId]) // Indexing organizationId
+}
+
+enum PermissionScope {
+  ORGANIZATION
+  SITE
+  GLOBAL
+}
+
+enum InvitationChannel {
+  EMAIL
+  SLACK
+  INTERNAL
+  EXTERNAL
+}
+
+enum MembershipStatus {
+  INVITED
+  ACTIVE
+  SUSPENDED
+  PENDING
 }
 
 model Site {
-  id              Int          @id @default(autoincrement())
-  name            String
-  addressLine1    String
-  addressLine2    String?
-  city            String?
-  state           String?
-  postalCode      String?
-  country         String?
-  npdesTrackingNo String?
-  siteType        SiteType     @relation(fields: [siteTypeId], references: [id])
-  siteTypeId      Int
-  siteInspector   String?
-  siteMap         String?
-  ownerName       String
-  createdAt       DateTime     @default(now())
-  updatedAt       DateTime     @updatedAt
-  inspections     Inspection[]
-  bmps            Bmp[]
-  User            User?        @relation(fields: [userId], references: [id])
-  userId          Int?
+  id        String    @id @default(cuid())
+  name      String
+  deletedAt DateTime?
+
+  organization   Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  organizationId String
+  metadata       Json?
+  currentData    Json?
+  assignments    Assignment[]
+  events         Event[]
+  createdAt      DateTime     @default(now())
+  updatedAt      DateTime     @updatedAt
+  Inspection     Inspection[]
+
+  @@index([deletedAt])
+  @@index([organizationId]) // Indexing organizationId
 }
 
-model SiteType {
-  id    Int    @id @default(autoincrement())
-  name  String @unique
-  sites Site[]
+model Assignment {
+  id             String       @id @default(cuid())
+  site           Site         @relation(fields: [siteId], references: [id])
+  siteId         String
+  user           User         @relation(fields: [userId], references: [id])
+  userId         String
+  organization   Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  organizationId String
+
+  @@unique([userId, siteId])
+  @@index([organizationId, userId]) // Index for frequent organization-user queries
+}
+
+model Event {
+  id             String       @id @default(cuid())
+  type           EventType
+  site           Site         @relation(fields: [siteId], references: [id])
+  siteId         String
+  user           User?        @relation(fields: [userId], references: [id])
+  userId         String?
+  organization   Organization @relation(fields: [organizationId], references: [id])
+  organizationId String
+  details        Json?
+  createdAt      DateTime     @default(now())
+  Media          Media[]
+  metadata       Json?
+
+  InspectionEventDetails InspectionEventDetails?
+  Inspection             Inspection?             @relation(fields: [inspectionId], references: [id])
+  inspectionId           String?
+  EventTag               EventTag[]
+
+  @@index([organizationId, type, createdAt])
+  @@index([userId, type])
+  @@index([siteId, createdAt])
+}
+
+model EventTag {
+  id      String @id @default(cuid())
+  eventId String
+  tag     String
+  Event   Event  @relation(fields: [eventId], references: [id])
+
+  @@unique([eventId, tag]) // Prevent duplicate tagging.
+}
+
+model InspectionEventDetails {
+  id             String       @id @default(cuid())
+  statusChange   Json?
+  Event          Event        @relation(fields: [eventId], references: [id])
+  eventId        String       @unique
+  organization   Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  organizationId String
+
+  @@index([organizationId]) // Indexing organizationId
+}
+
+enum EventType {
+  SITE_TYPE_CREATED
+  SITE_TYPE_UPDATED
+  SITE_TYPE_DELETED
+  BMP_CREATED
+  BMP_UPDATED
+  BMP_DELETED
+  ROLE_CREATED
+  ROLE_UPDATED
+  ROLE_DELETED
+  MEDIA_UPLOADED
 }
 
 model Inspection {
-  id                       Int       @id @default(autoincrement())
-  site                     Site      @relation(fields: [siteId], references: [id])
-  siteId                   Int
-  inspector                User      @relation(fields: [inspectorId], references: [id])
-  inspectorId              Int
-  date                     DateTime
-  startTime                DateTime
-  endTime                  DateTime
-  permitOnSite             Boolean
-  swpppOnSite              Boolean
-  bmpsInstalledPerSwppp    Boolean
-  siteInspectionReports    Boolean
-  inspectionType           String
-  title                    String
-  description              String
-  severity                 String
-  violationsNotes          String?
-  whomToContact            String?
-  newStormEvent            Boolean
-  stormDateTime            DateTime?
-  stormDuration            String?
-  approximatePrecipitation Float?
-  weatherAtTime            String
-  temperature              Float?
-  previousDischarge        Boolean
-  newDischarges            Boolean
-  dischargeAtThisTime      Boolean
-  currentDischarges        Boolean
-  createdAt                DateTime  @default(now())
-  updatedAt                DateTime  @updatedAt
-  bmpData                  BmpData[]
-  media                    Media[]
-}
+  id             String       @id @default(cuid())
+  organization   Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  organizationId String
+  site           Site         @relation(fields: [siteId], references: [id], onDelete: Cascade)
+  siteId         String
+  events         Event[] // Linked events
+  currentState   Json? // Reflects the latest state of the inspection
 
-model Bmp {
-  id          Int       @id @default(autoincrement())
-  name        String
-  description String
-  isStandard  Boolean
-  site        Site?     @relation(fields: [siteId], references: [id])
-  siteId      Int?
-  bmpData     BmpData[]
-}
-
-model BmpData {
-  id                     Int        @id @default(autoincrement())
-  bmp                    Bmp        @relation(fields: [bmpId], references: [id])
-  bmpId                  Int
-  inspection             Inspection @relation(fields: [inspectionId], references: [id])
-  inspectionId           Int
-  implemented            Boolean?
-  maintenanceRequired    Boolean?
-  repeatOccurrence       Boolean?
-  correctiveActionNeeded String?
-  notes                  String?
-
-  @@unique([bmpId, inspectionId])
+  @@index([organizationId, siteId])
 }
 
 model Media {
-  id           Int        @id @default(autoincrement())
-  inspection   Inspection @relation(fields: [inspectionId], references: [id])
-  inspectionId Int
-  url          String
-  description  String
+  id             String       @id @default(cuid())
+  url            String
+  description    String?
+  inspectionId   String?
+  siteId         String?
+  Event          Event?       @relation(fields: [eventId], references: [id])
+  eventId        String?
+  type           MediaType
+  fileSize       Int?
+  mimeType       String?
+  uploadedBy     User?        @relation(fields: [userId], references: [id])
+  userId         String?
+  organization   Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  organizationId String
+
+  @@index([organizationId]) // Indexing organizationId
+}
+
+enum MediaType {
+  IMAGE
+  DOCUMENT
+  VIDEO
+  AUDIO
+}
+
+model AuditLog {
+  id            String   @id @default(cuid())
+  userId        String?
+  action        String
+  resourceType  String
+  resourceId    String
+  changes       Json?
+  ipAddress     String?
+  deviceDetails Json?
+  createdAt     DateTime @default(now())
 }
