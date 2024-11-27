@@ -103,6 +103,7 @@ enum PermissionScope {
   ORGANIZATION
   SITE
   GLOBAL
+  CROSS_ORGANIZATIONAL
 }
 
 enum InvitationChannel {
