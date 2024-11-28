@@ -1,8 +1,4 @@
-Here's the updated README for your project, reflecting the current state, roles, permissions, and features:
-
----
-
-# README: SWPPP-TOP - Stormwater Inspection Application
+# README: SWPPP-TOP - The One Program for Stormwater Inspections
 
 ## **System Overview**
 

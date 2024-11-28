@@ -26,6 +26,8 @@ model User {
   loginAttempts     Int          @default(0)
   isLocked          Boolean      @default(false)
   passwordChangedAt DateTime?
+  deletedAt         DateTime?
+  isActive          Boolean      @default(true)
 }
 
 model Organization {
@@ -44,6 +46,15 @@ model Organization {
   inspectionEventDetails InspectionEventDetails[]
   assignment             Assignment[]
   permission             Permission[]
+  deletedAt              DateTime?
+  status                 OrganizationStatus       @default(ACTIVE)
+}
+
+enum OrganizationStatus {
+  ACTIVE
+  SUSPENDED
+  ARCHIVED
+  PENDING
 }
 
 model Membership {
@@ -55,7 +66,6 @@ model Membership {
   deletedAt           DateTime?
   roles               MembershipRole[]
   settings            Json? // Per-organization user-specific settings
-  status              MembershipStatus
   invitationId        String?           @default(dbgenerated("concat('manual-join-', gen_random_uuid())"))
   invitedEmail        String?
   invitationExpiresAt DateTime?
@@ -68,6 +78,8 @@ model Membership {
   event               Event[]
   media               Media[]
   auditLog            AuditLog[]
+  status              MembershipStatus  @default(ACTIVE)
+  deactivationReason  String?
 
   @@unique([userId, organizationId])
   @@unique([invitationId, organizationId])
@@ -87,17 +99,19 @@ model MembershipRole {
 }
 
 model Permission {
-  id             String           @id @default(cuid())
-  name           String // Name of the permission (e.g., "READ", "WRITE")
-  description    String? // Optional description
-  scope          PermissionScope // Enum for scope (e.g., ORGANIZATION, SITE, etc.)
-  conditions     Json? // Optional JSON to specify dynamic conditions (e.g., `{ "resourceId": "xyz" }`)
-  membershipRole MembershipRole[] // Links to roles
-  organization   Organization?    @relation(fields: [organizationId], references: [id])
-  organizationId String?
-  deletedAt      DateTime?
-  resourceType   String? // Specify the type of resource, e.g., Site, Organization
-  resourceId     String? // Specific ID for granular control
+  id                 String           @id @default(cuid())
+  name               String // Name of the permission (e.g., "READ", "WRITE")
+  description        String? // Optional description
+  scope              PermissionScope // Enum for scope (e.g., ORGANIZATION, SITE, etc.)
+  conditions         Json? // Optional JSON to specify dynamic conditions (e.g., `{ "resourceId": "xyz" }`)
+  membershipRole     MembershipRole[] // Links to roles
+  organization       Organization?    @relation(fields: [organizationId], references: [id])
+  organizationId     String?
+  deletedAt          DateTime?
+  resourceType       String? // Specify the type of resource, e.g., Site, Organization
+  resourceId         String? // Specific ID for granular control
+  deactivatedBy      String? // Optionally track who deactivated the permission
+  deactivationReason String?
 
   @@unique([name, scope])
   @@index([organizationId])
@@ -127,7 +141,6 @@ enum MembershipStatus {
 model Site {
   id             String       @id @default(cuid())
   name           String
-  deletedAt      DateTime?
   organization   Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
   organizationId String
   metadata       Json? // Could contain { claimedBy: "Southaven", pendingApproval: true }
@@ -138,6 +151,8 @@ model Site {
   updatedAt      DateTime     @updatedAt
   inspection     Inspection[]
   media          Media[]
+  deletedAt      DateTime?
+  isActive       Boolean      @default(true)
 
   @@index([deletedAt])
   @@index([organizationId])
@@ -218,16 +233,25 @@ enum EventType {
 }
 
 model Inspection {
-  id             String       @id @default(cuid())
-  organization   Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  id             String           @id @default(cuid())
+  organization   Organization     @relation(fields: [organizationId], references: [id], onDelete: Cascade)
   organizationId String
-  site           Site         @relation(fields: [siteId], references: [id], onDelete: Cascade)
+  site           Site             @relation(fields: [siteId], references: [id], onDelete: Cascade)
   siteId         String
   events         Event[]
   currentState   Json?
   media          Media[]
+  deletedAt      DateTime?
+  status         InspectionStatus @default(ACTIVE)
 
   @@index([organizationId, siteId])
+}
+
+enum InspectionStatus {
+  ACTIVE
+  COMPLETED
+  ARCHIVED
+  UNDER_REVIEW
 }
 
 model Media {
