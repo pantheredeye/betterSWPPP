@@ -52,11 +52,11 @@ const SignupPage = () => {
       <main className="flex min-h-full flex-1 flex-col justify-center py-12 sm:px-6 lg:px-8">
         <Toaster toastOptions={{ className: 'rw-toast', duration: 6000 }} />
         <div className="sm:mx-auto sm:w-full sm:max-w-md">
-          <img
+          {/* <img
             className="mx-auto h-10 w-auto"
             src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=600"
-            alt="BetterSWPPP"
-          />
+            alt="SWPPP-TOP"
+          /> */} <h1>THE ONE PROGRAM FOR STORMWATER MANAGEMENT</h1>
           <h2 className="mt-6 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900">
             Create your account
           </h2>
