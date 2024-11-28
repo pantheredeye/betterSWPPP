@@ -52,6 +52,7 @@ model Membership {
   userId              String
   organization        Organization      @relation(fields: [organizationId], references: [id], onDelete: Cascade)
   organizationId      String
+  deletedAt           DateTime?
   roles               MembershipRole[]
   settings            Json? // Per-organization user-specific settings
   status              MembershipStatus
@@ -94,6 +95,9 @@ model Permission {
   membershipRole MembershipRole[] // Links to roles
   organization   Organization?    @relation(fields: [organizationId], references: [id])
   organizationId String?
+  deletedAt      DateTime?
+  resourceType   String? // Specify the type of resource, e.g., Site, Organization
+  resourceId     String? // Specific ID for granular control
 
   @@unique([name, scope])
   @@index([organizationId])
@@ -243,6 +247,7 @@ model Media {
   membershipId   String?
   organization   Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
   organizationId String
+  json           Json?
 
   @@index([organizationId])
 }
