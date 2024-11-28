@@ -100,17 +100,17 @@ model MembershipRole {
 
 model Permission {
   id                 String           @id @default(cuid())
-  name               String // Name of the permission (e.g., "READ", "WRITE")
-  description        String? // Optional description
-  scope              PermissionScope // Enum for scope (e.g., ORGANIZATION, SITE, etc.)
+  name               String
+  description        String?
+  scope              PermissionScope
   conditions         Json? // Optional JSON to specify dynamic conditions (e.g., `{ "resourceId": "xyz" }`)
-  membershipRole     MembershipRole[] // Links to roles
+  membershipRole     MembershipRole[]
   organization       Organization?    @relation(fields: [organizationId], references: [id])
   organizationId     String?
   deletedAt          DateTime?
   resourceType       String? // Specify the type of resource, e.g., Site, Organization
   resourceId         String? // Specific ID for granular control
-  deactivatedBy      String? // Optionally track who deactivated the permission
+  deactivatedBy      String?
   deactivationReason String?
 
   @@unique([name, scope])
