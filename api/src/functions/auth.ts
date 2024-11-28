@@ -129,16 +129,53 @@ export const handler = async (
       username,
       hashedPassword,
       salt,
-      userAttributes: _userAttributes,
+      userAttributes,
     }) => {
-      return db.user.create({
-        data: {
-          email: username,
-          hashedPassword: hashedPassword,
-          salt: salt,
-          roles: 'Inspector',
-          // name: userAttributes.name
-        },
+      return db.$transaction(async (tx) => {
+        // Create the user
+        const user = await tx.user.create({
+          data: {
+            email: username,
+            hashedPassword: hashedPassword,
+            salt: salt,
+          }
+        })
+
+        const personalOrg = await tx.organization.create({
+          data: {
+            name: `${user.firstName || user.email}'s Organization`,
+          }
+        })
+
+        const ownerRole = await tx.membershipRole.create({
+          data: {
+            name: 'Owner',
+            organization: {
+              connect: { id: personalOrg.id },
+            },
+            permission: {
+              create: {
+                name: 'Full Access',
+                scope: 'ORGANIZATION',
+                description: 'Complete access to personal organization',
+              },
+            },
+          },
+        })
+
+        await tx.membership.create({
+          data: {
+            userId: user.id,
+            organizationId: personalOrg.id,
+            roles: {
+              connect: { id: ownerRole.id }, // Link the "Owner" role
+            },
+            status: 'ACTIVE',
+            invitationChannel: 'INTERNAL',
+          },
+        })
+
+        return user
       })
     },
 
@@ -206,3 +243,4 @@ export const handler = async (
 
   return await authHandler.invoke()
 }
+
