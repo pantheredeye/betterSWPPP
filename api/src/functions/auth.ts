@@ -143,9 +143,9 @@ export const handler = async (
 
         const personalOrg = await tx.organization.create({
           data: {
-            name: `${user.email}'s Organization`,
-          }
-        })
+            name: `Personal Organization (${user.id})`,
+          },
+          })
 
         const ownerRole = await tx.membershipRole.create({
           data: {
