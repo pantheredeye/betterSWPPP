@@ -19,7 +19,7 @@ interface AuthenticatedLayoutProps {
 
 const AuthenticatedLayout = ({ children }: AuthenticatedLayoutProps) => {
   const [sidebarOpen, setSidebarOpen] = useState(false)
-  const { currentUser } = useAuth()
+  // const { currentUser } = useAuth()
 
   // TODO: Uncomment when org.ids?.length is available
 
