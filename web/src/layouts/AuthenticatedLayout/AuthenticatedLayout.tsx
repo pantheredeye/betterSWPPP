@@ -1,4 +1,6 @@
-import { useState, Fragment, ReactNode } from 'react'
+import { useState, Fragment, ReactNode, useEffect } from 'react'
+import { navigate } from '@redwoodjs/router'
+
 
 import {
   Dialog,
@@ -9,6 +11,7 @@ import {
 import { Bars3Icon, XMarkIcon } from '@heroicons/react/24/outline'
 
 import Sidebar from 'src/components/Sidebar'
+import { useAuth } from 'src/auth'
 
 interface AuthenticatedLayoutProps {
   children: ReactNode
@@ -16,6 +19,18 @@ interface AuthenticatedLayoutProps {
 
 const AuthenticatedLayout = ({ children }: AuthenticatedLayoutProps) => {
   const [sidebarOpen, setSidebarOpen] = useState(false)
+  const { currentUser } = useAuth()
+
+  // TODO: Uncomment when org.ids?.length is available
+
+  // useEffect(() => {
+  //   if (currentUser?.defaultOrganizationId) {
+  //     navigate(`/org/${currentUser.defaultOrganizationId}/dashboard`)
+  //   } else if (currentUser?.organizationIds?.length) {
+  //     navigate(`/org/${currentUser.organizationIds[0]}/dashboard`)
+  //   }
+  // }, [currentUser])
+
 
   return (
     <div className="flex min-h-screen bg-gray-900 font-sans text-gray-300">

@@ -1,9 +1,20 @@
-import { Router, Route, Set, PrivateSet } from '@redwoodjs/router'
+import { Router, Route, Set, PrivateSet, navigate } from '@redwoodjs/router'
 
 import MainLayout from 'src/layouts/MainLayout/MainLayout'
 
 import { useAuth } from './auth'
 import AuthenticatedLayout from './layouts/AuthenticatedLayout/AuthenticatedLayout'
+
+const redirectToDashboard = (user) => {
+  const defaultOrg = user.defaultOrganizationId || user.organizationIds[0];
+
+  if (!defaultOrg) {
+    throw new Error("No organization found.");
+  }
+
+  navigate(`/org/${defaultOrg}/dashboard`);
+};
+
 
 const Routes = () => {
   return (
