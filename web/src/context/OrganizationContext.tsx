@@ -4,6 +4,9 @@ import { navigate } from '@redwoodjs/router';
 // Create a context
 const OrganizationContext = createContext(null);
 
+// Could move switchOrg to a utility file: src/utils/organization.ts
+// and call directly when needed
+
 export const OrganizationProvider = ({ children }: { children: ReactNode }) => {
   const [currentOrganization, setCurrentOrganization] = useState(() =>
     localStorage.getItem('currentOrganization')
