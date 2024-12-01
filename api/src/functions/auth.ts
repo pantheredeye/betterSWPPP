@@ -143,7 +143,7 @@ export const handler = async (
 
         const personalOrg = await tx.organization.create({
           data: {
-            name: `${user.firstName || user.email}'s Organization`,
+            name: `${user.email}'s Organization`,
           }
         })
 
