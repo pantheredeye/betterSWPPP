@@ -2,56 +2,56 @@ import type {
   QueryResolvers,
   MutationResolvers,
   MediaRelationResolvers,
-} from "types/graphql";
+} from 'types/graphql'
 
-import { db } from "src/lib/db";
+import { db } from 'src/lib/db'
 
-export const medias: QueryResolvers["medias"] = () => {
-  return db.media.findMany();
-};
+export const medias: QueryResolvers['medias'] = () => {
+  return db.media.findMany()
+}
 
-export const media: QueryResolvers["media"] = ({ id }) => {
+export const media: QueryResolvers['media'] = ({ id }) => {
   return db.media.findUnique({
     where: { id },
-  });
-};
+  })
+}
 
-export const createMedia: MutationResolvers["createMedia"] = ({ input }) => {
+export const createMedia: MutationResolvers['createMedia'] = ({ input }) => {
   return db.media.create({
     data: input,
-  });
-};
+  })
+}
 
-export const updateMedia: MutationResolvers["updateMedia"] = ({
+export const updateMedia: MutationResolvers['updateMedia'] = ({
   id,
   input,
 }) => {
   return db.media.update({
     data: input,
     where: { id },
-  });
-};
+  })
+}
 
-export const deleteMedia: MutationResolvers["deleteMedia"] = ({ id }) => {
+export const deleteMedia: MutationResolvers['deleteMedia'] = ({ id }) => {
   return db.media.delete({
     where: { id },
-  });
-};
+  })
+}
 
 export const Media: MediaRelationResolvers = {
   inspection: (_obj, { root }) => {
-    return db.media.findUnique({ where: { id: root?.id } }).inspection();
+    return db.media.findUnique({ where: { id: root?.id } }).inspection()
   },
   site: (_obj, { root }) => {
-    return db.media.findUnique({ where: { id: root?.id } }).site();
+    return db.media.findUnique({ where: { id: root?.id } }).site()
   },
   event: (_obj, { root }) => {
-    return db.media.findUnique({ where: { id: root?.id } }).event();
+    return db.media.findUnique({ where: { id: root?.id } }).event()
   },
   uploadedBy: (_obj, { root }) => {
-    return db.media.findUnique({ where: { id: root?.id } }).uploadedBy();
+    return db.media.findUnique({ where: { id: root?.id } }).uploadedBy()
   },
   organization: (_obj, { root }) => {
-    return db.media.findUnique({ where: { id: root?.id } }).organization();
+    return db.media.findUnique({ where: { id: root?.id } }).organization()
   },
-};
+}

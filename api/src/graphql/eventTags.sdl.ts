@@ -27,4 +27,4 @@ export const schema = gql`
       @requireAuth
     deleteEventTag(id: String!): EventTag! @requireAuth
   }
-`;
+`

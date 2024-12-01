@@ -65,4 +65,4 @@ export const schema = gql`
     updateEvent(id: String!, input: UpdateEventInput!): Event! @requireAuth
     deleteEvent(id: String!): Event! @requireAuth
   }
-`;
+`

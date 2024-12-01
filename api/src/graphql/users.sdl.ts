@@ -64,4 +64,4 @@ export const schema = gql`
     deleteUser(id: String!): User! @requireAuth
     setDefaultOrganization(organizationId: String!): User! @requireAuth
   }
-`;
+`

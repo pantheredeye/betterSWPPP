@@ -1,8 +1,9 @@
-import { createContext, useContext, useState, ReactNode } from 'react';
-import { navigate } from '@redwoodjs/router';
+import { createContext, useContext, useState, ReactNode } from 'react'
+
+import { navigate } from '@redwoodjs/router'
 
 // Create a context
-const OrganizationContext = createContext(null);
+const OrganizationContext = createContext(null)
 
 // Could move switchOrg to a utility file: src/utils/organization.ts
 // and call directly when needed
@@ -10,13 +11,13 @@ const OrganizationContext = createContext(null);
 export const OrganizationProvider = ({ children }: { children: ReactNode }) => {
   const [currentOrganization, setCurrentOrganization] = useState(() =>
     localStorage.getItem('currentOrganization')
-  );
+  )
 
   const switchOrganization = (organizationId: string) => {
-    setCurrentOrganization(organizationId);
-    localStorage.setItem('currentOrganization', organizationId);
-    navigate(`/org/${organizationId}/dashboard`);
-  };
+    setCurrentOrganization(organizationId)
+    localStorage.setItem('currentOrganization', organizationId)
+    navigate(`/org/${organizationId}/dashboard`)
+  }
 
   return (
     <OrganizationContext.Provider
@@ -24,10 +25,10 @@ export const OrganizationProvider = ({ children }: { children: ReactNode }) => {
     >
       {children}
     </OrganizationContext.Provider>
-  );
-};
+  )
+}
 
 // Hook for easy access
 export const useOrganization = () => {
-  return useContext(OrganizationContext);
-};
+  return useContext(OrganizationContext)
+}

@@ -46,4 +46,4 @@ export const schema = gql`
       @requireAuth
     deleteInspection(id: String!): Inspection! @requireAuth
   }
-`;
+`

@@ -5,16 +5,17 @@ import MainLayout from 'src/layouts/MainLayout/MainLayout'
 import { useAuth } from './auth'
 import AuthenticatedLayout from './layouts/AuthenticatedLayout/AuthenticatedLayout'
 
-const redirectToDashboard = (user) => {
-  const defaultOrg = user.defaultOrganizationId || user.organizationIds[0];
+// EXAMPLE: redirect function
 
-  if (!defaultOrg) {
-    throw new Error("No organization found.");
-  }
+// const redirectToDashboard = (user) => {
+//   const defaultOrg = user.defaultOrganizationId || user.organizationIds[0]
 
-  navigate(`/org/${defaultOrg}/dashboard`);
-};
+//   if (!defaultOrg) {
+//     throw new Error('No organization found.')
+//   }
 
+//   navigate(`/org/${defaultOrg}/dashboard`)
+// }
 
 const Routes = () => {
   return (

@@ -43,4 +43,4 @@ export const schema = gql`
       @requireAuth
     deleteAuditLog(id: String!): AuditLog! @requireAuth
   }
-`;
+`

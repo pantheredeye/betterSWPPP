@@ -21,6 +21,4 @@ describe('SignupPage', () => {
     render(<SignupPage />)
     expect(screen.getByLabelText('Email address')).toHaveFocus()
   })
-
-
 })

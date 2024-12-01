@@ -36,4 +36,4 @@ export const schema = gql`
     deleteInspectionEventDetails(id: String!): InspectionEventDetails!
       @requireAuth
   }
-`;
+`

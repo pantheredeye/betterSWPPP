@@ -2,76 +2,76 @@ import type {
   QueryResolvers,
   MutationResolvers,
   OrganizationRelationResolvers,
-} from "types/graphql";
+} from 'types/graphql'
 
-import { db } from "src/lib/db";
+import { db } from 'src/lib/db'
 
-export const organizations: QueryResolvers["organizations"] = () => {
-  return db.organization.findMany();
-};
+export const organizations: QueryResolvers['organizations'] = () => {
+  return db.organization.findMany()
+}
 
-export const organization: QueryResolvers["organization"] = ({ id }) => {
+export const organization: QueryResolvers['organization'] = ({ id }) => {
   return db.organization.findUnique({
     where: { id },
-  });
-};
+  })
+}
 
-export const createOrganization: MutationResolvers["createOrganization"] = ({
+export const createOrganization: MutationResolvers['createOrganization'] = ({
   input,
 }) => {
   return db.organization.create({
     data: input,
-  });
-};
+  })
+}
 
-export const updateOrganization: MutationResolvers["updateOrganization"] = ({
+export const updateOrganization: MutationResolvers['updateOrganization'] = ({
   id,
   input,
 }) => {
   return db.organization.update({
     data: input,
     where: { id },
-  });
-};
+  })
+}
 
-export const deleteOrganization: MutationResolvers["deleteOrganization"] = ({
+export const deleteOrganization: MutationResolvers['deleteOrganization'] = ({
   id,
 }) => {
   return db.organization.delete({
     where: { id },
-  });
-};
+  })
+}
 
 export const Organization: OrganizationRelationResolvers = {
   users: (_obj, { root }) => {
-    return db.organization.findUnique({ where: { id: root?.id } }).users();
+    return db.organization.findUnique({ where: { id: root?.id } }).users()
   },
   sites: (_obj, { root }) => {
-    return db.organization.findUnique({ where: { id: root?.id } }).sites();
+    return db.organization.findUnique({ where: { id: root?.id } }).sites()
   },
   inspection: (_obj, { root }) => {
-    return db.organization.findUnique({ where: { id: root?.id } }).inspection();
+    return db.organization.findUnique({ where: { id: root?.id } }).inspection()
   },
   event: (_obj, { root }) => {
-    return db.organization.findUnique({ where: { id: root?.id } }).event();
+    return db.organization.findUnique({ where: { id: root?.id } }).event()
   },
   membershipRole: (_obj, { root }) => {
     return db.organization
       .findUnique({ where: { id: root?.id } })
-      .membershipRole();
+      .membershipRole()
   },
   media: (_obj, { root }) => {
-    return db.organization.findUnique({ where: { id: root?.id } }).media();
+    return db.organization.findUnique({ where: { id: root?.id } }).media()
   },
   inspectionEventDetails: (_obj, { root }) => {
     return db.organization
       .findUnique({ where: { id: root?.id } })
-      .inspectionEventDetails();
+      .inspectionEventDetails()
   },
   assignment: (_obj, { root }) => {
-    return db.organization.findUnique({ where: { id: root?.id } }).assignment();
+    return db.organization.findUnique({ where: { id: root?.id } }).assignment()
   },
   permission: (_obj, { root }) => {
-    return db.organization.findUnique({ where: { id: root?.id } }).permission();
+    return db.organization.findUnique({ where: { id: root?.id } }).permission()
   },
-};
+}

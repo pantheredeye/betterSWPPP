@@ -58,4 +58,4 @@ export const schema = gql`
     ): Organization! @requireAuth
     deleteOrganization(id: String!): Organization! @requireAuth
   }
-`;
+`

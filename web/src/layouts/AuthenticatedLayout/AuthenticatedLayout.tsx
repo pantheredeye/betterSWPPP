@@ -1,6 +1,4 @@
 import { useState, Fragment, ReactNode, useEffect } from 'react'
-import { navigate } from '@redwoodjs/router'
-
 
 import {
   Dialog,
@@ -10,8 +8,10 @@ import {
 } from '@headlessui/react'
 import { Bars3Icon, XMarkIcon } from '@heroicons/react/24/outline'
 
-import Sidebar from 'src/components/Sidebar'
+import { navigate } from '@redwoodjs/router'
+
 import { useAuth } from 'src/auth'
+import Sidebar from 'src/components/Sidebar'
 
 interface AuthenticatedLayoutProps {
   children: ReactNode
@@ -30,7 +30,6 @@ const AuthenticatedLayout = ({ children }: AuthenticatedLayoutProps) => {
   //     navigate(`/org/${currentUser.organizationIds[0]}/dashboard`)
   //   }
   // }, [currentUser])
-
 
   return (
     <div className="flex min-h-screen bg-gray-900 font-sans text-gray-300">

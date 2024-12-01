@@ -1,11 +1,11 @@
+import { useParams } from '@redwoodjs/router'
+
 import { useAuth } from 'src/auth'
 import QuickActionsCard from 'src/components/QuickActionsCard'
 import RecentActivityCard from 'src/components/RecentActivityCard'
 import StatisticsCard from 'src/components/StatisticsCard'
 import WelcomeCard from 'src/components/WelcomeCard'
-import { useParams } from '@redwoodjs/router'
 import { useOrganization } from 'src/context/OrganizationContext'
-
 
 const DashboardPage = () => {
   const { currentUser } = useAuth()

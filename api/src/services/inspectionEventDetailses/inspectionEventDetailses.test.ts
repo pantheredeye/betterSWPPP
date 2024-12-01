@@ -1,4 +1,4 @@
-import type { InspectionEventDetails } from "@prisma/client";
+import type { InspectionEventDetails } from '@prisma/client'
 
 import {
   inspectionEventDetailses,
@@ -6,8 +6,8 @@ import {
   createInspectionEventDetails,
   updateInspectionEventDetails,
   deleteInspectionEventDetails,
-} from "./inspectionEventDetailses";
-import type { StandardScenario } from "./inspectionEventDetailses.scenarios";
+} from './inspectionEventDetailses'
+import type { StandardScenario } from './inspectionEventDetailses.scenarios'
 
 // Generated boilerplate tests do not account for all circumstances
 // and can fail without adjustments, e.g. Float.
@@ -15,74 +15,74 @@ import type { StandardScenario } from "./inspectionEventDetailses.scenarios";
 //       https://redwoodjs.com/docs/testing#testing-services
 // https://redwoodjs.com/docs/testing#jest-expect-type-considerations
 
-describe("inspectionEventDetailses", () => {
+describe('inspectionEventDetailses', () => {
   scenario(
-    "returns all inspectionEventDetailses",
+    'returns all inspectionEventDetailses',
     async (scenario: StandardScenario) => {
-      const result = await inspectionEventDetailses();
+      const result = await inspectionEventDetailses()
 
       expect(result.length).toEqual(
-        Object.keys(scenario.inspectionEventDetails).length,
-      );
-    },
-  );
+        Object.keys(scenario.inspectionEventDetails).length
+      )
+    }
+  )
 
   scenario(
-    "returns a single inspectionEventDetails",
+    'returns a single inspectionEventDetails',
     async (scenario: StandardScenario) => {
       const result = await inspectionEventDetails({
         id: scenario.inspectionEventDetails.one.id,
-      });
+      })
 
-      expect(result).toEqual(scenario.inspectionEventDetails.one);
-    },
-  );
+      expect(result).toEqual(scenario.inspectionEventDetails.one)
+    }
+  )
 
   scenario(
-    "creates a inspectionEventDetails",
+    'creates a inspectionEventDetails',
     async (scenario: StandardScenario) => {
       const result = await createInspectionEventDetails({
         input: {
           eventId: scenario.inspectionEventDetails.two.eventId,
           organizationId: scenario.inspectionEventDetails.two.organizationId,
         },
-      });
+      })
 
       expect(result.eventId).toEqual(
-        scenario.inspectionEventDetails.two.eventId,
-      );
+        scenario.inspectionEventDetails.two.eventId
+      )
       expect(result.organizationId).toEqual(
-        scenario.inspectionEventDetails.two.organizationId,
-      );
-    },
-  );
+        scenario.inspectionEventDetails.two.organizationId
+      )
+    }
+  )
 
   scenario(
-    "updates a inspectionEventDetails",
+    'updates a inspectionEventDetails',
     async (scenario: StandardScenario) => {
       const original = (await inspectionEventDetails({
         id: scenario.inspectionEventDetails.one.id,
-      })) as InspectionEventDetails;
+      })) as InspectionEventDetails
       const result = await updateInspectionEventDetails({
         id: original.id,
         input: { eventId: scenario.inspectionEventDetails.two.eventId },
-      });
+      })
 
       expect(result.eventId).toEqual(
-        scenario.inspectionEventDetails.two.eventId,
-      );
-    },
-  );
+        scenario.inspectionEventDetails.two.eventId
+      )
+    }
+  )
 
   scenario(
-    "deletes a inspectionEventDetails",
+    'deletes a inspectionEventDetails',
     async (scenario: StandardScenario) => {
       const original = (await deleteInspectionEventDetails({
         id: scenario.inspectionEventDetails.one.id,
-      })) as InspectionEventDetails;
-      const result = await inspectionEventDetails({ id: original.id });
+      })) as InspectionEventDetails
+      const result = await inspectionEventDetails({ id: original.id })
 
-      expect(result).toEqual(null);
-    },
-  );
-});
+      expect(result).toEqual(null)
+    }
+  )
+})

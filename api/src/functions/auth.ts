@@ -125,12 +125,7 @@ export const handler = async (
     //
     // If this returns anything else, it will be returned by the
     // `signUp()` function in the form of: `{ message: 'String here' }`.
-    handler: ({
-      username,
-      hashedPassword,
-      salt,
-      userAttributes,
-    }) => {
+    handler: ({ username, hashedPassword, salt }) => {
       return db.$transaction(async (tx) => {
         // Create the user
         const user = await tx.user.create({
@@ -138,14 +133,14 @@ export const handler = async (
             email: username,
             hashedPassword: hashedPassword,
             salt: salt,
-          }
+          },
         })
 
         const personalOrg = await tx.organization.create({
           data: {
             name: `Personal Organization (${user.id})`,
           },
-          })
+        })
 
         const ownerRole = await tx.membershipRole.create({
           data: {
@@ -243,4 +238,3 @@ export const handler = async (
 
   return await authHandler.invoke()
 }
-

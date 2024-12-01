@@ -64,4 +64,4 @@ export const schema = gql`
     updateMedia(id: String!, input: UpdateMediaInput!): Media! @requireAuth
     deleteMedia(id: String!): Media! @requireAuth
   }
-`;
+`

@@ -83,4 +83,4 @@ export const schema = gql`
       @requireAuth
     deleteMembership(id: String!): Membership! @requireAuth
   }
-`;
+`

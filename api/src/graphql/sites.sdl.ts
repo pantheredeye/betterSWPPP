@@ -44,4 +44,4 @@ export const schema = gql`
     updateSite(id: String!, input: UpdateSiteInput!): Site! @requireAuth
     deleteSite(id: String!): Site! @requireAuth
   }
-`;
+`
