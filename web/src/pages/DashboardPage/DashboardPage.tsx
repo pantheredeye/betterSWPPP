@@ -3,9 +3,23 @@ import QuickActionsCard from 'src/components/QuickActionsCard'
 import RecentActivityCard from 'src/components/RecentActivityCard'
 import StatisticsCard from 'src/components/StatisticsCard'
 import WelcomeCard from 'src/components/WelcomeCard'
+import { useParams } from '@redwoodjs/router'
+import { useOrganization } from 'src/context/OrganizationContext'
+
 
 const DashboardPage = () => {
   const { currentUser } = useAuth()
+
+  const { organizationId } = useParams()
+
+  // EXAMPLE: how to get currentOrg
+
+  const { currentOrganization } = useOrganization()
+
+  const activeOrg = organizationId || currentOrganization
+
+  // TODO: use activeOrg properly
+
   const activities = [
     'Inspection #123 completed at Site A',
     'Site B added by User X',

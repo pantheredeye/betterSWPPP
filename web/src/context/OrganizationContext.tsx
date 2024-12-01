@@ -1,23 +1,30 @@
-import { createContext, useContext, useState } from 'react'
+import { createContext, useContext, useState, ReactNode } from 'react';
+import { navigate } from '@redwoodjs/router';
 
-const OrganizationContext = createContext()
+// Create a context
+const OrganizationContext = createContext(null);
 
-export const OrganizationProvider = ({ children }) => {
-  const [currentOrganization, setCurrentOrganization] = useState(
-    localStorage.getItem('currentOrganization') || null
-  )
+export const OrganizationProvider = ({ children }: { children: ReactNode }) => {
+  const [currentOrganization, setCurrentOrganization] = useState(() =>
+    localStorage.getItem('currentOrganization')
+  );
 
-  const switchOrganization = (organizationId) => {
-    setCurrentOrganization(organizationId)
-    localStorage.setItem('currentOrganization', organizationId)
-    window.location.href = `/org/${organizationId}/dashboard` // Force reload to ensure scoped data
-  }
+  const switchOrganization = (organizationId: string) => {
+    setCurrentOrganization(organizationId);
+    localStorage.setItem('currentOrganization', organizationId);
+    navigate(`/org/${organizationId}/dashboard`);
+  };
 
   return (
-    <OrganizationContext.Provider value={{ currentOrganization, switchOrganization }}>
+    <OrganizationContext.Provider
+      value={{ currentOrganization, switchOrganization }}
+    >
       {children}
     </OrganizationContext.Provider>
-  )
-}
+  );
+};
 
-export const useOrganization = () => useContext(OrganizationContext)
+// Hook for easy access
+export const useOrganization = () => {
+  return useContext(OrganizationContext);
+};

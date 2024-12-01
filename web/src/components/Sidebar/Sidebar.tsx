@@ -15,6 +15,7 @@ import {
 import { Link } from '@redwoodjs/router'
 
 import { useAuth } from 'src/auth'
+import { useOrganization } from 'src/context/OrganizationContext'
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(' ')
@@ -29,6 +30,7 @@ const Sidebar = () => {
   const [isCollapsed, setIsCollapsed] = useState(false)
   const { logOut } = useAuth()
   const { currentUser } = useAuth()
+  const { switchOrganization } = useOrganization()
 
   const navigation = [
     { name: 'Dashboard', href: '/dashboard', icon: HomeIcon },
@@ -102,6 +104,11 @@ const Sidebar = () => {
       {/* Actions at the Bottom */}
       <div className="px-2 py-2 pb-4">
         <ul className="space-y-2">
+          <li>
+            <button onClick={() => switchOrganization('new-organization-id')}>
+              Switch to New Organization
+            </button>
+          </li>
           {actions.map((action) => (
             <li key={action.name}>
               <button
