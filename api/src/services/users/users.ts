@@ -6,14 +6,6 @@ import type {
 
 import { db } from 'src/lib/db'
 
-interface CurrentUser {
-  id: string;
-  organizationIds: string[];
-  globalSettings: {
-    defaultOrganizationId?: string;
-    [key: string]: any; // To allow for other global settings if needed
-  };
-}
 
 export const users: QueryResolvers['users'] = () => {
   return db.user.findMany()

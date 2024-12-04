@@ -12,6 +12,15 @@ import { db } from './db'
  */
 export const cookieName = 'session_%port%'
 
+interface CurrentUser {
+  id: string;
+  organizationIds: string[];
+  globalSettings: {
+    defaultOrganizationId?: string;
+    [key: string]: any; // To allow for other global settings if needed
+  };
+}
+
 /**
  * The session object sent in as the first argument to getCurrentUser() will
  * have a single key `id` containing the unique ID of the logged in user
@@ -30,13 +39,20 @@ export const cookieName = 'session_%port%'
  * seen if someone were to open the Web Inspector in their browser.
  */
 export const getCurrentUser = async (session: Decoded) => {
-  if (!session || typeof session.id !== 'number') {
+  if (!session || typeof session.id !== 'string') {
     throw new Error('Invalid session')
   }
 
   return await db.user.findUnique({
     where: { id: session.id },
-    select: { id: true },
+    select: { id: true,
+      globalSettings: true,
+      memberships: {
+        select: {
+          organizationId: true, // Extract organization IDs from memberships
+        },
+      },
+    },
   })
 }
 
