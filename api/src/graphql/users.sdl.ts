@@ -11,6 +11,8 @@ export const schema = gql`
     updatedAt: DateTime!
     memberships: [Membership]!
     globalSettings: JSON
+    defaultOrganization: Organization!
+    defaultOrganizationId: String!
     assignment: [Assignment]!
     event: [Event]!
     lastLoginAt: DateTime
@@ -34,6 +36,7 @@ export const schema = gql`
     lastName: String
     phoneNumber: String
     globalSettings: JSON
+    defaultOrganizationId: String!
     lastLoginAt: DateTime
     loginAttempts: Int!
     isLocked: Boolean!
@@ -50,6 +53,7 @@ export const schema = gql`
     lastName: String
     phoneNumber: String
     globalSettings: JSON
+    defaultOrganizationId: String
     lastLoginAt: DateTime
     loginAttempts: Int
     isLocked: Boolean
@@ -63,4 +67,4 @@ export const schema = gql`
     updateUser(id: String!, input: UpdateUserInput!): User! @requireAuth
     deleteUser(id: String!): User! @requireAuth
   }
-`
+`;
