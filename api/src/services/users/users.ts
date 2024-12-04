@@ -47,24 +47,3 @@ export const User: UserRelationResolvers = {
     return db.user.findUnique({ where: { id: root?.id } }).event()
   },
 }
-
-
-export const setDefaultOrganization: MutationResolvers['setDefaultOrganization'] = async (
-  { organizationId },
-  { currentUser }
-) => {
-  if (!currentUser.organizationIds.includes(organizationId)) {
-    throw new Error('You do not have access to this organization.');
-  }
-
-  return await db.user.update({
-    where: { id: currentUser.id },
-    data: {
-      globalSettings: {
-        ...currentUser.globalSettings,
-        defaultOrganizationId: organizationId,
-      },
-    },
-  });
-};
-
