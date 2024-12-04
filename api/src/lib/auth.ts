@@ -49,7 +49,7 @@ export const getCurrentUser = async (session: Decoded) => {
       globalSettings: true,
       memberships: {
         select: {
-          organizationId: true, // Extract organization IDs from memberships
+          organizationId: true,
         },
       },
     },
