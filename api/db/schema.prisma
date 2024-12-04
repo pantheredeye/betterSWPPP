@@ -9,25 +9,27 @@ generator client {
 }
 
 model User {
-  id                String       @id @default(cuid())
-  email             String       @unique
-  hashedPassword    String
-  salt              String
-  firstName         String?
-  lastName          String?
-  phoneNumber       String?
-  createdAt         DateTime     @default(now())
-  updatedAt         DateTime     @updatedAt
-  memberships       Membership[]
-  globalSettings    Json? // User's global preferences
-  assignment        Assignment[]
-  event             Event[]
-  lastLoginAt       DateTime?
-  loginAttempts     Int          @default(0)
-  isLocked          Boolean      @default(false)
-  passwordChangedAt DateTime?
-  deletedAt         DateTime?
-  isActive          Boolean      @default(true)
+  id                    String       @id @default(cuid())
+  email                 String       @unique
+  hashedPassword        String
+  salt                  String
+  firstName             String?
+  lastName              String?
+  phoneNumber           String?
+  createdAt             DateTime     @default(now())
+  updatedAt             DateTime     @updatedAt
+  memberships           Membership[]
+  globalSettings        Json? // User's global preferences
+  defaultOrganization   Organization @relation(fields: [defaultOrganizationId], references: [id])
+  defaultOrganizationId String
+  assignment            Assignment[]
+  event                 Event[]
+  lastLoginAt           DateTime?
+  loginAttempts         Int          @default(0)
+  isLocked              Boolean      @default(false)
+  passwordChangedAt     DateTime?
+  deletedAt             DateTime?
+  isActive              Boolean      @default(true)
 }
 
 model Organization {
@@ -48,6 +50,7 @@ model Organization {
   permission             Permission[]
   deletedAt              DateTime?
   status                 OrganizationStatus       @default(ACTIVE)
+  User                   User[]
 }
 
 enum OrganizationStatus {
