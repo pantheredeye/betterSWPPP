@@ -141,7 +141,7 @@ const NewInspectionPage = () => {
 
       Object.keys(data).forEach((key) => {
         const match = key.match(/(.*)-(\d+)/)
-        if (match) {
+        if (match && !key.startsWith('media-description')) {
           const fieldName = match[1]
           const bmpId = parseInt(match[2], 10)
           if (!bmpData[bmpId]) {
@@ -162,10 +162,17 @@ const NewInspectionPage = () => {
           ? parseFloat(cleanedData.approximatePrecipitation)
           : null
 
-      data.media = media.map((item) => ({
-        url: item.url,
-        description: item.description,
-      }))
+      data.media = media.map((item, index) => {
+        const descriptionKey = `media-description-${index}`
+        const mediaItem = {
+          url: item.url,
+          description: data[descriptionKey] || '', // Attach description
+        }
+
+        delete cleanedData[descriptionKey]
+
+        return mediaItem
+      })
 
       await createInspection({
         variables: {
