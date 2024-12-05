@@ -53,7 +53,7 @@ const Sidebar = () => {
       {/* Header with Title and Collapse Button */}
       <div className="flex h-16 items-center justify-between px-4">
         {!isCollapsed && (
-          <span className="text-2xl font-bold text-gray-200">SWPPP-Tip</span>
+          <span className="text-2xl font-bold text-gray-200">SWPPP-TOP</span>
         )}
         <button
           onClick={() => setIsCollapsed(!isCollapsed)}

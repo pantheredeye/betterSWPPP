@@ -9,7 +9,11 @@ const MainLayout = ({ children }) => {
   return (
     <div className="flex min-h-screen flex-col  bg-gray-900 text-gray-900">
       <header className="flex items-center justify-between  bg-gray-900 px-6 py-4 text-white shadow">
-        <h1 className="text-2xl font-bold">BetterSWPPP</h1>
+        <h1 className="text-2xl font-bold">
+          <i>
+            Stormwater Management - <u>T</u>he <u>O</u>ne <u>P</u>rogram
+          </i>
+        </h1>
         <nav>
           <Link to={routes.home()} className="px-4">
             Home
@@ -43,7 +47,7 @@ const MainLayout = ({ children }) => {
       <main className="flex-1 px-4 py-6 sm:px-6 lg:px-8">{children}</main>
       <footer className="mt-auto bg-gray-400 py-4 text-center">
         <p className="text-sm text-gray-700">
-          &copy; 2024 BetterSWPPP. All rights reserved.
+          &copy; 2024 SWPPP-TOP. All rights reserved.
         </p>
       </footer>
     </div>
