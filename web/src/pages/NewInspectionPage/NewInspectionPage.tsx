@@ -13,6 +13,7 @@ import {
   TimeField,
   DatetimeLocalField,
 } from '@redwoodjs/forms'
+import { navigate } from '@redwoodjs/router'
 import { useMutation } from '@redwoodjs/web'
 
 import { useAuth } from 'src/auth'
@@ -183,6 +184,7 @@ const NewInspectionPage = () => {
           },
         },
       })
+      navigate('/dashboard')
     } catch (error) {
       console.error('Error in handleSubmit:', error.message)
       alert(

@@ -3,7 +3,7 @@ import React from 'react'
 import { ColumnDef } from '@tanstack/react-table'
 import { MoreHorizontal } from 'lucide-react'
 
-import { navigate, routes } from '@redwoodjs/router'
+// import { navigate, routes } from '@redwoodjs/router'
 
 import { Button } from 'src/components/ui/Button'
 import {
@@ -79,13 +79,13 @@ export const columns: ColumnDef<Inspection>[] = [
               Copy inspection ID
             </DropdownMenuItem>
             <DropdownMenuSeparator />
-            <DropdownMenuItem
+            {/* <DropdownMenuItem
               onClick={() =>
                 navigate(routes.viewInspection({ id: inspection.id }))
               }
             >
               View inspection
-            </DropdownMenuItem>
+            </DropdownMenuItem> */}
             <DropdownMenuItem>
               <ExportPDFButton inspectionId={inspection.id} />
             </DropdownMenuItem>
