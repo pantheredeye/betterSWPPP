@@ -8,13 +8,13 @@ const MainLayout = ({ children }) => {
 
   return (
     <div className="flex min-h-screen flex-col  bg-gray-900 text-gray-900">
-      <header className="flex items-center justify-between  bg-gray-900 px-6 py-4 text-white shadow">
-        <h1 className="text-2xl font-bold">
+      <header className="flex flex-wrap items-center justify-between bg-gray-900 px-6 py-4 text-white shadow">
+        <h1 className="w-full md:w-auto text-2xl font-bold text-center md:text-left">
           <i>
             Stormwater Management - <u>T</u>he <u>O</u>ne <u>P</u>rogram
           </i>
         </h1>
-        <nav>
+        <nav className="w-full md:w-auto flex justify-center md:justify-end mt-4 md:mt-0 space-x-4 md:space-x-0">
           <Link to={routes.home()} className="px-4">
             Home
           </Link>
