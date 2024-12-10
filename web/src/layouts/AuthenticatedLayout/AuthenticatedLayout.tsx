@@ -22,7 +22,7 @@ const AuthenticatedLayout = ({ children }: AuthenticatedLayoutProps) => {
   }, [isCollapsed])
 
   return (
-    <div className="min-h-screen bg-gray-900 font-sans text-gray-300">
+    <div className="lg: flex min-h-screen bg-gray-900 font-sans text-gray-300">
       {/* Mobile Sidebar */}
       <Transition show={sidebarOpen} as={Fragment}>
         <Dialog
