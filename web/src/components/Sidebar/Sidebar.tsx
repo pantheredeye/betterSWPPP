@@ -7,7 +7,9 @@ import {
   ArrowUturnLeftIcon,
   UserIcon,
 } from '@heroicons/react/24/outline'
-import { Link } from '@redwoodjs/router'
+
+import { Link, useLocation } from '@redwoodjs/router'
+
 import { useAuth } from 'src/auth'
 
 function classNames(...classes: string[]) {
@@ -17,14 +19,15 @@ function classNames(...classes: string[]) {
 const Sidebar = ({
   isCollapsed = false,
   setIsCollapsed,
-  setSidebarOpen, // Optional
+  setSidebarOpen,
 }: {
   isCollapsed: boolean
   setIsCollapsed: (collapsed: boolean) => void
-  setSidebarOpen?: (open: boolean) => void // Mark as optional
+  setSidebarOpen?: (open: boolean) => void
 }) => {
   const { logOut } = useAuth()
   const { currentUser } = useAuth()
+  const location = useLocation()
 
   const navigation = [
     { name: 'Dashboard', href: '/dashboard', icon: HomeIcon },
@@ -53,12 +56,14 @@ const Sidebar = ({
         to={href}
         className={classNames(
           'group relative flex items-center rounded-xl px-2 py-2 text-sm font-medium',
-          'bg-gray-800 hover:bg-gray-700',
+          location.pathname === href
+            ? 'bg-gray-700'
+            : 'bg-gray-800 hover:bg-gray-700',
           'shadow-lg',
           isCollapsed ? 'justify-center' : 'justify-start'
         )}
         onClick={() => {
-          if (setSidebarOpen) setSidebarOpen(false) // Close sidebar if the function exists
+          if (setSidebarOpen) setSidebarOpen(false)
         }}
       >
         <Icon
@@ -81,6 +86,7 @@ const Sidebar = ({
       <button
         onClick={action}
         className="group flex w-full items-center rounded-xl px-2 py-2 text-sm font-medium bg-gray-800 hover:bg-gray-700 shadow-lg"
+        aria-label={name}
       >
         <Icon
           className="h-6 w-6 text-gray-400 group-hover:text-gray-200"
@@ -95,6 +101,13 @@ const Sidebar = ({
     <div className="flex flex-col w-64 bg-gray-900 text-gray-300 shadow-inner">
       <div className="flex h-16 items-center px-4">
         <span className="text-2xl font-bold text-gray-200">SWPPP-TOP</span>
+        <button
+          className="ml-auto text-gray-300 hover:text-white"
+          onClick={() => setIsCollapsed(!isCollapsed)}
+          aria-label={isCollapsed ? 'Expand sidebar' : 'Collapse sidebar'}
+        >
+          {isCollapsed ? '▶' : '◀'}
+        </button>
       </div>
 
       {/* Navigation */}

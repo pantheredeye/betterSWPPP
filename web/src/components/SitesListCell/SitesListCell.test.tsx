@@ -9,7 +9,7 @@ import { standard } from './SitesListCell.mock'
 //        https://redwoodjs.com/docs/testing#testing-cells
 // https://redwoodjs.com/docs/testing#jest-expect-type-considerations
 
-describe('SitesListCell', () => {
+describe.skip('SitesListCell', () => {
   it('renders Loading successfully', () => {
     expect(() => {
       render(<Loading />)

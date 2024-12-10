@@ -1,6 +1,8 @@
-import { useState, Fragment, ReactNode } from 'react'
+import { useState, useEffect, Fragment, ReactNode } from 'react'
+
 import { Dialog, Transition } from '@headlessui/react'
 import { Bars3Icon, XMarkIcon } from '@heroicons/react/24/outline'
+
 import Sidebar from 'src/components/Sidebar'
 
 interface AuthenticatedLayoutProps {
@@ -9,7 +11,15 @@ interface AuthenticatedLayoutProps {
 
 const AuthenticatedLayout = ({ children }: AuthenticatedLayoutProps) => {
   const [sidebarOpen, setSidebarOpen] = useState(false)
-  const [isCollapsed, setIsCollapsed] = useState(false);
+  const [isCollapsed, setIsCollapsed] = useState(() => {
+    // Persist collapsed state using localStorage
+    const savedState = localStorage.getItem('isSidebarCollapsed')
+    return savedState === 'true'
+  })
+
+  useEffect(() => {
+    localStorage.setItem('isSidebarCollapsed', isCollapsed.toString())
+  }, [isCollapsed])
 
   return (
     <div className="min-h-screen bg-gray-900 font-sans text-gray-300">
@@ -46,14 +56,15 @@ const AuthenticatedLayout = ({ children }: AuthenticatedLayoutProps) => {
               <button
                 className="text-gray-300 hover:text-white"
                 onClick={() => setSidebarOpen(false)}
+                aria-label="Close sidebar"
               >
                 <XMarkIcon className="h-6 w-6" />
               </button>
               <Sidebar
                 isCollapsed={isCollapsed}
                 setIsCollapsed={setIsCollapsed}
-                setSidebarOpen={setSidebarOpen} // Pass the function
-              />{' '}
+                setSidebarOpen={setSidebarOpen}
+              />
             </Dialog.Panel>
           </Transition.Child>
         </Dialog>
@@ -61,7 +72,7 @@ const AuthenticatedLayout = ({ children }: AuthenticatedLayoutProps) => {
 
       {/* Desktop Sidebar */}
       <div className="hidden lg:flex lg:w-64 lg:flex-shrink-0">
-        <Sidebar isCollapsed={isCollapsed} setIsCollapsed={setIsCollapsed} />{' '}
+        <Sidebar isCollapsed={isCollapsed} setIsCollapsed={setIsCollapsed} />
       </div>
 
       {/* Main Content */}
@@ -71,6 +82,7 @@ const AuthenticatedLayout = ({ children }: AuthenticatedLayoutProps) => {
           <button
             className="text-gray-300 hover:text-white"
             onClick={() => setSidebarOpen(true)}
+            aria-label="Open sidebar"
           >
             <Bars3Icon className="h-6 w-6" />
           </button>
