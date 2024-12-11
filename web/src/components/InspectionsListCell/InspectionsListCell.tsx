@@ -3,6 +3,7 @@ import type {
   FindInspectionsListQueryVariables,
 } from 'types/graphql'
 
+import { Link, routes } from '@redwoodjs/router'
 import type {
   CellSuccessProps,
   CellFailureProps,
@@ -49,6 +50,12 @@ export const Success = ({
 >) => {
   return (
     <div className="container mx-auto md:py-10 p-2">
+      <Link
+        to={routes.newInspection()}
+        className="flex w-full items-center justify-center rounded-xl bg-indigo-600 px-4 py-2 font-medium text-white shadow-lg hover:bg-indigo-500 focus:outline-none"
+      >
+        Add Inspection
+      </Link>
       <DataTable columns={columns} data={inspections} />
     </div>
   )
