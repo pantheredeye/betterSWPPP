@@ -48,7 +48,7 @@ export const Success = ({
   FindInspectionsListQueryVariables
 >) => {
   return (
-    <div className="container mx-auto py-10">
+    <div className="container mx-auto md:py-10 p-2">
       <DataTable columns={columns} data={inspections} />
     </div>
   )
