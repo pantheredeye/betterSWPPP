@@ -7,8 +7,8 @@ import WelcomeCard from 'src/components/WelcomeCard'
 const DashboardPage = () => {
   const { currentUser } = useAuth()
   const activities = [
-    'Inspection #123 completed at Site A',
-    'Site B added by User X',
+    'Inspection #12 completed at Pinewood',
+    'Site: Pinewood added by Barrett',
     // Add more activities as needed
   ]
 
