@@ -207,7 +207,7 @@ const NewInspectionPage = () => {
       <Form
         id="inspectionForm"
         onSubmit={handleSubmit}
-        className="mx-auto max-w-7xl rounded-xl bg-gray-900 p-8 shadow-2xl"
+        className="mx-auto max-w-7xl rounded-xl bg-gray-900 p-2 sm:p-8 shadow-2xl"
       >
         <div className="space-y-12">
           {/* Section 1: Inspection Details */}

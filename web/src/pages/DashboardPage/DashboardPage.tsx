@@ -13,7 +13,7 @@ const DashboardPage = () => {
   ]
 
   return (
-    <div className="grid grid-cols-1 gap-8 px-4 sm:px-6 md:grid-cols-2 lg:grid-cols-3 lg:px-8">
+    <div className="grid grid-cols-1 md:gap-8 gap-3 px-4 sm:px-6 md:grid-cols-2 lg:grid-cols-3 lg:px-8">
       <WelcomeCard user={currentUser} />
       <QuickActionsCard />
       <RecentActivityCard activities={activities} />

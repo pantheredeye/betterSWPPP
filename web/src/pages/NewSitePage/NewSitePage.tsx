@@ -117,7 +117,7 @@ const NewSitePage = () => {
       <Form
         id="new-site-form"
         onSubmit={handleCreateSite}
-        className="mx-auto max-w-7xl rounded-xl bg-gray-900 p-8 shadow-2xl"
+        className="mx-auto max-w-7xl rounded-xl bg-gray-900 p-2 sm:p-8 shadow-2xl"
       >
         <div className="space-y-12">
           <div className="grid grid-cols-1 gap-x-8 gap-y-10 border-b border-gray-900/10 pb-12 md:grid-cols-3">

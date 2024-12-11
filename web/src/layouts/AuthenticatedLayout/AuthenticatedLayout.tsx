@@ -89,7 +89,7 @@ const AuthenticatedLayout = ({ children }: AuthenticatedLayoutProps) => {
         </header>
 
         {/* Main Section */}
-        <main className="flex-grow p-6">{children}</main>
+        <main className="flex-grow p-1 md:p-6">{children}</main>
 
         {/* Footer */}
         <footer className="bg-gray-900 p-4 text-center">
