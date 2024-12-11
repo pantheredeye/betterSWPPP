@@ -1,4 +1,4 @@
-import { useState, useEffect, Fragment, ReactNode } from 'react'
+import { useState, Fragment, ReactNode } from 'react'
 
 import { Dialog, Transition } from '@headlessui/react'
 import { Bars3Icon, XMarkIcon } from '@heroicons/react/24/outline'
@@ -11,18 +11,9 @@ interface AuthenticatedLayoutProps {
 
 const AuthenticatedLayout = ({ children }: AuthenticatedLayoutProps) => {
   const [sidebarOpen, setSidebarOpen] = useState(false)
-  const [isCollapsed, setIsCollapsed] = useState(() => {
-    // Persist collapsed state using localStorage
-    const savedState = localStorage.getItem('isSidebarCollapsed')
-    return savedState === 'true'
-  })
-
-  useEffect(() => {
-    localStorage.setItem('isSidebarCollapsed', isCollapsed.toString())
-  }, [isCollapsed])
 
   return (
-    <div className="lg: flex min-h-screen bg-gray-900 font-sans text-gray-300">
+    <div className="lg:flex min-h-screen bg-gray-900 font-sans text-gray-300">
       {/* Mobile Sidebar */}
       <Transition show={sidebarOpen} as={Fragment}>
         <Dialog
@@ -51,7 +42,7 @@ const AuthenticatedLayout = ({ children }: AuthenticatedLayoutProps) => {
             leaveFrom="translate-x-0"
             leaveTo="-translate-x-full"
           >
-            <Dialog.Panel className="fixed inset-y-0 left-0 w-64 bg-gray-900 p-4 shadow-lg">
+            <Dialog.Panel className="fixed inset-y-0 left-0 w-64 bg-gray-900 shadow-lg">
               {/* Close Button */}
               <button
                 className="text-gray-300 hover:text-white"
@@ -60,11 +51,7 @@ const AuthenticatedLayout = ({ children }: AuthenticatedLayoutProps) => {
               >
                 <XMarkIcon className="h-6 w-6" />
               </button>
-              <Sidebar
-                isCollapsed={isCollapsed}
-                setIsCollapsed={setIsCollapsed}
-                setSidebarOpen={setSidebarOpen}
-              />
+              <Sidebar setSidebarOpen={setSidebarOpen} />
             </Dialog.Panel>
           </Transition.Child>
         </Dialog>
@@ -72,7 +59,7 @@ const AuthenticatedLayout = ({ children }: AuthenticatedLayoutProps) => {
 
       {/* Desktop Sidebar */}
       <div className="hidden lg:flex lg:w-64 lg:flex-shrink-0">
-        <Sidebar isCollapsed={isCollapsed} setIsCollapsed={setIsCollapsed} />
+        <Sidebar />
       </div>
 
       {/* Main Content */}

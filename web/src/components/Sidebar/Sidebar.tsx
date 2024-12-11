@@ -17,12 +17,8 @@ function classNames(...classes: string[]) {
 }
 
 const Sidebar = ({
-  isCollapsed = false,
-  setIsCollapsed,
   setSidebarOpen,
 }: {
-  isCollapsed: boolean
-  setIsCollapsed: (collapsed: boolean) => void
   setSidebarOpen?: (open: boolean) => void
 }) => {
   const { logOut } = useAuth()
@@ -60,7 +56,7 @@ const Sidebar = ({
             ? 'bg-gray-700'
             : 'bg-gray-800 hover:bg-gray-700',
           'shadow-lg',
-          isCollapsed ? 'justify-center' : 'justify-start'
+          'justify-start'
         )}
         onClick={() => {
           if (setSidebarOpen) setSidebarOpen(false)
@@ -71,12 +67,7 @@ const Sidebar = ({
           aria-hidden="true"
           aria-label={name}
         />
-        {!isCollapsed && <span className="ml-3 text-gray-200">{name}</span>}
-        {isCollapsed && (
-          <span className="absolute left-full ml-3 w-auto min-w-max whitespace-nowrap rounded-md bg-gray-800 px-2 py-1 text-xs text-gray-200 opacity-0 group-hover:opacity-100">
-            {name}
-          </span>
-        )}
+        <span className="ml-3 text-gray-200">{name}</span>
       </Link>
     </li>
   )
@@ -99,15 +90,8 @@ const Sidebar = ({
 
   return (
     <div className="flex flex-col w-64 bg-gray-900 text-gray-300 shadow-inner">
-      <div className="flex h-16 items-center px-4">
+      <div className="flex h-12 items-center px-4">
         <span className="text-2xl font-bold text-gray-200">SWPPP-TOP</span>
-        <button
-          className="ml-auto text-gray-300 hover:text-white"
-          onClick={() => setIsCollapsed(!isCollapsed)}
-          aria-label={isCollapsed ? 'Expand sidebar' : 'Collapse sidebar'}
-        >
-          {isCollapsed ? '▶' : '◀'}
-        </button>
       </div>
 
       {/* Navigation */}
