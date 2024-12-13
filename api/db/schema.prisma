@@ -122,3 +122,11 @@ model Media {
   url          String
   description  String
 }
+
+model Lead {
+  id        Int      @id @default(autoincrement())
+  name      String?
+  email     String
+  feedback  String?
+  createdAt DateTime @default(now())
+}

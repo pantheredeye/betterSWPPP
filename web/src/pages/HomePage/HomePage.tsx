@@ -2,6 +2,8 @@ import * as HeroIcons from '@heroicons/react/24/outline'
 
 import { Link, routes } from '@redwoodjs/router'
 
+import LeadForm from 'src/components/LeadForm/LeadForm'
+
 import background from './Daytime Background.png'
 
 const features = [
@@ -91,20 +93,33 @@ const HomePage = () => {
             of communication
           </p>
 
-          <Link
+          {/* <Link
             to={routes.signup()}
             className="rounded-xl bg-indigo-600 px-6 py-3 text-lg font-medium text-white shadow-lg hover:bg-indigo-500 focus:outline-none"
           >
             Get Started Today
-          </Link>
-          <button
-            onClick={() =>
-              (window.location.href = 'mailto:barrettburnworth@gmail.com')
-            }
-            className="rounded-xl bg-gray-700 px-6 py-3 font-medium text-white hover:bg-gray-600"
-          >
-            Contact Us
-          </button>
+          </Link> */}
+
+          <div className="py-8 px-4 text-center">
+            <h2 className="text-4xl font-semibold text-gray-200">
+              Stay Updated
+            </h2>
+            <p className="text-lg text-black-900 mt-4">
+              Fill out the form below to share get updates, share feature ideas
+              or join the waitlist.
+            </p>
+            <div className="mt-8 mx-auto max-w-md">
+              <LeadForm />
+            </div>
+            <button
+              onClick={() =>
+                (window.location.href = 'mailto:barrettburnworth@gmail.com')
+              }
+              className="mt-8 rounded-xl bg-indigo-600 px-6 py-3 text-lg font-medium text-white shadow-lg hover:bg-indigo-500 focus:outline-none"
+            >
+              Contact Us
+            </button>
+          </div>
         </div>
       </div>
 
