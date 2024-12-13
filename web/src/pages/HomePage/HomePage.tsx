@@ -117,7 +117,7 @@ const HomePage = () => {
               }
               className="mt-8 rounded-xl bg-indigo-600 px-6 py-3 text-lg font-medium text-white shadow-lg hover:bg-indigo-500 focus:outline-none"
             >
-              Contact Us
+              Email Us
             </button>
           </div>
         </div>
