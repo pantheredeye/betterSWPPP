@@ -99,6 +99,14 @@ const HomePage = () => {
           >
             Get Started Today
           </Link> */}
+          <button
+            onClick={() =>
+              (window.location.href = 'mailto:barrettburnworth@gmail.com')
+            }
+            className="mt-8 rounded-xl bg-indigo-600 px-6 py-3 text-lg font-medium text-white shadow-lg hover:bg-indigo-500 focus:outline-none"
+          >
+            Email Us
+          </button>
 
           <div className="py-8 px-4 text-center">
             <h2 className="text-4xl font-semibold text-gray-200">
@@ -111,14 +119,6 @@ const HomePage = () => {
             <div className="mt-8 mx-auto max-w-md">
               <LeadForm />
             </div>
-            <button
-              onClick={() =>
-                (window.location.href = 'mailto:barrettburnworth@gmail.com')
-              }
-              className="mt-8 rounded-xl bg-indigo-600 px-6 py-3 text-lg font-medium text-white shadow-lg hover:bg-indigo-500 focus:outline-none"
-            >
-              Email Us
-            </button>
           </div>
         </div>
       </div>
@@ -179,10 +179,10 @@ const HomePage = () => {
         </h2>
         <div className="mt-6 flex flex-col items-center space-y-4 md:flex-row md:space-x-4 md:space-y-0">
           <Link
-            to={routes.signup()}
+            to={routes.login()}
             className="rounded-xl bg-indigo-600 px-6 py-3 font-medium text-white shadow-lg hover:bg-indigo-500"
           >
-            Get Started Today
+            Log In
           </Link>
 
           <button className="rounded-xl bg-gray-700 px-6 py-3 font-medium text-white shadow-lg hover:bg-gray-600">
