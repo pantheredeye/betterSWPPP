@@ -97,6 +97,14 @@ const HomePage = () => {
           >
             Get Started Today
           </Link>
+          <button
+            onClick={() =>
+              (window.location.href = 'mailto:barrettburnworth@gmail.com')
+            }
+            className="rounded-xl bg-gray-700 px-6 py-3 font-medium text-white hover:bg-gray-600"
+          >
+            Contact Us
+          </button>
         </div>
       </div>
 
