@@ -185,9 +185,9 @@ const HomePage = () => {
             Log In
           </Link>
 
-          <button className="rounded-xl bg-gray-700 px-6 py-3 font-medium text-white shadow-lg hover:bg-gray-600">
+          {/* <button className="rounded-xl bg-gray-700 px-6 py-3 font-medium text-white shadow-lg hover:bg-gray-600">
             Learn More About Future Features
-          </button>
+          </button> */}
         </div>
       </div>
     </>
