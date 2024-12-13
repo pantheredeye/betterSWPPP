@@ -10,14 +10,20 @@ const CREATE_LEAD = gql`
 `
 
 const LeadForm = () => {
-  const [createLead] = useMutation(CREATE_LEAD, {
-    onCompleted: () => {
-      alert('Thanks for signing up!')
-    },
-  })
+  const [createLead] = useMutation(CREATE_LEAD)
+
+  const handleLeadSubmit = async (input) => {
+    try {
+      await createLead({ variables: { input } })
+      alert('Thank you for your interest!')
+    } catch (error) {
+      console.error('Submission failed:', error)
+      alert('Something went wrong. Please try again later.')
+    }
+  }
 
   const onSubmit = (data) => {
-    createLead({ variables: { input: data } })
+    handleLeadSubmit(data)
   }
 
   return (

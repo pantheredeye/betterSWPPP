@@ -25,7 +25,7 @@ export const schema = gql`
   }
 
   type Mutation {
-    createLead(input: CreateLeadInput!): Lead!
+    createLead(input: CreateLeadInput!): Lead! @skipAuth
     updateLead(id: Int!, input: UpdateLeadInput!): Lead! @requireAuth
     deleteLead(id: Int!): Lead! @requireAuth
   }
