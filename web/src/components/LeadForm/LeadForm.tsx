@@ -35,7 +35,7 @@ const LeadForm = () => {
       />
       <TextAreaField
         name="feedback"
-        placeholder="Feature Requests or Feedback"
+        placeholder="Feature Requests, Feedback or Ideas"
         className="w-full rounded-lg bg-gray-700 p-3 text-white"
       />
       <Submit className="rounded-xl bg-indigo-600 px-6 py-3 text-lg font-medium text-white shadow-lg hover:bg-indigo-500 focus:outline-none">
