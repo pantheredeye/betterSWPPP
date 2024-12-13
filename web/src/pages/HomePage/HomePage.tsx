@@ -113,8 +113,8 @@ const HomePage = () => {
               Stay Updated
             </h2>
             <p className="text-lg text-black-900 mt-4">
-              Fill out the form below to share get updates, share feature ideas
-              or join the waitlist.
+              Fill out the form below to get updates, share feature ideas or
+              join the waitlist.
             </p>
             <div className="mt-8 mx-auto max-w-md">
               <LeadForm />
